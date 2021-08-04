@@ -1,0 +1,23 @@
+# Variable 'PBI_API_URL' was defined in the Variables tab
+# Variable 'PBI_BUILD_GROUP_ID' was defined in the Variables tab
+# Variable 'PBI_DEV_GROUP_ID' was defined in the Variables tab
+# Variable 'PPU_PASSWORD' was defined in the Variables tab
+# Variable 'PPU_USERNAME' was defined in the Variables tab
+# Variable 'TENANT_ID' was defined in the Variables tab
+trigger:
+  branches:
+    include:
+    - refs/heads/main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Continuous Integration
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
