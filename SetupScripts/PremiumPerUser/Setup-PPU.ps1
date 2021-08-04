@@ -90,6 +90,7 @@ Write-Host "Development Workspace ID: $($DevWSObj.Id.Guid)"
 
 $LogInfo = az login | ConvertFrom-Json
 
+Write-Host "Creating Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
@@ -108,6 +109,7 @@ if(!$ProjectResult) {
 #Convert Result to JSON
 $ProjectInfo = $ProjectResult | ConvertFrom-JSON
 
+Write-Host "Creating Repo in Azure DevOps project"
 #Import Repo for kerski's GitHub
 $RepoResult = az repos import create --git-source-url $RepoToCopy `
             --org "$($AzDOHostURL)$($LogInfo.name)" `
@@ -135,6 +137,7 @@ if(!$PipelineResult) {
     return
 }
 
+Write-Host "Creating Pipeline in Azure DevOps project"
 # Variable 'PBI_API_URL' was defined in the Variables tab
 # Assumes commericial environment
 $VarResult = az pipelines variable create --name "PBI_API_URL" --only-show-errors `
@@ -206,9 +209,7 @@ if(!$VarResult) {
     return
 }
 
-Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created with pipeline $($PipelineName) at $($AzDOHostURL)$($LogInfo.name)"
-
-
+Write-Host "Uploading SampleModel.pbix to Build Workspace"
 #Upload Report
 Invoke-WebRequest -Uri $SampleModelURL -OutFile "./SampleModel.pbix"
 
@@ -217,6 +218,8 @@ New-PowerBIReport `
    -Name "SampleModel" `
    -WorkspaceId $BuildWSObj.Id.Guid `
    -ConflictAction CreateOrOverwrite
+
+Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created with pipeline $($PipelineName) at $($AzDOHostURL)$($LogInfo.name)"
 
 #Clean up
 #az devops project delete --id $ProjectInfo.id --organization "https://dev.azure.com/$($LogInfo.name)" --yes

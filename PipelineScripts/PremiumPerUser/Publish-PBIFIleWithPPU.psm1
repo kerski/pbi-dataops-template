@@ -32,15 +32,16 @@ Function Publish-PBIFIleWithPPU {
                 $FileName = [io.path]::GetFileNameWithoutExtension($LocalDatasetPath)
 
                 #Promote Report and overwrite if it already exists
-                $Result = New-PowerBIReport -Path $LocalDatasetPath -Name $FileName -WorkspaceId $WorkspaceId -ConflictAction CreateOrOverwrite -Timeout 500
+                $Result = New-PowerBIReport -Path $LocalDatasetPath -Name $FileName -WorkspaceId $WorkspaceId -ConflictAction CreateOrOverwrite -Timeout 5000 -Verbose
 
                 #Note the DatasetId is blank for newly published reports (possibly a timing issue) so request for the dataset id
-                $ReportInfo = Get-PowerBIReport -Filter "state ne 'Deleted'" -WorkspaceId $WorkspaceId -Id $Result.Id
+                $ReportInfo = Get-PowerBIReport -WorkspaceId $WorkspaceId -Id $Result.Id -Verbose
 
                 return $ReportInfo
 
-            }Catch{
-              Write-Host "##vso[task.logissue type=error]Failure to promote $($LocalDatasetPath) to Workspace $($WorkspacedId)."
+            }Catch [System.Exception]{
+              $ErrObj = ($_).ToString()
+              Write-Host "##vso[task.logissue type=error]$($ErrObj)"
               exit 1
             }#End Try
 	}#End Process
