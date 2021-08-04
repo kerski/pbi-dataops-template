@@ -8,7 +8,10 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ## Prerequisites
 
+### Power BI
 -   Power BI Premium Per User license assigned to a service account. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
+
+### Desktop
 
 -  <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a> installed.
 
@@ -18,7 +21,18 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -   Power BI Desktop installed on device executing these steps.
 
-### Steps
+### Azure DevOps
 
-1. Download the installation script from <a href="" target="_blank">this link</a>.
+-  Signed up for <a href="https://docs.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?view=azure-devops" target="_blank">Azure DevOps</a>.
+
+- For Azure DevOps you must be a member of the Project Collection Administrators group, the Organization Owner, or have the Create new projects permission set to Allow. 
+
+## Steps
+
+1. Open PowerShell ISE and run the script
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part5/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
+
+2. This will download the setup script to the current folder.  Open the file in PowerShell ISE.
+
+3. Highlight the code and...
 

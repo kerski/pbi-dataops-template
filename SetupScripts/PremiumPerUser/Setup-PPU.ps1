@@ -31,8 +31,8 @@ $SvcPwd = Read-Host "Please enter the password for the service account assigned 
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
-$RepoToCopy = "https://github.com/kerski/bringing-dataops-to-pbi-part-5.git"
-$SampleModelURL = "https://github.com/kerski/bringing-dataops-to-pbi-part-5/blob/main/Pbi/SampleModel/SampleModel.pbix?raw=true"
+$RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git#part5"
+$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part5/Pbi/SampleModel/SampleModel.pbix?raw=true"
 #Login into Power BI to Create Workspaces
 Login-PowerBI
 
