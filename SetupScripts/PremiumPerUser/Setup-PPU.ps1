@@ -31,8 +31,9 @@ $SvcPwd = Read-Host "Please enter the password for the service account assigned 
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
-$RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git#part5"
+$RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
 $SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part5/Pbi/SampleModel/SampleModel.pbix?raw=true"
+$PipelineName = "DataOpsCI-Part5"
 #Login into Power BI to Create Workspaces
 Login-PowerBI
 
@@ -120,7 +121,7 @@ if(!$RepoResult) {
 }
 
 #Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
-$PipelineResult = az pipelines create --name "DataOpsCI" --repository-type "tfsgit" `
+$PipelineResult = az pipelines create --name $PipelineName --repository-type "tfsgit" `
                 --description "Part 5 example pipeline of Bringing DataOps to Power BI" `
                 --org "$($AzDOHostURL)$($LogInfo.name)" `
                 --project $ProjectName `
@@ -151,7 +152,7 @@ if(!$VarResult) {
 # Variable 'TENANT_ID' was defined in the Variables tab
 $VarResult = az pipelines variable create --name "TENANT_ID" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
-            --pipeline-name "DataOpsCI" `
+            --pipeline-name $PipelineName `
             --project $ProjectName --value $LogInfo.tenantId
 
 #Check Result
@@ -162,7 +163,7 @@ if(!$VarResult) {
 # Variable 'PPU_USERNAME' was defined in the Variables tab
 $VarResult = az pipelines variable create --name "PPU_USERNAME" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
-            --pipeline-name "DataOpsCI" `
+            --pipeline-name $PipelineName `
             --project $ProjectName --value $SvcUser
 
 #Check Result
@@ -174,7 +175,7 @@ if(!$VarResult) {
 # Variable 'PPU_PASSWORD' was defined in the Variables tab
 $VarResult = az pipelines variable create --name "PPU_PASSWORD" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
-            --pipeline-name "DataOpsCI" `
+            --pipeline-name $PipelineName `
             --project $ProjectName --value $SvcPwd --secret $TRUE
 
 #Check Result
@@ -185,7 +186,7 @@ if(!$VarResult) {
 # Variable 'PBI_BUILD_GROUP_ID' was defined in the Variables tab
 $VarResult = az pipelines variable create --name "PBI_BUILD_GROUP_ID" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
-            --pipeline-name "DataOpsCI" `
+            --pipeline-name $PipelineName `
             --project $ProjectName --value $BuildWSObj.Id.Guid
 #Check Result
 if(!$VarResult) {
@@ -196,7 +197,7 @@ if(!$VarResult) {
 # Variable 'PBI_DEV_GROUP_ID' was defined in the Variables tab
 $VarResult = az pipelines variable create --name "PBI_DEV_GROUP_ID" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
-            --pipeline-name "DataOpsCI" `
+            --pipeline-name $PipelineName `
             --project $ProjectName --value $DevWSObj.Id.Guid
 
 #Check Result
@@ -205,7 +206,7 @@ if(!$VarResult) {
     return
 }
 
-Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created with pipeline DataOpsCI at $($AzDOHostURL)$($LogInfo.name)"
+Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created with pipeline $($PipelineName) at $($AzDOHostURL)$($LogInfo.name)"
 
 
 #Upload Report

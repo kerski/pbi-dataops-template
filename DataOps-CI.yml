@@ -7,7 +7,7 @@
 trigger:
   branches:
     include:
-    - refs/heads/main
+    - refs/heads/part5
 jobs:
 - job: Job_1
   displayName: Agent job 1
