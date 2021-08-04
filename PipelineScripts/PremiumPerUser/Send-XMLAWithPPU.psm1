@@ -46,6 +46,7 @@ Function Send-XMLAWithPPU {
             }Catch [System.Exception]{
               $ErrObj = ($_).ToString()
               Write-Host "##vso[task.logissue type=error]$($ErrObj)"
+              exit 1
             }#End Try
 	}#End Process
 }#End Function

@@ -41,6 +41,7 @@ Function Publish-PBIFIleWithPPU {
 
             }Catch{
               Write-Host "##vso[task.logissue type=error]Failure to promote $($LocalDatasetPath) to Workspace $($WorkspacedId)."
+              exit 1
             }#End Try
 	}#End Process
 }#End Function
