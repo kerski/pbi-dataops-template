@@ -13,13 +13,6 @@
     3) Person running the script must have the ability admin rights to Power BI Tenant and at least a Pro license
     4) An existing Azure DevOps instance
 #>
-#Install Powershell Module if Needed
-if (Get-Module -ListAvailable -Name "MicrosoftPowerBIMgmt") {
-    Write-Host "MicrosoftPowerBIMgmt installed moving forward"
-} else {
-    #Install Power BI Module
-    Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
-}
 
 #Set Variables
 $BuildWSName = Read-Host "Please enter the name of the build workspace (ex. Build)"
@@ -27,15 +20,37 @@ $BuildDesc = "Used to test Power BI Reports before moving to development workspa
 $DevWSName = Read-Host "Please enter the name of the build workspace (ex. Development)"
 $DevDesc = "Development environment for Power BI Reports"
 $SvcUser = Read-Host "Please enter the email address (UPN) of the service account assigned premium per user"
-$SvcPwd = Read-Host "Please enter the password for the service account assigned premium per user"
+
+#Get Password and convert to plain string
+$SecureString = Read-Host "Please enter the password for the service account assigned premium per user" -AsSecureString
+$Bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString)
+$SvcPwd = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($Bstr)
+
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
 $SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part5/Pbi/SampleModel/SampleModel.pbix?raw=true"
 $PipelineName = "DataOpsCI-Part5"
+
+#Check Inputs
+if(!$BuildWSName -or !$DevWSName -or !$SvcUser -or !$SvcPwd -or !$ProjectName)
+{
+    Write-Error "Please make sure you entered all the required information. You will need to rerun the script."
+    return
+} 
+
+#Install Powershell Module if Needed
+if (Get-Module -ListAvailable -Name "MicrosoftPowerBIMgmt") {
+    Write-Host "MicrosoftPowerBIMgmt installed moving forward"
+} else {
+    #Install Power BI Module
+    Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
+}
 #Login into Power BI to Create Workspaces
 Login-PowerBI
+
+Write-Host -ForegroundColor Cyan "Step 1 or 5: Creating Power BI Workspaces" 
 
 #Get Premium Per User Capacity as it will be used to assign to new workspace
 $Cap = Get-PowerBICapacity -Scope Individual
@@ -87,10 +102,9 @@ Write-Host "Development Workspace ID: $($DevWSObj.Id.Guid)"
 
 
 ### Now Setup Azure DevOps
-
 $LogInfo = az login | ConvertFrom-Json
 
-Write-Host "Creating Azure DevOps project"
+Write-Host -ForegroundColor Cyan "Step 2 of 5: Creating Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
@@ -109,7 +123,7 @@ if(!$ProjectResult) {
 #Convert Result to JSON
 $ProjectInfo = $ProjectResult | ConvertFrom-JSON
 
-Write-Host "Creating Repo in Azure DevOps project"
+Write-Host -ForegroundColor Cyan "Step 3 of 5: Creating Repo in Azure DevOps project"
 #Import Repo for kerski's GitHub
 $RepoResult = az repos import create --git-source-url $RepoToCopy `
             --org "$($AzDOHostURL)$($LogInfo.name)" `
@@ -137,7 +151,7 @@ if(!$PipelineResult) {
     return
 }
 
-Write-Host "Creating Pipeline in Azure DevOps project"
+Write-Host -ForegroundColor Cyan "Step 4 of 5: Creating Pipeline in Azure DevOps project"
 # Variable 'PBI_API_URL' was defined in the Variables tab
 # Assumes commericial environment
 $VarResult = az pipelines variable create --name "PBI_API_URL" --only-show-errors `
@@ -209,7 +223,7 @@ if(!$VarResult) {
     return
 }
 
-Write-Host "Uploading SampleModel.pbix to Build Workspace"
+Write-Host -ForegroundColor Cyan "Step 5 of 5: Uploading SampleModel.pbix to Build Workspace"
 #Upload Report
 Invoke-WebRequest -Uri $SampleModelURL -OutFile "./SampleModel.pbix"
 
