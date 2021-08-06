@@ -91,7 +91,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 1. Copy the URL and navigate the project in Azure DevOps. Click on the Repos section and select the Clone button (outlined in orange in the image below).
 
- <img src="./images/part5-project-clone.PNG" alt="Example to Clone Project" width="400px"/>
+ <img src="./images/part5-project-clone.PNG" alt="Example to Clone Project" width="800px"/>
 
 2.  Copy the textbox under the 'Command line' label. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
