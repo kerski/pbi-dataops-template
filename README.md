@@ -105,46 +105,46 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 5. Open GitHub Desktop and select clone reposistory (outlined in orange in the image below).
 
- ![Clone the repository.](./images/part5-clone-repository.PNG) 
+<img src="./images/part5-clone-repository.PNG" alt="Clone the repository." width="400px"/>
 
-5. Paste the URL copied in step 2.
+6. Paste the URL copied in step 2.
 
  <img src="./images/part5-enter-url.PNG" alt="Enter URL to clone repository." width="400px"/>
 
-6. You will then be prompted to enter the username and password credentials you copied in Step 4.
+7. You will then be prompted to enter the username and password credentials you copied in Step 4.
 
  <img src="./images/part5-enter-credentials-git.PNG" alt="Prompt to enter credentials to clone repository." width="400px"/>
 
-7. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
+8. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
 
 ![Switch branch](./images/part5-switch-branch.PNG)
 
-8. Within File Explorer (for Windows) navigate to the project folder that was cloned and within that folder navigate to Pbi->SampleModel->SampleModel.pbix and open the pbix file.
+9. Within File Explorer (for Windows) navigate to the project folder that was cloned and within that folder navigate to Pbi->SampleModel->SampleModel.pbix and open the pbix file.
 
 ![Example of File Explorer](./images/part5-branch-file-explorer.PNG)
 
 
-9. Navigate to the "Number of Characters" metric (outlined in orange in the image below) and remove "+ 0" from the measure (outlined in purple in the image below).  Then save the changes.  This demonstrates a change made to the Power BI file by a developer.
+10. Navigate to the "Number of Characters" metric (outlined in orange in the image below) and remove "+ 0" from the measure (outlined in purple in the image below).  Then save the changes.  This demonstrates a change made to the Power BI file by a developer.
 
 ![Example to Update Model](./images/part5-update-model.PNG)
 
-10. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
+11. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
 
 <img src="./images/part5-commit-part5.PNG" alt="Example of Committing changes in GitHub Desktop" height="400px"/>
 
-11. Then select the "Push origin" button.  This will push the changes to Azure DevOps and kick-off the pipeline.
+12. Then select the "Push origin" button.  This will push the changes to Azure DevOps and kick-off the pipeline.
 
 ![Example of pushing changes to Azure DevOps repository](./images/part5-push-origin.PNG)
 
-12. Navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically donated by the a blue clock icon.  Press the pipeline link (outlined in orange in the image below).
+13. Navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically donated by the a blue clock icon.  Press the pipeline link (outlined in orange in the image below).
 
 ![Example of Pipeline in Azure Devops](./images/part5-see-pipeline.PNG)
 
-13. This page will show you the latest status of the pipeline.  The example image below shows the commit you pushed to Azure DevOps and that the pipeline is in progress.
+14. This page will show you the latest status of the pipeline.  The example image below shows the commit you pushed to Azure DevOps and that the pipeline is in progress.
 
 ![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
 
-14. Once the pipeline completes you should get a green checkmark icon.  You may also receive an email stating the pipeline successfully completed.
+15. Once the pipeline completes you should get a green checkmark icon.  You may also receive an email stating the pipeline successfully completed.
 
 ![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
 
