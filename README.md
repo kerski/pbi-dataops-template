@@ -95,11 +95,11 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 2.  Copy the textbox under the 'Command line' label. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
- ![Copy HTTPs url for git](./images/part5-generate-credentials-git.PNG)
+ <img src="/images/part5-generate-credentials-git.PNG" alt="Copy HTTPs url for git" width="400px"/>
 
 3. Press the "Generate Git Credentials" button.
 
- ![Press the 'Generate Git Credentials' button.](./images/part5-generate-credentials2-git.PNG)
+ <img src="./images/part5-generate-credentials2-git.PNG" alt="Press the 'Generate Git Credentials' button" width="400px"/>
 
 4. Copy the Username and Password to Notepad temporarily.
 
@@ -108,7 +108,8 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
  ![Clone the repository.](./images/part5-clone-repository.PNG) 
 
 5. Paste the URL copied in step 2.
-  ![Enter URL to clone repository.](./images/part5-enter-url.PNG)
+
+ <img src="./images/part5-enter-url.PNG" alt="Enter URL to clone repository." width="400px"/>
 
 6. You will then be prompted to enter the username and password credentials you copied in Step 4.
 
