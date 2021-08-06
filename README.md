@@ -59,7 +59,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     - The password for the (UPN/email). ***Important Note**: This scripts assumes PowerShell Version 5.1, so this password WILL NOT be masked. Make sure to protect this password from someone snooping behind you.* 
     - The name of the project you wish to create in Azure DevOps.
 
-    ![Prompt for information in install script](./images/part5-enter-info.PNG)
+    ![Prompt for information in install script](./images/part5-enter-information.PNG)
 
 
 1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the Powershell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
@@ -99,7 +99,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 3. Press the "Generate Git Credentials" button.
 
- ![Press the 'Generate Git Credentials' button.](./images/part5-generate-credentials2.PNG)
+ ![Press the 'Generate Git Credentials' button.](./images/part5-generate-credentials2-git.PNG)
 
 4. Copy the Username and Password to Notepad temporarily.
 
