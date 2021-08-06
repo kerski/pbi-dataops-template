@@ -8,7 +8,11 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ## Table of Contents
 
-TODO
+1. [Prerequisites](#Prerequisites)
+1. [Installation Steps](#InstallationSteps)
+1. [Priming the Pipeline](#PrimingthePipeline)
+1. [Running the Pipeline](#RunningthePipeline)
+1. [Failed Pipeline](#FailedPipeline)
 
 ## Prerequisites
 
@@ -62,37 +66,99 @@ TODO
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
-1. If the script runs successfully you will be presented with a message similar in the image below.
+1. If the script runs successfully you will be presented with a message similar in the image below.  
+
+## Priming the Pipeline
+
+As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> this the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
+
+1. Navigate to app.powerbi.com and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps) (outlined in orange in the image below).
+
+    ![Dataset Settings screenshot](./images/part5-dataset-settings.PNG)
+
+1. Expand the 'Data source credentials' section and select 'Edit Credentials' link (outlined in orange in the image below).
+    ![Dataset Settings screenshot](./images/part5-edit-dataset-credentials.PNG)
+
+1. Select the Authentication method as "Anonymous" and Privacy level to "None" and then press the "Sign in" button.
+
+    ![hi](./images/part5-configure-sample-model-credentials.PNG)
 
 ## Running the Pipeline
 
 With the installation step complete now you will need to follow these steps to work with project locally, make a change to a Power BI file, commit it to the repository in Azure DevOps and see the pipeline in action.
 
-1. Copy the URL and navigate
+1. Copy the URL and navigate the project in Azure DevOps. Click on the Repos section and select the Clone button (outlined in orange in the image below).
 
-1. Select clone the repository
+    ![Example to Clone Project](./images/part5-project-clone.png)
 
-    ![Prompt to install azure devops cli](./images/part-5.PNG)
+2.  Copy the textbox under command line. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
-1.  Copy the textbox under command line. I suggest copying to Notepad temporarily as you'll have two other text fields to copy.
+ ![Copy HTTPs url for git](./images/part5-generate-credentials.PNG)
 
- ![Prompt to enter credentials](./images/part-5-generate-credentials.PNG)
+3. Press the "Generate Git Credentials" button.
 
-1. Press the "Generate Git Credentials" button.
+ ![Press the 'Generate Git Credentials' button.](./images/part5-generate-credentials2.PNG)
 
- ![Prompt to enter credentials](./images/part-5-generate-credentials2.PNG)
+4. Copy the Username and Password to Notepad temporarily.
 
-1. Copy the Username and Password to Notepad temporarily.
+5. Open GitHub Desktop and select clone reposistory (outlined in orange in the image below).
 
-1. Open GitHub Desktop and select clone reposistory
+ ![Clone the repository.](./images/part5-clone-repository.PNG) 
 
- ![Prompt to enter credentials](./images/part-5-clone-repository.PNG)
+5. Paste the URL copied in step 2.
+  ![Enter URL to clone repository.](./images/part5-enter-url.PNG)
 
- 1. 
+6. You will then be prompted to enter the username and password credentials you copied in Step 3.
 
-  ![Prompt to enter credentials](./images/part-5-enter-url.PNG)
+![Prompt to enter credentials to clone repository.](./images/part-5-enter-credentials.PNG)
 
-  1. TODO Fix image names
+7. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
 
-![Prompt to enter credentials](./images/part-5-enter-credentials.PNG)
+![Switch branch](./images/part5-select-branch.PNG)
+
+8. Within File Explorer (for Windows) navigate to the project folder that was cloned and within that folder navigate to Pbi->SampleModel->SampleModel.pbix and open the pbix file.
+
+![Example of File Explorer](./images/part5-branch-file-explorer.PNG)
+
+
+9. Navigate to the "Number of Characters" metric (outlined in orange in the image below) and remove "+ 0" to the measure (outlined in purple in the image below).  Then save the changes.  This demonstrates a change made to the Power BI file by a developer.
+
+![Prompt to enter credentials to clone repository.](./images/part5-update-model.PNG)
+
+10. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
+
+![Example of Committing changes in GitHub Desktop](./images/part5-commit-part5.PNG)
+
+11. Then select the "Push origin" button.  This will push the changes to Azure DevOps and kick-off the pipeline.
+
+![Example of pushing changes to Azure DevOps repository](./images/part5-push-origin.PNG)
+
+12. Navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically donated by the a blue clock icon.  Press the pipeline link (outlined in orange in the image below).
+
+![Example of Pipeline in Azure Devops](./images/part5-see-pipeline.PNG)
+
+13. This page will show you the latest status of the pipeline.  The image below shows the commit you pushed to Azure DevOps and that the pipeline is in progress.
+
+![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
+
+14. Once the pipeline completes you should get a green checkmark icon.  You may also receive an email stating the pipeline successfully completed.
+
+![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
+
+## Failed Pipeline
+
+If a test case fails in the pipeline you will see a red x icon appear in the Azure DevOps Pipeline. 
+
+![Example of Pipeline Success](./images/part5-pipeline-failed.PNG)
+
+If you click on the failed entry (outlined in orange in the image below) you will be presented with a screen providing details of the failed tests.
+
+![Example of Pipeline Success](./images/part5-pipeline-failed2.PNG)
+
+For example in the image below you can see an example of the failed test.
+
+![Example of Pipeline Success](./images/part5-pipeline-failed-details.PNG)
+
+
+
 
