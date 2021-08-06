@@ -9,10 +9,10 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 ## Table of Contents
 
 1. [Prerequisites](#Prerequisites)
-1. [Installation Steps](#InstallationSteps)
-1. [Priming the Pipeline](#PrimingthePipeline)
-1. [Running the Pipeline](#RunningthePipeline)
-1. [Failed Pipeline](#FailedPipeline)
+1. [Installation Steps](#Installation-Steps)
+1. [Priming the Pipeline](#Priming-the-Pipeline)
+1. [Running the Pipeline](#Running-the-Pipeline)
+1. [Failed Pipeline](#Failed-Pipeline-Example)
 
 ## Prerequisites
 
@@ -147,7 +147,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
 
-## Failed Pipeline
+## Failed Pipeline Example
 
 If a test case fails in the pipeline you will see a red x icon appear in the Azure DevOps Pipeline. 
 
