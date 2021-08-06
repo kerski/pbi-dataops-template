@@ -91,7 +91,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 1. Copy the URL and navigate the project in Azure DevOps. Click on the Repos section and select the Clone button (outlined in orange in the image below).
 
-    ![Example to Clone Project](./images/part5-project-clone.PNG)
+ <img src="./images/part5-project-clone.PNG" alt="Example to Clone Project" width="400px"/>
 
 2.  Copy the textbox under the 'Command line' label. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
@@ -113,7 +113,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 6. You will then be prompted to enter the username and password credentials you copied in Step 4.
 
-![Prompt to enter credentials to clone repository.](./images/part5-enter-credentials-git.PNG)
+ <img src="./images/part5-enter-credentials-git.PNG" alt="Prompt to enter credentials to clone repository." width="400px"/>
 
 7. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
 
