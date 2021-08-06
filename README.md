@@ -95,7 +95,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 2.  Copy the textbox under the 'Command line' label. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
- ![Copy HTTPs url for git](./images/part5-generate-credentials.PNG)
+ ![Copy HTTPs url for git](./images/part5-generate-credentials-git.PNG)
 
 3. Press the "Generate Git Credentials" button.
 
@@ -112,11 +112,11 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 6. You will then be prompted to enter the username and password credentials you copied in Step 4.
 
-![Prompt to enter credentials to clone repository.](./images/part5-enter-credentials.PNG)
+![Prompt to enter credentials to clone repository.](./images/part5-enter-credentials-git.PNG)
 
 7. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
 
-![Switch branch](./images/part5-select-branch.PNG)
+![Switch branch](./images/part5-switch-branch.PNG)
 
 8. Within File Explorer (for Windows) navigate to the project folder that was cloned and within that folder navigate to Pbi->SampleModel->SampleModel.pbix and open the pbix file.
 
@@ -125,7 +125,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 9. Navigate to the "Number of Characters" metric (outlined in orange in the image below) and remove "+ 0" from the measure (outlined in purple in the image below).  Then save the changes.  This demonstrates a change made to the Power BI file by a developer.
 
-![Prompt to enter credentials to clone repository.](./images/part5-update-model.PNG)
+![Example to Update Model](./images/part5-update-model.PNG)
 
 10. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
 
@@ -155,7 +155,7 @@ If a test case fails in the pipeline you will see a red x icon appear in the Azu
 
 If you click on the failed entry (outlined in orange in the image below) you will be presented with a screen providing details of the failed tests.
 
-![Example of Pipeline Success](./images/part5-pipeline-failed2.PNG)
+![Example of Pipeline Success](./images/part5-pipeline-failed-2.PNG)
 
 For example, in the image below you can see an example of the failed test.
 
