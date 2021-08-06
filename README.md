@@ -23,7 +23,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -  <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a> installed.
 
--  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1">Powershell</a> installed.  If you are using > Windows 10/11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
+-  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-5.1">Powershell 5.1</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
 
 -   <a href="https://desktop.github.com/">GitHub desktop</a> installed.
 
@@ -41,38 +41,40 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 1. Open PowerShell ISE and enter the followinging script:
     > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part5/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
 
-1. Highlight the code and select "Run Selection" (outlined in orange in the image below) 
+1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
     ![Image of running script to download install script in PowerShell ISE.](./images/part5-run-install-step2.PNG)
 
 1. This will download the setup script to the current folder.  Open the file "Setup-PPU.ps1" in PowerShell ISE.
 
-1. Highlight the code and select "Run Selection" (outlined in orange in the image below)
+1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
     ![Image of running install script in PowerShell ISE.](./images/part5-run-setup-step4.PNG)
 
 1. During the install process you will be prompted to enter the following information:
 
     - The name of the build workspace you wish to create in the Power BI Service.
-    - The name of the development workspace you witsh to create in the Power BI Service.
+    - The name of the development workspace you wish to create in the Power BI Service.
     - The name (UPN/email) of the Service account you created in the Prerequisites section.
     - The password for the (UPN/email). ***Important Note**: This scripts assumes PowerShell Version 5.1, so this password WILL NOT be masked. Make sure to protect this password from someone snooping behind you.* 
     - The name of the project you wish to create in Azure DevOps.
 
-    ![Prompt for information in install script](./images/part-5-enter-info.PNG)
+    ![Prompt for information in install script](./images/part5-enter-info.PNG)
 
 
-1. During the coure of the install you will be prompted to enter your credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the Powershell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
+1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the Powershell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
-1. If the script runs successfully you will be presented with a message similar in the image below.  
+1. If the script runs successfully you will be presented with a message similar in the image below. 
+
+    ![Example of successful install](./images/part5-success-install.PNG)
 
 ## Priming the Pipeline
 
-As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> this the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
+As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
 
-1. Navigate to app.powerbi.com and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps) (outlined in orange in the image below).
+1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
 
     ![Dataset Settings screenshot](./images/part5-dataset-settings.PNG)
 
@@ -81,17 +83,17 @@ As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5
 
 1. Select the Authentication method as "Anonymous" and Privacy level to "None" and then press the "Sign in" button.
 
-    ![hi](./images/part5-configure-sample-model-credentials.PNG)
+    ![Set the credentials](./images/part5-configure-sample-model-credentials.PNG)
 
 ## Running the Pipeline
 
-With the installation step complete now you will need to follow these steps to work with project locally, make a change to a Power BI file, commit it to the repository in Azure DevOps and see the pipeline in action.
+With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#PrimingthePipeline) steps complete, you will need to follow the steps below to work with the project locally, make a change to a Power BI file, commit it to the repository in Azure DevOps, and see the pipeline in action.
 
 1. Copy the URL and navigate the project in Azure DevOps. Click on the Repos section and select the Clone button (outlined in orange in the image below).
 
     ![Example to Clone Project](./images/part5-project-clone.png)
 
-2.  Copy the textbox under command line. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
+2.  Copy the textbox under the 'Command line' label. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
  ![Copy HTTPs url for git](./images/part5-generate-credentials.PNG)
 
@@ -108,9 +110,9 @@ With the installation step complete now you will need to follow these steps to w
 5. Paste the URL copied in step 2.
   ![Enter URL to clone repository.](./images/part5-enter-url.PNG)
 
-6. You will then be prompted to enter the username and password credentials you copied in Step 3.
+6. You will then be prompted to enter the username and password credentials you copied in Step 4.
 
-![Prompt to enter credentials to clone repository.](./images/part-5-enter-credentials.PNG)
+![Prompt to enter credentials to clone repository.](./images/part5-enter-credentials.PNG)
 
 7. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
 
@@ -121,7 +123,7 @@ With the installation step complete now you will need to follow these steps to w
 ![Example of File Explorer](./images/part5-branch-file-explorer.PNG)
 
 
-9. Navigate to the "Number of Characters" metric (outlined in orange in the image below) and remove "+ 0" to the measure (outlined in purple in the image below).  Then save the changes.  This demonstrates a change made to the Power BI file by a developer.
+9. Navigate to the "Number of Characters" metric (outlined in orange in the image below) and remove "+ 0" from the measure (outlined in purple in the image below).  Then save the changes.  This demonstrates a change made to the Power BI file by a developer.
 
 ![Prompt to enter credentials to clone repository.](./images/part5-update-model.PNG)
 
@@ -137,7 +139,7 @@ With the installation step complete now you will need to follow these steps to w
 
 ![Example of Pipeline in Azure Devops](./images/part5-see-pipeline.PNG)
 
-13. This page will show you the latest status of the pipeline.  The image below shows the commit you pushed to Azure DevOps and that the pipeline is in progress.
+13. This page will show you the latest status of the pipeline.  The example image below shows the commit you pushed to Azure DevOps and that the pipeline is in progress.
 
 ![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
 
@@ -155,7 +157,7 @@ If you click on the failed entry (outlined in orange in the image below) you wil
 
 ![Example of Pipeline Success](./images/part5-pipeline-failed2.PNG)
 
-For example in the image below you can see an example of the failed test.
+For example, in the image below you can see an example of the failed test.
 
 ![Example of Pipeline Success](./images/part5-pipeline-failed-details.PNG)
 
