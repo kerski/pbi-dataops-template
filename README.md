@@ -129,7 +129,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 10. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
 
-![Example of Committing changes in GitHub Desktop](./images/part5-commit-part5.PNG)
+<img src="./images/part5-commit-part5.PNG" alt="Example of Committing changes in GitHub Desktop" height="400px"/>
 
 11. Then select the "Push origin" button.  This will push the changes to Azure DevOps and kick-off the pipeline.
 
