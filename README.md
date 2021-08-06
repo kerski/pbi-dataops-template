@@ -49,7 +49,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
-    ![Image of running install script in PowerShell ISE.](./images/part5-run-setup-step4.PNG)
+    <img src="./images/part5-run-setup-step4.PNG" alt="Image of running install script in PowerShell ISE." height="100px"/>
 
 1. During the install process you will be prompted to enter the following information:
 
@@ -91,7 +91,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 1. Copy the URL and navigate the project in Azure DevOps. Click on the Repos section and select the Clone button (outlined in orange in the image below).
 
-    ![Example to Clone Project](./images/part5-project-clone.png)
+    ![Example to Clone Project](./images/part5-project-clone.PNG)
 
 2.  Copy the textbox under the 'Command line' label. I suggest copying to Notepad temporarily as you'll have two other text fields to copy (outlined in orange in the image below).
 
