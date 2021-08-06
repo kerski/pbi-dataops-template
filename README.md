@@ -76,14 +76,14 @@ As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5
 
 1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
 
-    ![Dataset Settings screenshot](./images/part5-dataset-settings.PNG)
+    <img src="./images/part5-dataset-settings.PNG" alt="Dataset Settings screenshot" width="400px"/>
 
 1. Expand the 'Data source credentials' section and select 'Edit Credentials' link (outlined in orange in the image below).
     ![Dataset Settings screenshot](./images/part5-edit-dataset-credentials.PNG)
 
 1. Select the Authentication method as "Anonymous" and Privacy level to "None" and then press the "Sign in" button.
 
-    ![Set the credentials](./images/part5-configure-sample-model-credentials.PNG)
+    <img src="./images/part5-configure-sample-model-credentials.PNG" alt="Set the credentials" width="400px"/>
 
 ## Running the Pipeline
 
