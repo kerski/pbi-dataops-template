@@ -49,7 +49,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
-    <img src="./images/part5-run-setup-step4.PNG" alt="Image of running install script in PowerShell ISE." height="100px"/>
+    <img src="./images/part5-run-setup-step4.PNG" alt="Image of running install script in PowerShell ISE." height="400px"/>
 
 1. During the install process you will be prompted to enter the following information:
 
