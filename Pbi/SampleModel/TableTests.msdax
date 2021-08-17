@@ -1,0 +1,34 @@
+﻿DEFINE
+
+	// Pick a static date(s)
+    VAR __January2011Filter = TREATAS({DATE(2011,1,1)}, 'DateDim'[Date])
+    VAR __OneDayFilter = TREATAS({DATE(2021, 1, 1)}, 'DateDim'[Date])
+	VAR __BlankDayFilter = TREATAS({"JAN-0001"},'DateDim'[DateKey])
+	/* Table */
+	VAR _Marvel_Fact_Count = COUNTROWS('MarvelFact')
+	VAR _Date_Dim_Count = COUNTROWS('DateDim')
+	/* Check for blank date */
+	VAR _Date_Dim_Blank_Count = CALCULATE(COUNTROWS('DateDim'),__BlankDayFilter)
+	
+/*Run Tests*/
+VAR _Tests = 
+UNION(
+ROW(
+	"TestName", "Table: MarvelFact Count should be exact", 
+	"ExpectedValue", 16376,
+	"ActualValue", _Marvel_Fact_Count
+),
+ROW(
+	"TestName", "Table: DateDim should be at least 982 rows", 
+	"ExpectedValue", 1,
+	"ActualValue", _Date_Dim_Count >= 982
+),
+ROW(
+	"TestName", "Table: DateDim should have one blank value", 
+	"ExpectedValue", 1,
+	"ActualValue", _Date_Dim_Blank_Count
+)
+)
+
+/*Output Pass/Fail*/
+EVALUATE ADDCOLUMNS(_Tests,"Passed",[ExpectedValue] = [ActualValue])
