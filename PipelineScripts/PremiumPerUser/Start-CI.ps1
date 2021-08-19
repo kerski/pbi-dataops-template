@@ -1,8 +1,10 @@
 ﻿<#
     Author: John Kerski
-    Description: This script runs the proof-of-concept Continuous Integration of Power BI files into a Development workspace.
+    Description: This script runs the proof-of-concept Continuous Integration of Power BI files 
+    into a Development workspace.
 
-    Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
+    Dependencies: Premium Per User license purchased and assigned to UserName and UserName 
+    has admin right to workspace.
 #>
 #Setup TLS 12
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -11,6 +13,7 @@ $WorkingDir = (& pwd) -replace "\\", '/'
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Publish-PBIFIleWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Refresh-DatasetSyncWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Send-XMLAWithPPU.psm1 -Force
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Confirm-BestPracticesWithPPU.psm1 -Force
 #Set Default Environment Variables 
 $Opts = @{
     TenantId = "${env:TENANT_ID}";
@@ -19,6 +22,7 @@ $Opts = @{
     DevGroupId = "${env:PBI_DEV_GROUP_ID}"
     UserName = "${env:PPU_USERNAME}";
     Password = "${env:PPU_PASSWORD}";
+    TabularEditorUrl = "${env:TAB_EDITOR_URL}";
     #Get new pbix changes
     PbixChanges = git diff --name-only --relative --diff-filter AMR HEAD^ HEAD '**/*.pbix';
     PbixTracking = @();
@@ -46,6 +50,10 @@ if(-not $Opts.UserName){
 
 if(-not $Opts.Password){
     throw "Missing or Blank Password"
+}
+
+if(-not $Opts.TabularEditorUrl){
+    throw "Missing or Blank Tabular Editor URL"
 }
 
 #Iterate of Power BI Changes and get the test files
@@ -149,6 +157,20 @@ foreach($PBITest in $PBIsToTest){
     $TempRpt = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBITest.BaseName
     $TempOptFile = "$($WorkingDir)/$($TempRpt.Name).xml"
     
+    #Best Practices
+    Write-Host "Attempting to run best practice analyzer for: $($PBITest)"
+    
+    #Run Analyze and will output errors and failed the build is best practices are not followed
+    #NOTE: BPAUrl is hard code but you can and should change for your own needs/guidelines
+    Confirm-BestPracticesWithPPU -WorkspaceName $BuildWS.Name `
+                        -DatasetName $TempRpt.Name `
+                        -UserName $Opts.UserName `
+                        -Password $Opts.Password `
+                        -TabularEditorUrl $Opts.TabularEditorUrl,
+                        -APIUrl $Opts.PbiApiUrl,
+                        -BPAUrl "https://raw.githubusercontent.com/TabularEditor/BestPracticeRules/master/BPARules-PowerBI.json" `
+                        -OutputFile $TempOptFile
+
     #Run Tests
     #Get parent folder of this file
     $ParentFolder = Split-Path -Path $PBITest.FullName

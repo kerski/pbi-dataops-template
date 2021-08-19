@@ -1,6 +1,6 @@
-# Part 5 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
+# Part 6 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests and deploys a Power BI report.
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part6/" target="_blank">Part 6 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests, *runs the Best Practice Analyzer*, and deploys a Power BI report.
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -39,7 +39,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ### Create Power BI Workspaces and Create Azure DevOps project
 1. Open PowerShell ISE and enter the followinging script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part5/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part6/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
 
 1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
@@ -72,7 +72,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ## Priming the Pipeline
 
-As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
+As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part6/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
 
 1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
 
@@ -115,7 +115,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
  <img src="./images/part5-enter-credentials-git.PNG" alt="Prompt to enter credentials to clone repository." width="400px"/>
 
-8. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
+8. Within GitHub Desktop switch the branch from main to 'origin/part6'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
 
 ![Switch branch](./images/part5-switch-branch.PNG)
 
