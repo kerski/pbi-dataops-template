@@ -166,8 +166,8 @@ foreach($PBITest in $PBIsToTest){
                         -DatasetName $TempRpt.Name `
                         -UserName $Opts.UserName `
                         -Password $Opts.Password `
-                        -TabularEditorUrl $Opts.TabularEditorUrl,
-                        -APIUrl $Opts.PbiApiUrl,
+                        -TabularEditorUrl $Opts.TabularEditorUrl `
+                        -APIUrl $Opts.PbiApiUrl `
                         -BPAUrl "https://raw.githubusercontent.com/TabularEditor/BestPracticeRules/master/BPARules-PowerBI.json" `
                         -OutputFile $TempOptFile
 
