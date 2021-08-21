@@ -23,7 +23,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -  <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli" target="_blank">Azure CLI</a> installed.
 
--  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-5.1" target="_blank">Powershell 5.1</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
+-  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-5.1" target="_blank">PowerShell 5.1</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
 
 -   <a href="https://desktop.github.com/" target="_blank">GitHub desktop</a> installed.
 
@@ -62,7 +62,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     ![Prompt for information in install script](./images/part5-enter-information.PNG)
 
 
-1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the Powershell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
+1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the PowerShell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
@@ -103,7 +103,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 4. Copy the Username and Password to Notepad temporarily.
 
-5. Open GitHub Desktop and select clone reposistory (outlined in orange in the image below).
+5. Open GitHub Desktop and select clone repository (outlined in orange in the image below).
 
 <img src="./images/part5-clone-repository.PNG" alt="Clone the repository." width="400px"/>
 
@@ -115,7 +115,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
  <img src="./images/part5-enter-credentials-git.PNG" alt="Prompt to enter credentials to clone repository." width="400px"/>
 
-8. Within GitHub Desktop switch the branch from main to 'origin/part6'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
+8. Within GitHub Desktop switch the branch from main to 'origin/part6'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps principles.
 
 ![Switch branch](./images/part5-switch-branch.PNG)
 
@@ -128,7 +128,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example to Update Model](./images/part5-update-model.PNG)
 
-11. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
+11. Navigate back to GitHub Desktop and press "Commit to part6" (outlined in orange in the image below).
 
 <img src="./images/part5-commit-part5.PNG" alt="Example of Committing changes in GitHub Desktop" height="400px"/>
 
@@ -144,11 +144,11 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
 
-15. Once the pipeline completes you should get a "Build Succeed with Issues" noted by an amber icon with an exclamation mark (to demostrate a build with warnings).  You may also receive an email stating the pipeline successfully completed with issues.
+15. Once the pipeline completes you should get a "Build Succeed with Issues" noted by an amber icon with an exclamation mark (to demonstrate a build with warnings).  You may also receive an email stating the pipeline successfully completed with issues.
 
 ![Example of Warnings](./images/part6-warning-example.PNG)
 
-The Best Practice Analyzer will log warnings to Azure DevOps if an issue of Severity 2 is identified. Severity levels are defined in the Best Practices json file.
+The Best Practice Analyzer will log warnings to Azure DevOps if an issue of Severity 2 is identified. Severity levels are defined in the Best Practices JSON file.
 
 ## Example of Failed Pipeline Example
 

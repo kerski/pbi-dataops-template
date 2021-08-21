@@ -2,3 +2,4 @@
 DK_dataops_book_2nd_edition.pdf
 *.queryBuilder
 Pbi/SampleModel/debug.log
+.vscode/settings.json
