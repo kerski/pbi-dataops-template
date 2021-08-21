@@ -12,7 +12,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 1. [Installation Steps](#Installation-Steps)
 1. [Priming the Pipeline](#Priming-the-Pipeline)
 1. [Running the Pipeline](#Running-the-Pipeline)
-1. [Failed Pipeline](#Failed-Pipeline-Example)
+1. [Failed Pipeline](#Example-of-Failed-Pipeline-Example)
 
 ## Prerequisites
 
@@ -144,24 +144,17 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
 
-15. Once the pipeline completes you should get a green checkmark icon.  You may also receive an email stating the pipeline successfully completed.
+15. Once the pipeline completes you should get a "Build Succeed with Issues" noted by an amber icon with an exclamation mark (to demostrate a build with warnings).  You may also receive an email stating the pipeline successfully completed with issues.
 
-![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
+![Example of Warnings](./images/part6-warning-example.PNG)
 
-## Failed Pipeline Example
+The Best Practice Analyzer will log warnings to Azure DevOps if an issue of Severity 2 is identified. Severity levels are defined in the Best Practices json file.
 
-If a test case fails in the pipeline you will see a red x icon appear in the Azure DevOps Pipeline. 
+## Example of Failed Pipeline Example
 
-![Example of Pipeline Success](./images/part5-pipeline-failed.PNG)
+The Best Practice Analyzer will log failures to Azure DevOps if Severity is greater than 2. In the pipeline you will see a red x icon appear in the Azure DevOps Pipeline. Here is an example of a failure.
 
-If you click on the failed entry (outlined in orange in the image below) you will be presented with a screen providing details of the failed tests.
-
-![Example of Pipeline Success](./images/part5-pipeline-failed-2.PNG)
-
-For example, in the image below you can see an example of the failed test.
-
-![Example of Pipeline Success](./images/part5-pipeline-failed-details.PNG)
-
+![Example of Error](./images/part6-error-example.PNG)
 
 
 
