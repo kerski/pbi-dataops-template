@@ -2,11 +2,11 @@
 
 	// Pick a static date(s)
 	VAR __January2011 = DATE(2011,1,1)
-    VAR __January2011Filter = TREATAS({__January2011}, 'DateDim'[Date])
-	VAR __BlankDayFilter = TREATAS({0},'DateDim'[DateID])
+    VAR __January2011Filter = TREATAS({__January2011}, 'Date Dim'[Date])
+	VAR __BlankDayFilter = TREATAS({0},'Date Dim'[DateID])
 	/* Check for blank date */
-	VAR _Date_Dim_Blank_Format = CALCULATE(MIN('DateDim'[Month Year]),__BlankDayFilter)
-	VAR _Date_Dim_NonBlank_Format = CALCULATE(MAX('DateDim'[Month Year]),__January2011Filter)
+	VAR _Date_Dim_Blank_Format = CALCULATE(MIN('Date Dim'[Month Year]),__BlankDayFilter)
+	VAR _Date_Dim_NonBlank_Format = CALCULATE(MAX('Date Dim'[Month Year]),__January2011Filter)
 	
 /*Run Tests*/
 VAR _Tests = 

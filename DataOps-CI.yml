@@ -4,20 +4,22 @@
 # Variable 'PPU_PASSWORD' was defined in the Variables tab
 # Variable 'PPU_USERNAME' was defined in the Variables tab
 # Variable 'TENANT_ID' was defined in the Variables tab
+# Variable 'SP_URL' was defined in the Variables tab
+# Variable 'SP_LIST_TITLE' was defined in the Variables tab
 trigger:
   branches:
     include:
-    - refs/heads/part5
+    - refs/heads/part8
 jobs:
-- job: Job_1
-  displayName: Agent job 1
+- job: Job_2
+  displayName: Test Coverage Job
   pool:
     vmImage: vs2017-win2016
   steps:
   - checkout: self
   - task: PowerShell@2
-    displayName: Continuous Integration
+    displayName: Test Coverage
     inputs:
-      filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
+      filePath: PipelineScripts/PremiumPerUser/Test-Coverage.ps1
     env:
       PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable

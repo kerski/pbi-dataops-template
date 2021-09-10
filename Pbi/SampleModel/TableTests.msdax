@@ -1,14 +1,14 @@
 ﻿DEFINE
 
 	// Pick a static date(s)
-    VAR __January2011Filter = TREATAS({DATE(2011,1,1)}, 'DateDim'[Date])
-    VAR __OneDayFilter = TREATAS({DATE(2021, 1, 1)}, 'DateDim'[Date])
-	VAR __BlankDayFilter = TREATAS({"JAN-0001"},'DateDim'[DateKey])
+    VAR __January2011Filter = TREATAS({DATE(2011,1,1)}, 'Date Dim'[Date])
+    VAR __OneDayFilter = TREATAS({DATE(2021, 1, 1)}, 'Date Dim'[Date])
+	VAR __BlankDayFilter = TREATAS({"JAN-0001"},'Date Dim'[DateKey])
 	/* Table */
-	VAR _Marvel_Fact_Count = COUNTROWS('MarvelFact')
-	VAR _Date_Dim_Count = COUNTROWS('DateDim')
+	VAR _Marvel_Fact_Count = COUNTROWS('Marvel Fact')
+	VAR _Date_Dim_Count = COUNTROWS('Date Dim')
 	/* Check for blank date */
-	VAR _Date_Dim_Blank_Count = CALCULATE(COUNTROWS('DateDim'),__BlankDayFilter)
+	VAR _Date_Dim_Blank_Count = CALCULATE(COUNTROWS('Date Dim'),__BlankDayFilter)
 	
 /*Run Tests*/
 VAR _Tests = 

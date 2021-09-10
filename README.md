@@ -1,6 +1,6 @@
-# Part 5 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
+# Part 8 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests and deploys a Power BI report.
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part8/" target="_blank">Part 8 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests, *runs the Best Practice Analyzer*, and deploys a Power BI report.
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -12,7 +12,6 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 1. [Installation Steps](#Installation-Steps)
 1. [Priming the Pipeline](#Priming-the-Pipeline)
 1. [Running the Pipeline](#Running-the-Pipeline)
-1. [Failed Pipeline](#Failed-Pipeline-Example)
 
 ## Prerequisites
 
@@ -23,7 +22,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -  <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli" target="_blank">Azure CLI</a> installed.
 
--  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-5.1" target="_blank">Powershell 5.1</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
+-  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-5.1" target="_blank">PowerShell 5.1</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
 
 -   <a href="https://desktop.github.com/" target="_blank">GitHub desktop</a> installed.
 
@@ -35,11 +34,15 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 - For Azure DevOps you must be a member of the Project Collection Administrators group, the Organization Owner, or have the Create new projects permission set to Allow. 
 
+### SharePoint Online
+
+- For SharePoint Online you must have administrator rights in order for the SharePoint site and Test Coverage list to be created.
+
 ## Installation Steps
 
-### Create Power BI Workspaces and Create Azure DevOps project
+### Create Power BI Workspaces, Create Azure DevOps project, and SharePoint Online site for logging test coverage data
 1. Open PowerShell ISE and enter the followinging script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part5/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part8/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
 
 1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
@@ -62,7 +65,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     ![Prompt for information in install script](./images/part5-enter-information.PNG)
 
 
-1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the Powershell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
+1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the PowerShell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
@@ -72,7 +75,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ## Priming the Pipeline
 
-As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
+As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part8/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of August 2021.  Please take the following steps to setup the credentials for the SampleModel.pbix file found within this project.
 
 1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
 
@@ -103,7 +106,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 4. Copy the Username and Password to Notepad temporarily.
 
-5. Open GitHub Desktop and select clone reposistory (outlined in orange in the image below).
+5. Open GitHub Desktop and select clone repository (outlined in orange in the image below).
 
 <img src="./images/part5-clone-repository.PNG" alt="Clone the repository." width="400px"/>
 
@@ -115,7 +118,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
  <img src="./images/part5-enter-credentials-git.PNG" alt="Prompt to enter credentials to clone repository." width="400px"/>
 
-8. Within GitHub Desktop switch the branch from main to 'origin/part5'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps priniciples.
+8. Within GitHub Desktop switch the branch from main to 'origin/part8'.  I ask you to do this because in subsequent blog series, I'll have separate branches that will introduce new features that follow DataOps principles.
 
 ![Switch branch](./images/part5-switch-branch.PNG)
 
@@ -128,7 +131,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example to Update Model](./images/part5-update-model.PNG)
 
-11. Navigate back to GitHub Desktop and press "Commit to part5" (outlined in orange in the image below).
+11. Navigate back to GitHub Desktop and press "Commit to part8" (outlined in orange in the image below).
 
 <img src="./images/part5-commit-part5.PNG" alt="Example of Committing changes in GitHub Desktop" height="400px"/>
 
@@ -136,7 +139,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of pushing changes to Azure DevOps repository](./images/part5-push-origin.PNG)
 
-13. Navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically donated by the a blue clock icon.  Press the pipeline link (outlined in orange in the image below).
+13. Navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically denoted by the a blue clock icon.  Press the pipeline link (outlined in orange in the image below).
 
 ![Example of Pipeline in Azure Devops](./images/part5-see-pipeline.PNG)
 
@@ -144,24 +147,10 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
 
-15. Once the pipeline completes you should get a green checkmark icon.  You may also receive an email stating the pipeline successfully completed.
+15. Once the pipeline completes you should get a "Build Succeeded" noted by an green checkmark icon.
 
 ![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
 
-## Failed Pipeline Example
+16. Navigate to the SharePoint Online site created and navigate to the SharePoint list labeled Test Coverage.  Verify the test coverage data has been logged to the list.
 
-If a test case fails in the pipeline you will see a red x icon appear in the Azure DevOps Pipeline. 
-
-![Example of Pipeline Success](./images/part5-pipeline-failed.PNG)
-
-If you click on the failed entry (outlined in orange in the image below) you will be presented with a screen providing details of the failed tests.
-
-![Example of Pipeline Success](./images/part5-pipeline-failed-2.PNG)
-
-For example, in the image below you can see an example of the failed test.
-
-![Example of Pipeline Success](./images/part5-pipeline-failed-details.PNG)
-
-
-
-
+![Example of test coverage data logged to the SharePoint list](./images/part8-sharepoint-list.PNG)
