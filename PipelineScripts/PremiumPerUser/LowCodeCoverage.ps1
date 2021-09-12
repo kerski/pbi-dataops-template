@@ -1,6 +1,6 @@
 ﻿<#
     Author: John Kerski
-    Description: This script runs the proof-of-concept to run Test Coverage processes.
+    Description: This script runs the proof-of-concept to run Low-Code Coverage processes.
 
     Dependencies: Premium Per User license purchased and assigned to UserName and UserName 
     has admin right to workspace.
@@ -91,7 +91,7 @@ foreach($PBITest in $PBIsToTest){
     $ParentFolder = Split-Path -Path $PBITest.FullName
     #Get dax files in this folder
     $DaxFilesInFolder = Get-ChildItem -Path $ParentFolder | Where-Object {$_ -like "*.*dax"}    
-    Write-Host "Attempting to run calculate test coverage: $($PBITest)"
+    Write-Host "Attempting to run calculate low-code coverage: $($PBITest)"
 
     #Define array
     $DaxQueries = @()
