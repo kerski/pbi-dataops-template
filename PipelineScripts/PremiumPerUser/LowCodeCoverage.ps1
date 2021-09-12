@@ -116,7 +116,7 @@ foreach($PBITest in $PBIsToTest){
             $DaxQueries += $X
     }#end foreach test files
 
-    #Get Test Coverage information (Calculation Dependencies, Measures, Calculated Columns and Tables)
+    #Get Coverage information (Calculation Dependencies, Measures, Calculated Columns and Tables)
     $TestCoverageResult = Find-LowCodeCoverageForPBIWithPPU -WorkspaceName $BuildWS.Name `
                 -LocalDatasetPath $PBITest.FullName `
                 -UserName $Opts.UserName `
