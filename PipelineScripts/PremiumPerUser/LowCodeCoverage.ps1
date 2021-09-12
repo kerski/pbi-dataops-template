@@ -117,7 +117,7 @@ foreach($PBITest in $PBIsToTest){
     }#end foreach test files
 
     #Get Test Coverage information (Calculation Dependencies, Measures, Calculated Columns and Tables)
-    $TestCoverageResult = Find-TestCoverageForPBIWithPPU -WorkspaceName $BuildWS.Name `
+    $TestCoverageResult = Find-LowCodeCoverageForPBIWithPPU -WorkspaceName $BuildWS.Name `
                 -LocalDatasetPath $PBITest.FullName `
                 -UserName $Opts.UserName `
                 -Password $Opts.Password `
