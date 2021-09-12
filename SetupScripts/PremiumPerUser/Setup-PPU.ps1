@@ -22,15 +22,18 @@ $BuildDesc = "Used to test Power BI Reports before moving to development workspa
 $DevWSName = Read-Host "Please enter the name of the build workspace (ex. Development)"
 $DevDesc = "Development environment for Power BI Reports"
 $SvcUser = Read-Host "Please enter the email address (UPN) of the service account assigned premium per user"
-$SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com)"
-$SPSiteName = Read-Host "Please enter the name of the SharePoint site to store low-code coverage data"
+
 
 #Get Password and convert to plain string
 $SecureString = Read-Host "Please enter the password for the service account assigned premium per user" -AsSecureString
 $Bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString)
 $SvcPwd = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($Bstr)
 
+#Set Azure DevOps and SharePoint information
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
+$SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com)"
+$SPSiteName = Read-Host "Please enter the name of the SharePoint site to store low-code coverage data"
+
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"

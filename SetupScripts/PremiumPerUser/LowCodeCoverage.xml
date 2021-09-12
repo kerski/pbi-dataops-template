@@ -4,7 +4,7 @@
   <pnp:Templates ID="CONTAINER-TEMPLATE-B7E775A1E00749078822F67CE12BA80D">
     <pnp:ProvisioningTemplate ID="TEMPLATE-B7E775A1E00749078822F67CE12BA80D" Version="1" BaseSiteTemplate="GROUP#0" Scope="RootSite">
       <pnp:Lists>
-        <pnp:ListInstance Title="Low-Code Coverage" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LowCodeCoverage" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TestCoverage/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TestCoverage/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TestCoverage/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+        <pnp:ListInstance Title="Low-Code Coverage" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LowCodeCoverage" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/LowCodeCoverage/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/LowCodeCoverage/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/LowCodeCoverage/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
           <pnp:ContentTypeBindings>
             <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
             <pnp:ContentTypeBinding ContentTypeID="0x0120" />
