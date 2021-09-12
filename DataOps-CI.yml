@@ -1,11 +1,3 @@
-# Variable 'PBI_API_URL' was defined in the Variables tab
-# Variable 'PBI_BUILD_GROUP_ID' was defined in the Variables tab
-# Variable 'PBI_DEV_GROUP_ID' was defined in the Variables tab
-# Variable 'PPU_PASSWORD' was defined in the Variables tab
-# Variable 'PPU_USERNAME' was defined in the Variables tab
-# Variable 'TENANT_ID' was defined in the Variables tab
-# Variable 'SP_URL' was defined in the Variables tab
-# Variable 'SP_LIST_TITLE' was defined in the Variables tab
 trigger:
   branches:
     include:
@@ -20,6 +12,6 @@ jobs:
   - task: PowerShell@2
     displayName: Test Coverage
     inputs:
-      filePath: PipelineScripts/PremiumPerUser/Test-Coverage.ps1
+      filePath: PipelineScripts/PremiumPerUser/LowCodeCoverage.ps1
     env:
       PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable

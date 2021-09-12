@@ -10,7 +10,7 @@
 #Get Working Directory
 $WorkingDir = (& pwd) -replace "\\", '/'
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Get-DevOpsVariables.psm1 -Force
-Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Find-TestCoverageForPBIWithPPU.psm1 -Force
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Find-LowCodeCoverageForPBIWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Add-ResultToSPWithPPU.psm1 -Force
 #Get Default Environment Variables 
 $Opts = Get-DevOpsVariables

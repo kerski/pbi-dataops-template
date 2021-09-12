@@ -250,7 +250,7 @@ if(!$VarResult) {
 $VarResult = az pipelines variable create --name "SP_URL" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
             --pipeline-name $PipelineName `
-            --project $ProjectName --value "$($SPUrl)/sites/$($SPSiteName)"
+            --project $ProjectName --value "$($SPBaseUrl)/sites/$($SPSiteName)"
 
 #Check Result
 if(!$VarResult) {

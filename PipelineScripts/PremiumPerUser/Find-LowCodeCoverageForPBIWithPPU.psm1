@@ -11,7 +11,7 @@
 
     Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
 #>
-Function Find-TestCoverageForPBIWithPPU { 
+Function Find-LowCodeCoverageForPBIWithPPU { 
 		[CmdletBinding()]
 		Param( 
 				[Parameter(Position = 0, Mandatory = $true)][String]$WorkspaceName, 
@@ -263,4 +263,4 @@ Function Find-TestCoverageForPBIWithPPU {
 	}#End Process
 }#End Function
 
-Export-ModuleMember -Function Find-TestCoverageForPBIWithPPU
+Export-ModuleMember -Function Find-LowCodeCoverageForPBIWithPPU
