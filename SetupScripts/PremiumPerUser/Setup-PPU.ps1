@@ -299,8 +299,8 @@ $TemplateFile = "./LowCodeCoverageTemplate.xml"
 Invoke-PnPSiteTemplate -Path $TemplateFile
 
 #Give Service User ability to write to this list
+Start-Sleep -Seconds 15 #sleep wait seconds before running again. 
 Add-PnPGroupMember -LoginName $SvcUser -Group "$($SPSiteName) Members"
-
 
 Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created with pipeline $($PipelineName) at $($AzDOHostURL)$($LogInfo.name)"
 
