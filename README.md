@@ -36,11 +36,11 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ### SharePoint Online
 
-- For SharePoint Online you must have administrator rights in order for the SharePoint site and Test Coverage list to be created.
+- For SharePoint Online you must have administrator rights in order for the SharePoint site and Low-Code Coverage list to be created.
 
 ## Installation Steps
 
-### Create Power BI Workspaces, Create Azure DevOps project, and SharePoint Online site for logging test coverage data
+### Create Power BI Workspaces, Create Azure DevOps project, and SharePoint Online site for logging low-code coverage data
 1. Open PowerShell ISE and enter the followinging script:
     > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part8/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
 
@@ -151,6 +151,6 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
 
-16. Navigate to the SharePoint Online site created and navigate to the SharePoint list labeled Test Coverage.  Verify the test coverage data has been logged to the list.
+16. Navigate to the SharePoint Online site created and navigate to the SharePoint list labeled Low-Code Coverage.  Verify the Low-Code Coverage data has been logged to the list.
 
-![Example of test coverage data logged to the SharePoint list](./images/part8-sharepoint-list.PNG)
+![Example of low-code coverage data logged to the SharePoint list](./images/part8-sharepoint-list.PNG)
