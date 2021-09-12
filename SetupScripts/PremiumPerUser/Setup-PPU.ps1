@@ -22,8 +22,8 @@ $BuildDesc = "Used to test Power BI Reports before moving to development workspa
 $DevWSName = Read-Host "Please enter the name of the build workspace (ex. Development)"
 $DevDesc = "Development environment for Power BI Reports"
 $SvcUser = Read-Host "Please enter the email address (UPN) of the service account assigned premium per user"
-$SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com/"
-$SPSiteName = Read-Host "Please enter the name of the SharePoint site to store test coverage results"
+$SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com)"
+$SPSiteName = Read-Host "Please enter the name of the SharePoint site to store low-code coverage data"
 
 #Get Password and convert to plain string
 $SecureString = Read-Host "Please enter the password for the service account assigned premium per user" -AsSecureString
@@ -35,6 +35,7 @@ $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
 $SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part8/Pbi/SampleModel/SampleModel.pbix?raw=true"
+$SPListTemplate = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part8/SetupScripts/PremiumPerUser/LowCodeCoverage.xml"
 #Download URL for Tabular Editor:
 $TabularEditorUrl = "https://github.com/otykier/TabularEditor/releases/download/2.16.1/TabularEditor.Portable.zip"
 
@@ -258,7 +259,7 @@ if(!$VarResult) {
 $VarResult = az pipelines variable create --name "SP_LIST_TITLE" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LogInfo.name)" `
             --pipeline-name $PipelineName `
-            --project $ProjectName --value "Test Coverage"
+            --project $ProjectName --value "Low-Code Coverage"
 
 #Check Result
 if(!$VarResult) {
@@ -277,24 +278,26 @@ New-PowerBIReport `
    -WorkspaceId $BuildWSObj.Id.Guid `
    -ConflictAction CreateOrOverwrite
 
-Write-Host -ForegroundColor Cyan "Step 6 of 6: Create SharePoint Site for Test Coverage"
+Write-Host -ForegroundColor Cyan "Step 6 of 6: Create SharePoint Site for Low-Code Coverage"
 
-#Setup SharePoint site and list
-Connect-PnPOnline -Url $SPUrl -Interactive
 #Create PnP Site
-New-PnPSite -Type TeamSite -Title $SPSiteName -Alias $SPSiteName
+Connect-PnPOnline -Url $SPBaseUrl -Interactive
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title $SPSiteName -Url "$($SPBaseUrl)/sites/$($SPSiteName)"
+Disconnect-PnPOnline
 
 #Connect to new SharePoint Online site
-Connect-PnPOnline -Url "$($SPUrl)/sites/$($SiteName)" -Interactive
+Connect-PnPOnline -Url "$($SPBaseUrl)/sites/$($SPSiteName)" -Interactive
 
 #Retrieve local template
-$TemplateFile = "./TestCoverageTemplate.xml"
+Invoke-WebRequest -Uri $SPListTemplate -OutFile "./LowCodeCoverageTemplate.xml"
+$TemplateFile = "./LowCodeCoverageTemplate.xml"
 
 #Create list based on template
 Invoke-PnPSiteTemplate -Path $TemplateFile
 
 #Give Service User ability to write to this list
-Set-PnPListPermission -Identity 'Test Coverage' -User $SvcUser -AddRole 'Contribute'
+Add-PnPGroupMember -LoginName $SvcUser -Group "$($SPSiteName) Members"
+
 
 Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created with pipeline $($PipelineName) at $($AzDOHostURL)$($LogInfo.name)"
 
@@ -302,4 +305,4 @@ Write-Host -ForegroundColor Green "Azure DevOps Project $($ProjectName) created 
 #az devops project delete --id $ProjectInfo.id --organization "https://dev.azure.com/$($LogInfo.name)" --yes
 #Invoke-PowerBIRestMethod -Url "groups/$($DevWSObj.Id.Guid)" -Method Delete 
 #Invoke-PowerBIRestMethod -Url "groups/$($BuildWSObj.Id.Guid)" -Method Delete
-#Remove-PnPWeb -Url "$($SPUrl)/sites/$($SiteName)" -Force
+#Remove-PnPTenantSite -Url "$($SPBaseUrl)/sites/$($SPSiteName)" -Force
