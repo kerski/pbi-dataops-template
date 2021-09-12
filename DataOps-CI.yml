@@ -4,13 +4,13 @@ trigger:
     - refs/heads/part8
 jobs:
 - job: Job_2
-  displayName: Test Coverage Job
+  displayName: Low-Code Coverage Job
   pool:
     vmImage: vs2017-win2016
   steps:
   - checkout: self
   - task: PowerShell@2
-    displayName: Test Coverage
+    displayName: Low-Code Coverage
     inputs:
       filePath: PipelineScripts/PremiumPerUser/LowCodeCoverage.ps1
     env:
