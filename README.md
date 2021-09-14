@@ -61,6 +61,8 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     - The name (UPN/email) of the Service account you created in the Prerequisites section.
     - The password for the (UPN/email). ***Important Note**: This scripts assumes PowerShell Version 5.1, so this password WILL NOT be masked. Make sure to protect this password from someone snooping behind you.* 
     - The name of the project you wish to create in Azure DevOps.
+    - The base URL for the SharePoint Online site (do not end with a forward slash).
+    - The name of the SharePoint site you wish to create. 
 
     ![Prompt for information in install script](./images/part5-enter-information.PNG)
 
@@ -141,13 +143,13 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 13. Navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically denoted by the a blue clock icon.  Press the pipeline link (outlined in orange in the image below).
 
-![Example of Pipeline in Azure Devops](./images/part5-see-pipeline.PNG)
+![Example of Pipeline in Azure DevOps](./images/part5-see-pipeline.PNG)
 
 14. This page will show you the latest status of the pipeline.  The example image below shows the commit you pushed to Azure DevOps and that the pipeline is in progress.
 
 ![Example of Pipeline in Progress](./images/part5-pipeline-in-progress.PNG)
 
-15. Once the pipeline completes you should get a "Build Succeeded" noted by an green checkmark icon.
+15. Once the pipeline completes you should get a "Build Succeeded" noted by an green check mark icon.
 
 ![Example of Pipeline Success](./images/part5-pipeline-success.PNG)
 
