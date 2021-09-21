@@ -37,3 +37,5 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 1. It may take a few minutes to load the data, but if all steps and permissions are set correctly the report should load.
 
     ![Loading Screen for Low-Code Coverage.pbit](./images/part9-loading-pbit.PNG)
+
+1. Please be sure to save the file in an appropriate location when finished.
