@@ -87,7 +87,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
 
-    ![Example of running selection for Setup-Container.ps1](./images/part10-run-selection-setup-container.PNG)
+    ![Example of running selection for Setup-Container.ps1](./images/part10-run-selection-setup-containers.PNG)
 
 1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the PowerShell ISE window.. Moreover, you will also be prompted to enter the following information:
 
