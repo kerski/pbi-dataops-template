@@ -1,80 +1,35 @@
-﻿<#
+<#
     Author: John Kerski
-    Description: This script runs the proof-of-concept Continuous Integration of Power BI files into a Development workspace.
+    Description: This script runs the proof-of-concept Continuous Integration of Power BI files 
+    into a Development workspace.
 
-    Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
+    Dependencies: Premium Per User license purchased and assigned to UserName and UserName 
+    has admin right to workspace.
 #>
 #Setup TLS 12
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 #Get Working Directory
 $WorkingDir = (& pwd) -replace "\\", '/'
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Get-DevOpsVariables.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Publish-PBIFIleWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Refresh-DatasetSyncWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Send-XMLAWithPPU.psm1 -Force
-#Set Default Environment Variables 
-$Opts = @{
-    TenantId = "${env:TENANT_ID}";
-    PbiApiUrl = "${env:PBI_API_URL}"
-    BuildGroupId = "${env:PBI_BUILD_GROUP_ID}"
-    DevGroupId = "${env:PBI_DEV_GROUP_ID}"
-    UserName = "${env:PPU_USERNAME}";
-    Password = "${env:PPU_PASSWORD}";
-    #Get new pbix changes
-    PbixChanges = git diff --name-only --relative --diff-filter AMR HEAD^ HEAD '**/*.pbix';
-    PbixTracking = @();
-    BuildVersion = "${env:BUILD_SOURCEVERSION}";
-}
-#Check for missing variables required for pipeline to work
-if(-not $Opts.TenantId){
-    throw "Missing or Blank Tenant ID"
-}
-if(-not $Opts.PbiApiUrl){
-    throw "Missing or Blank Power BI Api URL"
-}
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Confirm-BestPracticesWithPPU.psm1 -Force
 
-if(-not $Opts.BuildGroupId){
-    throw "Missing or Blank Build Group Id"
-}
-
-if(-not $Opts.DevGroupId){
-    throw "Missing or Blank Dev Group Id"
-}
-
-if(-not $Opts.UserName){
-    throw "Missing or Blank UserName"
-}
-
-if(-not $Opts.Password){
-    throw "Missing or Blank Password"
-}
-
-#Iterate of Power BI Changes and get the test files
-if($Opts.PbixChanges)
-{	
-	foreach ($File in $Opts.PbixChanges) {
-        #If file exists and not deleted
-        if($File)
-        {
-            #Get parent folder of this file
-            $ParentFolder = Split-Path -Path $File
-            #Add testing to object array
-            $Temp = @([pscustomobject]@{PBIPath=$File;TestFolderPath=$ParentFolder;BuildInfo=$null;RefreshResult=$null})
-            $Opts.PbixTracking += $Temp
-        }#end if
-	}#end for-each
-}
-else
-{
-	Write-Warning "Found no PBI files that have changed."
-}#end if
-
-#Install Powershell Module if Needed
+#Get Default Environment Variables 
+$Opts = Get-DevOpsVariables
+#Install PBI Powershell Module if Needed
 if (Get-Module -ListAvailable -Name "MicrosoftPowerBIMgmt") {
     Write-Host "MicrosoftPowerBIMgmt already installed"
 } else {
     Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
 }
-
+#Install SQL Powershell Module if Needed
+if (Get-Module -ListAvailable -Name "SqlServer") {
+    Write-Host "SqlServer module already installed"
+} else {
+    Install-Module -Name SqlServer
+}
 
 #Iterate through Test Cases and Promote to Build Environment
 $Iter = 0
@@ -149,6 +104,20 @@ foreach($PBITest in $PBIsToTest){
     $TempRpt = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBITest.BaseName
     $TempOptFile = "$($WorkingDir)/$($TempRpt.Name).xml"
     
+    #Best Practices
+    Write-Host "Attempting to run best practice analyzer for: $($PBITest)"
+    
+    #Run Analyze and will output errors and failed the build is best practices are not followed
+    #NOTE: BPAUrl is hard code but you can and should change for your own needs/guidelines
+    Confirm-BestPracticesWithPPU -WorkspaceName $BuildWS.Name `
+                        -DatasetName $TempRpt.Name `
+                        -UserName $Opts.UserName `
+                        -Password $Opts.Password `
+                        -TabularEditorUrl $Opts.TabularEditorUrl `
+                        -APIUrl $Opts.PbiApiUrl `
+                        -BPAUrl "https://raw.githubusercontent.com/TabularEditor/BestPracticeRules/master/BPARules-PowerBI.json" `
+                        -OutputFile $TempOptFile
+
     #Run Tests
     #Get parent folder of this file
     $ParentFolder = Split-Path -Path $PBITest.FullName

@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+#Set working directory
+WORKDIR /azp
+
+#Copy over MSI file and module to install and powershell to install Power BI pipeline dependencies
+COPY x64_15.0.2000.770_SQL_AS_AMO.msi .
+COPY Install-PipelineDependencies.psm1 .
+
+#Copy of script for running Azure Pipeline Agent setup
+COPY Setup-DevOps.ps1 .
+
+#Run setup
+CMD powershell .\Setup-DevOps.ps1

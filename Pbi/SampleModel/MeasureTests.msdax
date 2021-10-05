@@ -1,15 +1,15 @@
 ﻿DEFINE
     // Pick a static date(s) and filters
     VAR __January2010Filter =
-        TREATAS ( { DATE ( 2010, 1, 1 ) }, 'DateDim'[Date] )
+        TREATAS ( { DATE ( 2010, 1, 1 ) }, 'Date Dim'[Date] )
     VAR __OneDayFilter =
-        TREATAS ( { DATE ( 2021, 1, 1 ) }, 'DateDim'[Date] )
+        TREATAS ( { DATE ( 2021, 1, 1 ) }, 'Date Dim'[Date] )
     VAR __BlankDayFilter =
-        TREATAS ( { "JAN-0001" }, 'DateDim'[DateKey] )
+        TREATAS ( { "JAN-0001" }, 'Date Dim'[DateKey] )
     VAR __GoodAlignmentFilter =
-        TREATAS ( { "Good" }, 'AlignmentDim'[Alignment] )
+        TREATAS ( { "Good" }, 'Alignment Dim'[Alignment] )
     VAR __NeutralAlignmentFilter =
-        TREATAS ( { "Neutral" }, 'AlignmentDim'[Alignment] )
+        TREATAS ( { "Neutral" }, 'Alignment Dim'[Alignment] )
     VAR __SpidermanID = 1678
     VAR __WolverineID = 64786
     /* Marvel Fact Measures */
@@ -27,9 +27,9 @@
             FILTER (
                 KEEPFILTERS (
                     SUMMARIZECOLUMNS (
-                        'MarvelFact'[ID],
+                        'Marvel Fact'[ID],
                         __GoodAlignmentFilter,
-                        "Rank_of_Appearances", IGNORE ( 'MarvelFact'[Rank of Appearances] )
+                        "Rank_of_Appearances", IGNORE ( 'Marvel Fact'[Rank of Appearances] )
                     )
                 ),
                 [Rank_of_Appearances] = 1
@@ -42,9 +42,9 @@
             FILTER (
                 KEEPFILTERS (
                     SUMMARIZECOLUMNS (
-                        'MarvelFact'[ID],
+                        'Marvel Fact'[ID],
                         __NeutralAlignmentFilter,
-                        "Rank_of_Appearances", IGNORE ( 'MarvelFact'[Rank of Appearances] )
+                        "Rank_of_Appearances", IGNORE ( 'Marvel Fact'[Rank of Appearances] )
                     )
                 ),
                 [Rank_of_Appearances] = 1
@@ -56,13 +56,13 @@
         CALCULATE (
             [Date Filter],
             FILTER (
-                'DateDim',
+                'Date Dim',
                 [Date] >= DATE ( 2010, 1, 1 )
                     && [Date] <= DATE ( 2011, 6, 1 )
             )
         )
     VAR _SingleDateFilter =
-        CALCULATE ( [Date Filter], FILTER ( 'DateDim', [Date] = DATE ( 2011, 6, 1 ) ) ) 
+        CALCULATE ( [Date Filter], FILTER ( 'Date Dim', [Date] = DATE ( 2011, 6, 1 ) ) ) 
         
 /*Run Tests*/
 VAR _Tests =               

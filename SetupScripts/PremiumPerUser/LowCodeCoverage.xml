@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.6.0.0, Culture=neutral, PublicKeyToken=null" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-B7E775A1E00749078822F67CE12BA80D">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-B7E775A1E00749078822F67CE12BA80D" Version="1" BaseSiteTemplate="GROUP#0" Scope="RootSite">
+      <pnp:Lists>
+        <pnp:ListInstance Title="Low-Code Coverage" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/LowCodeCoverage" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/LowCodeCoverage/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/LowCodeCoverage/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/LowCodeCoverage/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{1EB544F5-47BD-4382-A7F9-38F124274D8F}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/LowCodeCoverage/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="Created" Ascending="FALSE" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="Created" />
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="CalculationDependencies" />
+                <FieldRef Name="Tables" />
+                <FieldRef Name="Columns" />
+                <FieldRef Name="Measures" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+              <ViewData />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field AppendOnly="FALSE" DisplayName="CalculationDependencies" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="CalculationDependencies" RichText="FALSE" RichTextMode="Compatible" Title="CalculationDependencies" Type="Note" ID="{bcd4fff2-e374-472a-8cdd-abce8839548b}" SourceID="{{listid:Low-Code Coverage}}" StaticName="CalculationDependencies" ColName="ntext2" RowOrdinal="0" />
+            <Field AppendOnly="FALSE" DisplayName="Tables" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="Tables" RichText="FALSE" RichTextMode="Compatible" Title="Tables" Type="Note" ID="{64ced61b-d720-4dd6-b132-2c81f8096fcc}" SourceID="{{listid:Low-Code Coverage}}" StaticName="Tables" ColName="ntext3" RowOrdinal="0" />
+            <Field AppendOnly="FALSE" DisplayName="Columns" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="Columns" RichText="FALSE" RichTextMode="Compatible" Title="Columns" Type="Note" ID="{b1903f0c-eb8d-442f-800b-022667bbfa62}" SourceID="{{listid:Low-Code Coverage}}" StaticName="Columns" ColName="ntext4" RowOrdinal="0" />
+            <Field AppendOnly="FALSE" DisplayName="Measures" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="Measures" RichText="FALSE" RichTextMode="Compatible" Title="Measures" Type="Note" ID="{2577e0c7-9bc7-4dc1-9f64-2b32b13194ae}" SourceID="{{listid:Low-Code Coverage}}" StaticName="Measures" ColName="ntext5" RowOrdinal="0" />
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://southcentralus0.pushnp.svc.ms/notifications?token=2a922519-44bf-4022-8648-36d82aa24fc1" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

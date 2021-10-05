@@ -1,18 +1,18 @@
-# Variable 'PBI_API_URL' was defined in the Variables tab
-# Variable 'PBI_BUILD_GROUP_ID' was defined in the Variables tab
-# Variable 'PBI_DEV_GROUP_ID' was defined in the Variables tab
-# Variable 'PPU_PASSWORD' was defined in the Variables tab
-# Variable 'PPU_USERNAME' was defined in the Variables tab
-# Variable 'TENANT_ID' was defined in the Variables tab
+schedules:
+- cron: "*/20 * * * *"
+  displayName: Build every twenty minutes
+  branches:
+    include:
+    - refs/heads/part10
 trigger:
   branches:
     include:
-    - refs/heads/part5
+    - refs/heads/part10
 jobs:
 - job: Job_1
-  displayName: Agent job 1
+  displayName: Continuous Integration
   pool:
-    vmImage: vs2017-win2016
+    name: 10_5GB3CPU_95812f33-90da-4838-a8da-d2eb95233a7f
   steps:
   - checkout: self
   - task: PowerShell@2
@@ -21,3 +21,68 @@ jobs:
       filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
     env:
       PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
+- job: Job_2
+  displayName: Low-Code Coverage
+  dependsOn: Job_1
+  pool:
+    name: 10_5GB3CPU_95812f33-90da-4838-a8da-d2eb95233a7f
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Low-Code Coverage
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-LowCodeCoverage.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
+- job: Job_3
+  displayName: Continuous Integration
+  dependsOn: Job_2
+  pool:
+    name: 7GB2CPU_95812f33-90da-4838-a8da-d2eb95233a7f
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Continuous Integration
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
+- job: Job_4
+  displayName: Low-Code Coverage
+  dependsOn: Job_3
+  pool:
+    name: 7GB2CPU_95812f33-90da-4838-a8da-d2eb95233a7f
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Low-Code Coverage
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-LowCodeCoverage.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable  
+- job: Job_5
+  displayName: Continuous Integration
+  dependsOn: Job_4
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Continuous Integration
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
+- job: Job_6
+  displayName: Low-Code Coverage
+  dependsOn: Job_5
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Low-Code Coverage
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-LowCodeCoverage.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable  
