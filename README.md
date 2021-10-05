@@ -185,7 +185,7 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 15. The pipeline will now run automatically every twenty minutes on the day you changed in step 10.  When complete you should see an exclamation point saying a run succeeded with issues.  This is due to the Best Practice Analyzer finding some warnings. 
 
-![Example of pipeline that succeeded with issues](./images/part10-succeeded-with-issues.PNG)
+![Example of pipeline that succeeded with issues](./images/part10-ex-succeeded-with-issues.PNG)
 
 16. Be sure to check the jobs from time to time.  If the builds succeed with issues more than they fail, you're in good shape.
 When finished you can delete the resource group in Azure so you don't incur more costs than necessary.  
