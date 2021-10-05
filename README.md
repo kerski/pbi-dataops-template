@@ -81,7 +81,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 ### Create Agent Pools and Containers
 
 1. Open PowerShell ISE and enter the followinging script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part10/SetupScripts/Containers/Setup-PPU.ps1" -OutFile "./Setup-Container.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part10/SetupScripts/Containers/Setup-Container.ps1" -OutFile "./Setup-Container.ps1"
 
 1. This will download the setup script to the current folder.  Open the file "Setup-Container.ps1" in PowerShell ISE.
 
@@ -181,9 +181,11 @@ With the [Installation Steps](#InstallationSteps) and [Priming the Pipeline](#Pr
 
 ![Example of presentation of agent pool approval](./images/part10-approve-pipeline.PNG)
 
-15. The pipeline should now run automatically every twenty minutes on the day you changed in step 10.  When complete you should see an exclamation point saying a run succeeded with issues.  This is due to the Best Practice Analyzer finding some warnings. 
-
 ![Example of approving agent pool](./images/part10-approve-pipeline-2.PNG)
+
+15. The pipeline will now run automatically every twenty minutes on the day you changed in step 10.  When complete you should see an exclamation point saying a run succeeded with issues.  This is due to the Best Practice Analyzer finding some warnings. 
+
+![Example of pipeline that succeeded with issues](./images/part10-succeeded-with-issues.PNG)
 
 16. Be sure to check the jobs from time to time.  If the builds succeed with issues more than they fail, you're in good shape.
 When finished you can delete the resource group in Azure so you don't incur more costs than necessary.  
