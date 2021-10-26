@@ -1,0 +1,9 @@
+{
+  "connectorId": "shared_power-20bi-20custom-20connector-20-2d-20export--e6510061b7d6e6ca",
+  "environment": "Default-e704d214-b5b5-4799-af96-61fa2730c289",
+  "apiProperties": "apiProperties.json",
+  "apiDefinition": "apiDefinition.swagger.json",
+  "icon": "icon.png",
+  "powerAppsUrl": "https://api.powerapps.com",
+  "powerAppsApiVersion": "2016-11-01"
+}

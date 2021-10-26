@@ -1,0 +1,62 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Power BI Custom Connector - Export File",
+    "description": "Custom Connector for Power BI to Export Power BI File as .pbix",
+    "version": "1.0"
+  },
+  "host": "api.powerbi.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/v1.0/myorg/groups/{groupId}/reports/{reportId}/export": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": ".pbix File is returned.",
+            "schema": {}
+          }
+        },
+        "summary": "Export Report",
+        "description": "Export Report to .pbix file",
+        "operationId": "Report_ExportReport",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reportId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "oauth2_auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
+      "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
+      "scopes": {}
+    }
+  },
+  "security": [
+    {
+      "oauth2_auth": []
+    }
+  ],
+  "tags": []
+}
