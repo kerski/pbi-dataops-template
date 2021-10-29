@@ -1,54 +1,50 @@
 {
-    "properties":  {
-                       "connectionParameters":  {
-                                                    "token":  {
-                                                                  "type":  "oauthSetting",
-                                                                  "oAuthSettings":  {
-                                                                                        "identityProvider":  "aad",
-                                                                                        "clientId":  "5df540af-acd6-42be-b39d-c92543faad4e",
-                                                                                        "scopes":  [
-
-                                                                                                   ],
-                                                                                        "redirectMode":  "Global",
-                                                                                        "redirectUrl":  "https://global.consent.azure-apim.net/redirect",
-                                                                                        "properties":  {
-                                                                                                           "IsFirstParty":  "False",
-                                                                                                           "AzureActiveDirectoryResourceId":  "https://analysis.windows.net/powerbi/api",
-                                                                                                           "IsOnbehalfofLoginSupported":  true
-                                                                                                       },
-                                                                                        "customParameters":  {
-                                                                                                                 "loginUri":  {
-                                                                                                                                  "value":  "https://login.windows.net"
-                                                                                                                              },
-                                                                                                                 "tenantId":  {
-                                                                                                                                  "value":  "common"
-                                                                                                                              },
-                                                                                                                 "resourceUri":  {
-                                                                                                                                     "value":  "https://analysis.windows.net/powerbi/api"
-                                                                                                                                 },
-                                                                                                                 "enableOnbehalfOfLogin":  {
-                                                                                                                                               "value":  "false"
-                                                                                                                                           }
-                                                                                                             }
-                                                                                    }
-                                                              },
-                                                    "token:TenantId":  {
-                                                                           "type":  "string",
-                                                                           "metadata":  {
-                                                                                            "sourceType":  "AzureActiveDirectoryTenant"
-                                                                                        },
-                                                                           "uiDefinition":  {
-                                                                                                "constraints":  {
-                                                                                                                    "required":  "false",
-                                                                                                                    "hidden":  "true"
-                                                                                                                }
-                                                                                            }
-                                                                       }
-                                                },
-                       "iconBrandColor":  "#123456",
-                       "capabilities":  [
-
-                                        ],
-                       "publisher":  "John Kerski"
-                   }
-}
+    "properties": {
+      "connectionParameters": {
+        "token": {
+          "type": "oauthSetting",
+          "oauthSettings": {
+            "identityProvider": "aad",
+            "clientId": "1fb6f1eb-2a93-4ce7-bb2d-6fbf5a3baad8",
+            "scopes": [],
+            "redirectMode": "Global",
+            "redirectUrl": "https://global.consent.azure-apim.net/redirect",
+            "properties": {
+              "IsFirstParty": "False",
+              "AzureActiveDirectoryResourceId": "https://analysis.windows.net/powerbi/api",
+              "IsOnbehalfofLoginSupported": true
+            },
+            "customParameters": {
+              "loginUri": {
+                "value": "https://login.windows.net"
+              },
+              "tenantId": {
+                "value": "common"
+              },
+              "resourceUri": {
+                "value": "https://analysis.windows.net/powerbi/api"
+              },
+              "enableOnbehalfOfLogin": {
+                "value": "false"
+              }
+            }
+          }
+        },
+        "token:TenantId": {
+          "type": "string",
+          "metadata": {
+            "sourceType": "AzureActiveDirectoryTenant"
+          },
+          "uiDefinition": {
+            "constraints": {
+              "required": "false",
+              "hidden": "true"
+            }
+          }
+        }
+      },
+      "iconBrandColor": "#007ee5",
+      "capabilities": [],
+      "publisher": "John Kerski"
+    }
+  }

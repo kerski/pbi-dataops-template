@@ -1,17 +1,14 @@
 ﻿<#
     Author: John Kerski
     Description: This script:
-        1) Creates Build and Development workspaces in Power BI
-        2) Assigns the service user as an admin to the workspaces
-        3) Assigns to the Premium Per User capacity to the two workspaces.
-        4) Setups Azure DevOps project with pipeline using example found on GitHub
-        5) Upload Power BI Report
+        1) Checks for dependencies (Azure CLI, Python)
+        2) Creates Service Principal in Azure
+        3) Adds Custom Connector to Power Automate
 
     Dependencies: 
     1) Azure CLI installed
-    2) Service User must be created beforehand.
-    3) Person running the script must have the ability admin rights to Power BI Tenant and at least a Pro license
-    4) An existing Azure DevOps instance
+    2) Python > 3.5
+    3) Script should be run by an administrator with ability to grant admin to api endpoints.
 #>
 ### NOTE: NAVIGATE TO Flows folder to file path works for paconn create
 $CurLoc = Get-Location
@@ -27,7 +24,7 @@ $DatasetReadAll = "7f33e027-4039-419b-938e-2f8ca153e68e=Scope"
 $ReportReadAll = "4ae1bf56-f562-4747-b7bc-2fa0874ed46f=Scope"
 
 #Check Dependencies
-Write-Host -ForegroundColor Cyan "Step 1 of X:  Check for install dependencies."
+Write-Host -ForegroundColor Cyan "Step 1 of 3:  Check for install dependencies."
 
 #Check Python Version
 $PythonVersion = python --version
@@ -43,24 +40,8 @@ if(-not $AZVersion){
     throw "Azure CLI is missing. Please install and ensure it has been added to the PATH environment variable."
 }
 
-#Check for PowerShell Admin
-if (Get-Module -ListAvailable -Name "Microsoft.PowerApps.Administration.PowerShell") {
-    Write-Host "Microsoft.PowerApps.Administration.PowerShell already installed"
-} else {
-    Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -Scope CurrentUser -AllowClobber -Force
-}
-
-#In this code we use the default, but this should be updated if using Dev/Test/Prod environments
-#Get Environment Information
-$AdminInfo = Get-AdminPowerAppEnvironment
-
-if(-not $AdminInfo){
-    throw "Unable to get environment information for Power Platform. Please check your access."
-}
-
-
 #Create Service Principal
-Write-Host -ForegroundColor Cyan "Step 1 of X:  Creating App Service Principal for Custom Connector."
+Write-Host -ForegroundColor Cyan "Step 2 of 3:  Creating App Service Principal for Custom Connector."
 #Login to Azure
 az login
 
@@ -121,7 +102,7 @@ if(!$CredentialResult.password)
 
 #Please run as administrator is possible
 #Install Power Platform CLI on Python
-Write-Host -ForegroundColor Cyan "Step 3 of X:  Installing Custom Connector"
+Write-Host -ForegroundColor Cyan "Step 3 of 3:  Installing Custom Connector"
 pip install paconn --upgrade
 
 #Login to Azure, you will be prompted
@@ -141,13 +122,10 @@ $ApiProps.properties.connectionParameters.token.oAuthSettings.clientId = $AppCli
 $UpdatedFile = $ApiProps | ConvertTo-Json -depth 100 
 Set-Content -Path .\apiProperties.json -Value $UpdatedFile
 
-#TODO REMOVE
-#$Test1 = "Default-e704d214-b5b5-4799-af96-61fa2730c289"
-#$Test2 = "Zr8EQB9uqhdGKnJK_7PAIyt3yz1XxHUykF"
-#paconn create -e $Test1 -s "settings.json" --secret $Test2 --debug
-
 #Create Custom Connector
-paconn create -e $AdminInfo[0].EnvironmentName -s "settings.json" --secret $CredentialResult.password
+#Note #https://github.com/microsoft/PowerPlatformConnectors/issues/1113 apiProperties.json 
+#has a lower-case 'a' oauthsettings as temporary workaround.
+paconn create -s "settings.json" -r $CredentialResult.password
 
 #Verify environment and settings file is set correctly.
 $SettingsFile = Get-Content settings.json | ConvertFrom-Json
@@ -157,6 +135,8 @@ if(-not $SettingsFile.connectorId)
     Write-Error "Creation of Custom Connector did not result in the settings.json file being update.  Please check for errors in console."
     return
 }
+
+Write-Host -ForegroundColor Green "Custom Connector Installed."
 
 #Cleanup
 #az ad app delete --id $AppClientId
