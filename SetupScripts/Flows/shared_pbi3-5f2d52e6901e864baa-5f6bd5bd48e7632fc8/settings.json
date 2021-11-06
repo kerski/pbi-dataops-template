@@ -1,9 +1,0 @@
-{
-  "connectorId": "shared_pbi3-5f2d52e6901e864baa-5f6bd5bd48e7632fc8",
-  "environment": "Default-e704d214-b5b5-4799-af96-61fa2730c289",
-  "apiProperties": "apiProperties.json",
-  "apiDefinition": "apiDefinition.swagger.json",
-  "icon": "icon.png",
-  "powerAppsUrl": "https://api.powerapps.com",
-  "powerAppsApiVersion": "2016-11-01"
-}
