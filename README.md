@@ -10,7 +10,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. [Prerequisites](#Prerequisites)
 1. [Installation Steps](#Installation-Steps)
-1. [Running the Pipeline](#Run-Pipeline-(show-a-failure))
+1. [Running the Pipeline](#Run-Pipeline)
 
 ## Prerequisites
 
@@ -65,15 +65,15 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
     ![Example of successful install](./images/part14-success-install.PNG)
 
-## Run Pipeline (show a failure)
+## Run Pipeline
 
 1. Navigate to the Azure DevOps Pipeline and click the Run Pipeline button.
 
-![Run Pipeline](./images/part14-run-pipeline.PNG)
+![Run Pipeline](./images/part14-run-pipeline1.PNG)
 
 2. Select the branch/tag for part 14 and then choose Run.
 
-![Run Pipeline 2](./images/part14-run-pipeline-2.PNG)
+![Run Pipeline 2](./images/part14-run-pipeline2.PNG)
 
 3. When the pipeline completes you should see the error below. Staging and Production SchemaExample.pbix files have different schemas.
 
