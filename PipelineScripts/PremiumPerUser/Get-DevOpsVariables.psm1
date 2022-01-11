@@ -14,6 +14,8 @@ Function Get-DevOpsVariables {
                     PbiApiUrl = "${env:PBI_API_URL}"
                     BuildGroupId = "${env:PBI_BUILD_GROUP_ID}"
                     DevGroupId = "${env:PBI_DEV_GROUP_ID}"
+                    StagingGroupId = "${env:PBI_STAGING_GROUP_ID}"
+                    ProdGroupId = "${env:PBI_PROD_GROUP_ID}"
                     UserName = "${env:PPU_USERNAME}";
                     Password = "${env:PPU_PASSWORD}";
                     TabularEditorUrl = "${env:TAB_EDITOR_URL}";
@@ -26,6 +28,11 @@ Function Get-DevOpsVariables {
                     BuildVersion = "${env:BUILD_SOURCEVERSION}";
                     TabularDLLRelPath = "\PipelineScripts\PremiumPerUser\Microsoft.AnalysisServices.Tabular.DLL";
                     SSASMSIRelPath = "\PipelineScripts\PremiumPerUser\x64_15.0.2000.770_SQL_AS_AMO.msi";
+                    CD = @{
+                        ProductionScriptFile = "/PipelineScripts/PremiumPerUser/CD/SchemaCheck/GetProductionSchema.cs";
+                        StagingScriptFile = "/PipelineScripts/PremiumPerUser/CD/SchemaCheck/GetStagingSchema.cs";
+                        TabEditorUrl = "https://github.com/otykier/TabularEditor/releases/download/2.16.1/TabularEditor.Portable.zip";    
+                    };
                 }
                 #Check for missing variables required for pipeline to work
                 if(-not $Opts.TenantId){

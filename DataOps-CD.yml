@@ -1,0 +1,17 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/part14
+jobs:
+- job: Job_1
+  displayName: Continous Deployment
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+  - task: PowerShell@2
+    displayName: Continous Deployment
+    inputs:
+      filePath: PipelineScripts/PremiumPerUser/Start-CD.ps1
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.7.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-2FD254465E924CCE8DD4BA4E287CCF6B">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-2FD254465E924CCE8DD4BA4E287CCF6B" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+      <pnp:Lists>
+        <pnp:ListInstance Title="ExampleList" Description="Example List for Part 14 of Bringing DataOps to Power BI" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/ExampleList" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/ExampleList/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/ExampleList/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/ExampleList/NewForm.aspx" ImageUrl="{site}/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{AD8DA1A7-7347-4356-85A2-AACFE7F7B892}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/ExampleList/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="{site}/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="DateReceived" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Date Received" FriendlyDisplayFormat="Disabled" Format="DateOnly" IsModern="TRUE" Name="DateReceived" Title="DateReceived" Type="DateTime" ID="{837b0d83-e6c4-49dc-90d4-5324c684c519}" SourceID="{{listid:ExampleList}}" StaticName="DateReceived" ColName="datetime1" RowOrdinal="0" CustomFormatter="" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" CalType="0" Version="1">
+              <Default>[today]</Default>
+            </Field>
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://southcentralus0.pushnp.svc.ms/notifications?token=c7492c79-156d-46ff-9456-123516f3f0ab" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>
