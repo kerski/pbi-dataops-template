@@ -38,37 +38,28 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 ## Installation Steps
 
 ### Create Power BI Workspaces and Create Azure DevOps project
-1. Open PowerShell ISE and enter the followinging script:
+1. Open PowerShell Version 7 and enter the following script:
     > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part5/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
-
-1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
-
-    ![Image of running script to download install script in PowerShell ISE.](./images/part5-run-install-step2.PNG)
-
-1. This will download the setup script to the current folder.  Open the file "Setup-PPU.ps1" in PowerShell ISE.
-
-1. Highlight the code and select "Run Selection" (outlined in orange in the image below).
-
-    <img src="./images/part5-run-setup-step4.PNG" alt="Image of running install script in PowerShell ISE." height="400px"/>
+    
+1. This will download the setup scripts to the current folder.  Run ".\Setup-PPU.ps1" in PowerShell.
 
 1. During the install process you will be prompted to enter the following information:
 
-    - The name of the build workspace you wish to create in the Power BI Service.
+    - The name of the workspaces you wish to create in the Power BI Service.
     - The name of the development workspace you wish to create in the Power BI Service.
     - The name (UPN/email) of the Service account you created in the Prerequisites section.
-    - The password for the (UPN/email). ***Important Note**: This scripts assumes PowerShell Version 5.1, so this password WILL NOT be masked. Make sure to protect this password from someone snooping behind you.* 
+    - The password for the (UPN/email).
     - The name of the project you wish to create in Azure DevOps.
 
     ![Prompt for information in install script](./images/part5-enter-information.PNG)
 
-
-1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the Powershell ISE window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
+1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the PowerShell window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
 1. If the script runs successfully you will be presented with a message similar in the image below. 
 
-    ![Example of successful install](./images/part5-success-install.PNG)
+    ![Example of successful install](./images/part14-success-install.PNG)
 
 ## Priming the Pipeline
 
