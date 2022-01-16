@@ -59,7 +59,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. If the script runs successfully you will be presented with a message similar in the image below. 
 
-    ![Example of successful install](./images/part14-success-install.PNG)
+    ![Example of successful install](./images/part5-success-install.PNG)
 
 ## Priming the Pipeline
 
