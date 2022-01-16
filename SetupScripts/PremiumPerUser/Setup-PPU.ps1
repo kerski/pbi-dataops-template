@@ -229,7 +229,7 @@ Invoke-WebRequest -Uri $SampleModelURL -OutFile "./SampleModel.pbix"
 
 #Upload Example to Build Workspace
 New-PowerBIReport `
-   -Path "$(Get-Location)\SchemaExample.pbix" `
+   -Path "$(Get-Location)\SampleModel.pbix" `
    -Name "SampleModel" `
    -WorkspaceId $BuildWSObj.Id.Guid `
    -ConflictAction CreateOrOverwrite
