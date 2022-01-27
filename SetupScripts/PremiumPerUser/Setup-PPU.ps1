@@ -227,8 +227,9 @@ Write-Host -ForegroundColor Cyan "Step 5 of 5: Uploading SampleModel.pbix to Bui
 #Upload Report
 Invoke-WebRequest -Uri $SampleModelURL -OutFile "./SampleModel.pbix"
 
+#Upload Example to Build Workspace
 New-PowerBIReport `
-   -Path "./SampleModel.pbix" `
+   -Path "$(Get-Location)\SampleModel.pbix" `
    -Name "SampleModel" `
    -WorkspaceId $BuildWSObj.Id.Guid `
    -ConflictAction CreateOrOverwrite
