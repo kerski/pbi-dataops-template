@@ -36,7 +36,7 @@
     VAR _Tests =
         UNION (
             ROW (
-                "TestName", "Table: Id column is unique (distinct Values should match row count)",
+                "TestName", "Table: Id column is unique (distinct values should match row count).",
                 "ExpectedValue", _Id_Distinct_Count,
                 "ActualValue", _Row_Count
             ),
@@ -46,7 +46,7 @@
                 "ActualValue", _Title_Is_Not_Blank
             ),
             ROW (
-                "TestName", "Table: Acceptable values are A, B, or blank",
+                "TestName", "Table: Acceptable values are A, B, or blank.",
                 "ExpectedValue", _Acceptable_Values_Example,
                 "ActualValue", _Row_Count
             ),
@@ -56,7 +56,7 @@
                 "ActualValue", _Row_Count
             ),
             ROW (
-                "TestName", "Table: Null Example has appropriate null percentage",
+                "TestName", "Table: Null Example has appropriate null percentage.",
                 "ExpectedValue", _Null_Per_Example <= .4,
                 "ActualValue", TRUE
             )
