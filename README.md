@@ -69,15 +69,15 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. Navigate to the Azure DevOps Pipeline and click the Run Pipeline button.
 
-![Run Pipeline](./images/part14-run-pipeline1.PNG)
+![Run Pipeline](./images/part15-run-pipeline1.PNG)
 
 2. Select the branch/tag for Part 15 and then choose Run.
 
-![Run Pipeline 2](./images/part14-run-pipeline2.PNG)
+![Run Pipeline 2](./images/part15-run-pipeline2.PNG)
 
-3. When the pipeline completes you should see the error below. Staging and Production SchemaExample.pbix files have different schemas.
+3. When the pipeline completes you should see the schema checks and tests pass.
 
-![Failed Pipeline](./images/part14-failed-pipeline.PNG)
+![Successfully Pipeline](./images/part15-success-pipeline.PNG)
 
 
 

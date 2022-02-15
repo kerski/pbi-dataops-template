@@ -45,16 +45,17 @@ foreach ($PBICheck in $PBIsToTest){
     $PBIName = [io.path]::GetFileNameWithoutExtension($PBICheck)
 
     # Get Dataset Id
-    $ReportInfo = Get-PowerBIReport -WorkspaceId $Opts.ProdGroupId -Name $PBIName
+    $ProdReportInfo = Get-PowerBIReport -WorkspaceId $Opts.ProdGroupId -Name $PBIName
+    $StagingReportInfo = Get-PowerBIReport -WorkspaceId $Opts.StagingGroupId -Name $PBIName
 
     #If Report exists in Production, assume we got it in Staging
-    if($ReportInfo){
+    if($ProdReportInfo){
         #If DatasetId property is null then this is a PowerBI report with a dataset needing a refresh
-        if(!$ReportInfo.DatasetId -ne $null){ 
+        if(!$ProdReportInfo.DatasetId -ne $null){ 
             Write-Host "##[section]Refreshing in Staging Workspace: $($PBICheck)"
 
             $RefreshResult = Refresh-DatasetSyncWithPPU -WorkspaceId $Opts.StagingGroupId `
-                            -DatasetId $ReportInfo.DatasetId `
+                            -DatasetId $StagingReportInfo.DatasetId `
                             -UserName $Opts.UserName `
                             -Password $Opts.Password `
                             -TenantId $Opts.TenantId `
@@ -194,7 +195,7 @@ foreach ($PBICheck in $PBIsToTest){
                 Write-Host "##[section]Refreshing in Production Workspace: $($PBICheck)"
                 #Now Refresh Production
                 $RefreshResult = Refresh-DatasetSyncWithPPU -WorkspaceId $Opts.ProdGroupId `
-                -DatasetId $ReportInfo.DatasetId `
+                -DatasetId $ProdReportInfo.DatasetId `
                 -UserName $Opts.UserName `
                 -Password $Opts.Password `
                 -TenantId $Opts.TenantId `
@@ -208,7 +209,7 @@ foreach ($PBICheck in $PBIsToTest){
                 }
                 else
                 {
-                    Write-Host "##[debug]Successfully refreshed: $($PBICheck) in $($StagingWS.Name)"
+                    Write-Host "##[debug]Successfully refreshed: $($PBICheck) in $($ProdWS.Name)"
                 }                
             }#end checking for failures
         }
