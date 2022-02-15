@@ -37,11 +37,11 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ### Create Power BI Workspaces and Create Azure DevOps project
 1. Open PowerShell Version 7 and enter the following script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part14/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part15/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
 
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part14/SetupScripts/PremiumPerUser/Add-AzureDevOpsVariable.psm1" -OutFile "./Add-AzureDevOpsVariable.psm1" ` 
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part15/SetupScripts/PremiumPerUser/Add-AzureDevOpsVariable.psm1" -OutFile "./Add-AzureDevOpsVariable.psm1" ` 
     
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part14/SetupScripts/PremiumPerUser/Add-PBIWorkspaceWithPPU.psm1" -OutFile "./Add-PBIWorkspaceWithPPU.psm1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part15/SetupScripts/PremiumPerUser/Add-PBIWorkspaceWithPPU.psm1" -OutFile "./Add-PBIWorkspaceWithPPU.psm1"
 
 
 1. This will download the setup scripts to the current folder.  Run ".\Setup-PPU.ps1" in PowerShell.
