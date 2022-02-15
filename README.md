@@ -1,6 +1,6 @@
-# Part 14 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
+# Part 15 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part14/" target="_blank">Part 14 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that refreshes a dataset in staging, pulls the schema with staging and production, and reports if the schemas are different (fails pipeline as an example).
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part15/" target="_blank">Part 15 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that refreshes a dataset in staging, pulls the schema with staging and production, and reports if the schemas are different (fails pipeline as an example).
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -71,7 +71,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 ![Run Pipeline](./images/part14-run-pipeline1.PNG)
 
-2. Select the branch/tag for part 14 and then choose Run.
+2. Select the branch/tag for Part 15 and then choose Run.
 
 ![Run Pipeline 2](./images/part14-run-pipeline2.PNG)
 

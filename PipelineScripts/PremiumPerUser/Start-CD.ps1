@@ -11,13 +11,14 @@
 $WorkingDir = (& pwd) -replace "\\", '/'
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Get-DevOpsVariables.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Refresh-DatasetSyncWithPPU.psm1 -Force
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Send-XMLAWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/CD/SchemaCheck/Get-DatasetSchemaWithPPU.psm1 -Force
 
 #Get Default Environment Variables 
 $Opts = Get-DevOpsVariables
 #Install PBI Powershell Module if Needed
 if (Get-Module -ListAvailable -Name "MicrosoftPowerBIMgmt") {
-    Write-Host "MicrosoftPowerBIMgmt already installed"
+    Write-Host "##[debug]MicrosoftPowerBIMgmt already installed"
 } else {
     Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
 }
@@ -38,7 +39,7 @@ $ProdWS = Get-PowerBIWorkspace -id $Opts.ProdGroupId
 $PBIsToTest = Get-ChildItem -Path "./pbi" -Recurse | Where-Object {$_ -like "*.pbix"}
 $Iter = 0
 foreach ($PBICheck in $PBIsToTest){
-    Write-Host "File to check in Staging Workspace: $($PBICheck)"
+    Write-Host "##[group]File to check in Staging Workspace: $($PBICheck)"
 
     #Power BI file without pbix extension
     $PBIName = [io.path]::GetFileNameWithoutExtension($PBICheck)
@@ -50,7 +51,7 @@ foreach ($PBICheck in $PBIsToTest){
     if($ReportInfo){
         #If DatasetId property is null then this is a PowerBI report with a dataset needing a refresh
         if(!$ReportInfo.DatasetId -ne $null){ 
-            Write-Host "Refreshing in Staging Workspace: $($PBICheck)"
+            Write-Host "##[section]Refreshing in Staging Workspace: $($PBICheck)"
 
             $RefreshResult = Refresh-DatasetSyncWithPPU -WorkspaceId $Opts.StagingGroupId `
                             -DatasetId $ReportInfo.DatasetId `
@@ -67,7 +68,7 @@ foreach ($PBICheck in $PBIsToTest){
                 }
                 else
                 {
-                    Write-Host "Successfully refreshed: $($PBICheck) in $($StagingWS.Name)"
+                    Write-Host "##[debug]Successfully refreshed: $($PBICheck) in $($StagingWS.Name)"
                 }
 
             #Run Schema Check
@@ -107,9 +108,90 @@ foreach ($PBICheck in $PBIsToTest){
                 exit 1
 
             }
-            else{
-                Write-Host "No schema issues found for $($PBICheck)"
-                Write-Host "Refreshing in Production Workspace: $($PBICheck)"
+            #end if schema comparison
+
+            ### Run Tests
+            # Get parent folder of this file
+            $ParentFolder = Split-Path -Path $PBICheck.FullName
+
+            #Get dax files in this folder
+            if(Test-Path -Path "$($ParentFolder)\CD")
+            {
+                $DaxFilesInFolder = Get-ChildItem -Path "$($ParentFolder)\CD" | Where-Object {$_ -like "*.*dax"}    
+            }
+            else #Default to empty array is CD folder does not exist
+            {
+                $DaxFilesInFolder = @()   
+            }
+        
+            Write-Host "##[section]Attempting to run tests for: $($PBICheck) in Staging"
+            
+            # Reset Failure Count for each file
+            $FailureCount = 0
+            foreach($Test in $DaxFilesInFolder)
+            {
+                Write-Host "##[section]Running Tests found in $($Test.FullName)"
+        
+                $QueryResults = Send-XMLAWithPPU -WorkspaceName $StagingWS.Name `
+                                -DatasetName $PBIName `
+                                -UserName $Opts.UserName `
+                                -Password $Opts.Password `
+                                -TenantId $Opts.TenantId `
+                                -APIUrl $Opts.PbiApiUrl `
+                                -InputFile $Test.FullName     
+                                
+                #Get Node List
+                [System.Xml.XmlNodeList]$Rows = $QueryResults.GetElementsByTagName("row")
+        
+                #Check if Row Count is 0, no test results.
+                if($Rows.Count -eq 0){
+                    $FailureCount += 1
+                    Write-Host "##vso[task.logissue type=warning]Query in test file $($Test.FullName) returned no results."
+                }#end check of results
+        
+                #Iterate through each row of the query results and check test results
+                foreach($Row in $Rows)
+                {
+                    #Expects Columns TestName, Expected, Actual Columns, Passed
+                    if($Row.ChildNodes.Count -ne 4)
+                    {
+
+                        $FailureCount +=1
+                        Write-Host "##vso[task.logissue type=error]Query in test file $($Test.FullName) returned no results that did not have 4 columns (TestName, Expected, and Actual)."
+                    }
+                    else
+                    {
+                        #Extract Values
+                        $TestName = $row.ChildNodes[0].InnerText
+                        $ExpectedVal = $row.ChildNodes[1].InnerText
+                        $ActualVal = $row.ChildNodes[2].InnerText
+                        #Compute whether the test passed
+                        $Passed = ($ExpectedVal -eq $ActualVal) -and ($ExpectedVal -and $ActualVal)
+        
+                        if(-not $Passed)
+                        {
+                            $FailureCount +=1
+                            Write-Host "##vso[task.logissue type=error]FAILED!: Test $($TestName). Expected: $($ExpectedVal) != $($ActualVal)"
+                        }
+                        else
+                        {
+                            Write-Host "##[debug]Test $($TestName) passed. Expected: $($ExpectedVal) == $($ActualVal)"
+                        }
+                    }
+                }#end foreach row
+            }#end iterating over test files            
+            
+            #Output Results
+            #If FailureCount is greater than 1
+            if($FailureCount -gt 0)
+            {
+                Write-Host "##vso[task.logissue type=error]$($FailureCount) failed test(s) in Staging. Please resolve"
+                exit 1
+            }
+            else #Refresh in Production but we encounter no issues
+            {            
+                Write-Host "##[debug]No schema or testing issues found for $($PBICheck)"
+                Write-Host "##[section]Refreshing in Production Workspace: $($PBICheck)"
                 #Now Refresh Production
                 $RefreshResult = Refresh-DatasetSyncWithPPU -WorkspaceId $Opts.ProdGroupId `
                 -DatasetId $ReportInfo.DatasetId `
@@ -126,27 +208,12 @@ foreach ($PBICheck in $PBIsToTest){
                 }
                 else
                 {
-                    Write-Host "Successfully refreshed: $($PBICheck) in $($StagingWS.Name)"
-                }
-            }#end if schema comparison
-
-            #Run Tests
-            <#Get parent folder of this file
-            $ParentFolder = Split-Path -Path $PBICheck.FullName
-
-            Write-Host $ParentFolder
-            #Get dax files in this folder
-            $DaxFilesInFolder = Get-ChildItem -Path "$($ParentFolder)\CD" | Where-Object {$_ -like "*.*dax"}    
-            
-            Write-Host $DaxFilesInFolder
-            
-            Write-Host "Attempting to run tests for: $($PBICheck)"
-            #>
-            #Output Results
-
-            #If pass publish production
+                    Write-Host "##[debug]Successfully refreshed: $($PBICheck) in $($StagingWS.Name)"
+                }                
+            }#end checking for failures
         }
     }#end if report info
         $Iter = $Iter + 1
+        Write-Host "##[endgroup]"
 }#end foreach
 return

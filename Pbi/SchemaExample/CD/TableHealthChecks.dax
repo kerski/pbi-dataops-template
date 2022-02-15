@@ -1,0 +1,66 @@
+﻿DEFINE
+    // Row Count
+    VAR _Row_Count =
+        COUNTROWS ( 'Test Table' ) + 0
+    // Id has distinct values
+    VAR _Id_Distinct_Count =
+        DISTINCTCOUNT ( 'Test Table'[Id] ) + 0
+    // Title is Not Blank Test
+    VAR _Title_Is_Not_Blank =
+        CALCULATE (
+            COUNTROWS ( VALUES ( 'Test Table'[Title] ) ) + 0,
+            ISBLANK ( TRIM ( 'Test Table'[Title] ) )
+        )
+    // Test for acceptable values
+    VAR _Acceptable_Values_Example =
+        CALCULATE (
+            COUNTROWS ( 'Test Table' ) + 0,
+            FILTER (
+                VALUES ( 'Test Table'[New Column] ),
+                'Test Table'[New Column]
+                    IN { "A", "B" }
+                        || LEN ( TRIM ( 'Test Table'[New Column] ) ) = 0
+                        || ISBLANK ( 'Test Table'[New Column] )
+            )
+        )
+    // Dates are less than today
+    VAR _Dates_In_Acceptable_Range =
+        CALCULATE (
+            COUNTROWS ( 'Test Table' ) + 0,
+            FILTER ( VALUES ( 'Test Table' ), 'Test Table'[Date Received] < TODAY () )
+        )
+    // Null Percentage
+    VAR _Null_Per_Example =
+        DIVIDE ( COUNTBLANK ( 'Test Table'[Null Example] ) + 0, _Row_Count, 0 )
+    /*Run Tests*/
+    VAR _Tests =
+        UNION (
+            ROW (
+                "TestName", "Table: Id column is unique (distinct Values should match row count)",
+                "ExpectedValue", _Id_Distinct_Count,
+                "ActualValue", _Row_Count
+            ),
+            ROW (
+                "TestName", "Table: Test Table's Title column has no blank values.",
+                "ExpectedValue", 0,
+                "ActualValue", _Title_Is_Not_Blank
+            ),
+            ROW (
+                "TestName", "Table: Acceptable values are A, B, or blank",
+                "ExpectedValue", _Acceptable_Values_Example,
+                "ActualValue", _Row_Count
+            ),
+            ROW (
+                "TestName", "Table: Dates Received less than today.",
+                "ExpectedValue", _Dates_In_Acceptable_Range,
+                "ActualValue", _Row_Count
+            ),
+            ROW (
+                "TestName", "Table: Null Example has appropriate null percentage",
+                "ExpectedValue", _Null_Per_Example <= .4,
+                "ActualValue", TRUE
+            )
+        ) /*Output Pass/Fail*/
+
+EVALUATE
+ADDCOLUMNS ( _Tests, "Passed", [ExpectedValue] = [ActualValue] )

@@ -41,14 +41,14 @@ $SPSiteName = Read-Host "Please enter the name of the SharePoint site to store l
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
-$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part14/Pbi/SampleModel/SampleModel.pbix?raw=true"
-$SampleModelCDURL = "https://github.com/kerski/pbi-dataops-template/blob/part14/SetupScripts/Pbi/SchemaExample.pbix?raw=true"
-$SampleModelCD2URL = "https://github.com/kerski/pbi-dataops-template/blob/part14/SetupScripts/Pbi/SchemaExamplePlusNewColumn.pbix?raw=true"
+$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part15/Pbi/SampleModel/SampleModel.pbix?raw=true"
+$SampleModelCDURL = "https://github.com/kerski/pbi-dataops-template/blob/part15/SetupScripts/Pbi/SchemaExample.pbix?raw=true"
+$SampleModelCD2URL = "https://github.com/kerski/pbi-dataops-template/blob/part15/SetupScripts/Pbi/SchemaExample.pbix?raw=true"
 $SPListTemplate = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part10/SetupScripts/PremiumPerUser/LowCodeCoverage.xml"
 #Download URL for Tabular Editor:
 $TabularEditorUrl = "https://github.com/otykier/TabularEditor/releases/download/2.16.1/TabularEditor.Portable.zip"
 
-$PipelineName = "DataOpsCD-Part14"
+$PipelineName = "DataOpsCD-Part15"
 
 #Check Inputs
 if(!$BuildWSName -or !$DevWSName -or !$StagingWSName -or !$ProdWSName -or `
@@ -118,7 +118,7 @@ Write-Host -ForegroundColor Cyan "Step 2 of 5: Creating Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
-                --description "Part 14 example of Bringing DataOps to Power BI" `
+                --description "Part 15 example of Bringing DataOps to Power BI" `
                 --organization "$($AzDOHostURL)$($LogInfo.name)" `
                 --source-control git `
                 --visibility private `
@@ -148,7 +148,7 @@ if(!$RepoResult) {
 
 #Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
 $PipelineResult = az pipelines create --name $PipelineName --repository-type "tfsgit" `
-                --description "Part 14 example pipeline of Bringing DataOps to Power BI" `
+                --description "Part 15 example pipeline of Bringing DataOps to Power BI" `
                 --org "$($AzDOHostURL)$($LogInfo.name)" `
                 --project $ProjectName `
                 --repository $ProjectName `
@@ -265,7 +265,7 @@ Add-AzureDevOpsVariable -AzDOHostURL $AzDOHostURL `
 Write-Host -ForegroundColor Cyan "Step 5 of 5: Uploading SchemaExample.pbix to Staging and Production Workspaces"
 #Upload Report
 Invoke-WebRequest -Uri $SampleModelCDURL -OutFile ".\SchemaExample.pbix"
-Invoke-WebRequest -Uri $SampleModelCD2URL -OutFile ".\SchemaExamplePlusNewColumn.pbix"
+Invoke-WebRequest -Uri $SampleModelCD2URL -OutFile ".\SchemaExample.pbix"
 
 #Upload Schema Examples to resepective workspaces
 New-PowerBIReport `
@@ -275,7 +275,7 @@ New-PowerBIReport `
    -ConflictAction CreateOrOverwrite
 
 New-PowerBIReport `
-   -Path "$(Get-Location)\SchemaExamplePlusNewColumn.pbix" `
+   -Path "$(Get-Location)\SchemaExample.pbix" `
    -Name "SchemaExample" `
    -WorkspaceId $ProdWSObj.Id.Guid `
    -ConflictAction CreateOrOverwrite
