@@ -18,7 +18,7 @@
             FILTER (
                 VALUES ( 'Test Table'[New Column] ),
                 'Test Table'[New Column]
-                    IN { "A", "B" }
+                    IN { "A", "B", "C" }
                         || LEN ( TRIM ( 'Test Table'[New Column] ) ) = 0
                         || ISBLANK ( 'Test Table'[New Column] )
             )

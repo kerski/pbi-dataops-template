@@ -1,6 +1,7 @@
 <#
     Author: John Kerski
-    Description: 
+    Description: Performs Schema and Health Checks (DAX and Regex) against datasets in Test before being
+    moved to Production. 
 
     Dependencies: Premium Per User license purchased and assigned to UserName and UserName 
     has admin right to workspace.
@@ -13,6 +14,7 @@ Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Get-DevOpsVariables.psm
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Refresh-DatasetSyncWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Send-XMLAWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/CD/SchemaCheck/Get-DatasetSchemaWithPPU.psm1 -Force
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/CD/RegexCheck/Confirm-RegexPassesWithPPU.psm1 -Force
 
 #Get Default Environment Variables 
 $Opts = Get-DevOpsVariables
@@ -181,7 +183,18 @@ foreach ($PBICheck in $PBIsToTest){
                     }
                 }#end foreach row
             }#end iterating over test files            
+
+            # Run Regex tests
+            Write-Host "##[section]Attempting to run regex tests for: $($PBICheck) in Staging"
             
+            $RegexFailCount = Confirm-RegexPassesWithPPU -DatasetId $StagingReportInfo.DatasetId `
+                                    -UserName $Opts.UserName `
+                                    -Password $Opts.Password `
+                                    -APIUrl $Opts.PbiApiUrl
+
+            #Add any regex failures to the overall count
+            $FailureCount = $FailureCount + $RegexFailCount
+
             #Output Results
             #If FailureCount is greater than 1
             if($FailureCount -gt 0)

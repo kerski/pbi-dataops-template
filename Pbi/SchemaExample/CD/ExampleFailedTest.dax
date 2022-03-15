@@ -1,0 +1,22 @@
+﻿DEFINE
+    // Title Begins with Test
+    VAR _Title_Begins_With_Test =
+        CALCULATE (
+            COUNTROWS ( VALUES ( 'Test Table'[Title] ) ) + 0,
+            LEFT(TRIM('Test Table'[Title]),4) = "Test"
+        )
+    // Row Count
+    VAR _Row_Count =
+        COUNTROWS ( VALUES ( 'Test Table'[Id] ) ) + 0
+        
+    /*Run Test*/
+    VAR _Test =
+            ROW (
+                "TestName", "Table: Test Table's Title column starts with 'Test'.",
+                "ExpectedValue", _Row_Count,
+                "ActualValue", _Title_Begins_With_Test
+            )          
+         /*Output Pass/Fail*/
+
+EVALUATE
+ADDCOLUMNS ( _Test, "Passed", [ExpectedValue] = [ActualValue] )

@@ -1,6 +1,6 @@
-# Part 15 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
+# Part 16 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part15/" target="_blank">Part 15 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that refreshes a dataset in staging, pulls the schema with staging and production, and reports if the schemas are different (fails pipeline as an example).
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part16/" target="_blank">Part 16 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that refreshes a dataset in staging, pulls the schema with staging and production, and reports if the schemas are different (fails pipeline as an example).
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -65,19 +65,34 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
     ![Example of successful install](./images/part14-success-install.PNG)
 
+## Priming the Pipeline
+
+As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of March 2022.  Please take the following steps to setup the credentials for the **SchemaExample.pbix (not SampleModel.pbix)** file found within this project.
+
+1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
+
+    <img src="./images/part5-dataset-settings.PNG" alt="Dataset Settings screenshot" width="400px"/>
+
+1. Expand the 'Data source credentials' section and select 'Edit Credentials' link (outlined in orange in the image below).
+    ![Dataset Settings screenshot](./images/part5-edit-dataset-credentials.PNG)
+
+1. Select the Authentication method as "Anonymous" and Privacy level to "None" and then press the "Sign in" button.
+
+    <img src="./images/part5-configure-sample-model-credentials.PNG" alt="Set the credentials" width="400px"/>
+
 ## Run Pipeline
 
 1. Navigate to the Azure DevOps Pipeline and click the Run Pipeline button.
 
-![Run Pipeline](./images/part15-run-pipeline1.PNG)
+![Run Pipeline](./images/part16-run-pipeline1.PNG)
 
 2. Select the branch/tag for Part 15 and then choose Run.
 
-![Run Pipeline 2](./images/part15-run-pipeline2.PNG)
+![Run Pipeline 2](./images/part16-run-pipeline2.PNG)
 
-3. When the pipeline completes you should see the schema checks and tests pass.
+3. When the pipeline completes you should see the schema checks and tests fail because of the presence of the text 'Blue' in the Part16.Color column.
 
-![Successfully Pipeline](./images/part15-success-pipeline.PNG)
+![Successfully Pipeline](./images/part16-fail-pipeline.PNG)
 
 
 

@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-    - refs/heads/branch15
+    - refs/heads/part16
 jobs:
 - job: Job_1
   displayName: Continous Deployment
