@@ -86,7 +86,7 @@ As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5
 
 ![Run Pipeline](./images/part16-run-pipeline1.PNG)
 
-2. Select the branch/tag for Part 15 and then choose Run.
+2. Select the branch/tag for Part 16 and then choose Run.
 
 ![Run Pipeline 2](./images/part16-run-pipeline2.PNG)
 
