@@ -69,7 +69,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5/" target="_blank">Part 5 of Bringing DataOps to Power BI</a> the data source credentials have to be manually set in order for the pipeline to be automated.  This is based on Power BI's architecture as of March 2022.  Please take the following steps to setup the credentials for the **SchemaExample.pbix (not SampleModel.pbix)** file found within this project.
 
-1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the workspace you named in step 5 on the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
+1. Navigate to <a href="https://app.powerbi.com" target="_blank">app.powerbi.com</a> and go the Staging workspace you named in the [Installation Steps](#InstallationSteps). Find the dataset and select the 'Settings' option (example outlined in orange in the image below).
 
     <img src="./images/part5-dataset-settings.PNG" alt="Dataset Settings screenshot" width="400px"/>
 
@@ -90,7 +90,7 @@ As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5
 
 ![Run Pipeline 2](./images/part16-run-pipeline2.PNG)
 
-3. When the pipeline completes you should see the schema checks and tests fail because of the presence of the text 'Blue' in the Part16.Color column.
+3. When the pipeline completes you should see the Regex test fail because of the presence of the text 'Blue' in the Part16.Color column because the Regex "^(Red|Green)$ is applied.
 
 ![Successfully Pipeline](./images/part16-fail-pipeline.PNG)
 
