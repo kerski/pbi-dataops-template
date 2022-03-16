@@ -74,7 +74,8 @@ As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5
     <img src="./images/part5-dataset-settings.PNG" alt="Dataset Settings screenshot" width="400px"/>
 
 1. Expand the 'Data source credentials' section and select 'Edit Credentials' link (outlined in orange in the image below).
-    ![Dataset Settings screenshot](./images/part5-edit-dataset-credentials.PNG)
+
+    <img src="./images/part5-edit-dataset-credentials.PNG" alt="Dataset Settings screenshot" width="400px"/>
 
 1. Select the Authentication method as "Anonymous" and Privacy level to "None" and then press the "Sign in" button.
 
