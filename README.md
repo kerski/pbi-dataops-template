@@ -89,7 +89,7 @@ As stated in <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part5
 
 2. Select the branch/tag for Part 16 and then choose Run.
 
-![Run Pipeline 2](./images/part16-run-pipeline2.PNG)
+<img src="./images/part16-run-pipeline2.PNG" alt="Run Pipeline 2" width="400px"/>
 
 3. When the pipeline completes you should see the Regex test fail because of the presence of the text 'Blue' in the Part16.Color column because the Regex "^(Red|Green)$ is applied.
 
