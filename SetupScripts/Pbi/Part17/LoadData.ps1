@@ -1,8 +1,8 @@
 ﻿<#
     Author: John Kerski
     Description: This script:
-        1) Creates a test SharePoint site with lists and loads data into those lists.
-        2) Creates a workspace and uploads the Power BI reports to the new workspace.
+        1) Creates a workspace and uploads the Power BI reports to the new workspace.
+        2) Creates a Test SharePoint site with lists and loads data into those lists.
 
     Dependencies: 
         1) You have the rights to create Power BI workspaces and SharePoint sites. 
@@ -86,19 +86,22 @@ $Result = Set-PowerBIWorkspace -CapacityId $CapacityId -Scope Organization -Id $
 #Upload Reports
 Foreach($File in $PbixFiles)
 {
-    Invoke-WebRequest -Uri $SampleModelCDURL -OutFile ".\SchemaExample.pbix"
-
+    #Build download URL
     $DlFile = $BasePBIDownloadUrl.Replace("{PBIX_NAME}",$File)
 
-    Write-Host -ForegroundColor Cyan "Uploading $($DlFile)..."
+    #Download file
+    Invoke-WebRequest -Uri $Dlfile -OutFile ".\$($File).pbix"
 
-    #Upload Schema Examples to resepective workspaces
-New-PowerBIReport `
-   -Path "$(Get-Location)\SchemaExample.pbix" `
-   -Name "SchemaExample" `
-   -WorkspaceId $StagingWSObj.Id.Guid `
-   -ConflictAction CreateOrOverwrite
+    Write-Host -ForegroundColor Cyan "Publishing $($File).pbix..."
 
+    #Upload example to respective workspace
+    <#New-PowerBIReport `
+       -Path "$(Get-Location)\$($File).pbix" `
+       -Name $File `
+       -WorkspaceId $TestWSObj.Id.Guid `
+       -ConflictAction CreateOrOverwrite
+    #>
+    Write-Host -ForegroundColor Cyan "Published $($File).pbix"
 }
 
 #Create SharePoint site and lists

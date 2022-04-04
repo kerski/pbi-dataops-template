@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.7.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-96F87B9184A24962B508A843D13096F9">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-96F87B9184A24962B508A843D13096F9" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
+      <pnp:Lists>
+        <pnp:ListInstance Title="8ColumnBigList" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/8ColumnBigList" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/8ColumnBigList/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/8ColumnBigList/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/8ColumnBigList/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{B0694B56-35EF-474D-AE8C-5A207D38E335}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/8ColumnBigList/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="field_0" />
+                <FieldRef Name="field_3" />
+                <FieldRef Name="field_4" />
+                <FieldRef Name="field_5" />
+                <FieldRef Name="field_6" />
+                <FieldRef Name="field_7" />
+                <FieldRef Name="Author" />
+                <FieldRef Name="field_2" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <ViewData />
+            </View>
+            <View Name="{ACCE6108-C651-4A26-A4C9-82F3C2AE703C}" MobileView="TRUE" Type="HTML" DisplayName="BetaView" Url="{site}/Lists/8ColumnBigList/BetaView.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="field_0" />
+                <FieldRef Name="field_4" />
+                <FieldRef Name="field_5" />
+                <FieldRef Name="field_6" />
+                <FieldRef Name="field_7" />
+                <FieldRef Name="Author" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <ViewData />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field Type="Number" DisplayName="id" Name="field_0" ID="{f0e2ce6d-4497-4552-96ee-e83f59c2563e}" Version="2" StaticName="field_0" SourceID="{{listid:8ColumnBigList}}" ColName="float1" RowOrdinal="0" />
+            <Field Type="Text" DisplayName="lastname" Name="field_2" ID="{7c344166-a117-4673-81e7-37cec6dd7459}" Version="2" StaticName="field_2" SourceID="{{listid:8ColumnBigList}}" ColName="nvarchar6" RowOrdinal="0" />
+            <Field Type="Choice" DisplayName="gender" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="TRUE" StaticName="field_3" Name="field_3" ID="{9e005fb6-8ed1-4b00-84d8-2f9c1079a065}" Version="2" SourceID="{{listid:8ColumnBigList}}" ColName="nvarchar4" RowOrdinal="0">
+              <CHOICES />
+            </Field>
+            <Field Type="Text" DisplayName="ipaddress" Name="field_4" ID="{582dc769-b38e-4258-bb52-b981aeb1f6b6}" Version="2" StaticName="field_4" SourceID="{{listid:8ColumnBigList}}" ColName="nvarchar7" RowOrdinal="0" />
+            <Field ID="{13863a75-ccd6-4fff-90d3-9d55967a7a41}" DisplayName="when" Name="field_5" StaticName="field_5" Type="DateTime" ColName="datetime1" RowOrdinal="0" SourceID="{{listid:8ColumnBigList}}" />
+            <Field ID="{b0e3ded8-d2c7-47df-99fe-1d71511093c0}" DisplayName="sentence" Name="field_6" StaticName="field_6" Type="Note" ColName="ntext4" RowOrdinal="0" SourceID="{{listid:8ColumnBigList}}" />
+            <Field Type="Choice" DisplayName="bool" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="TRUE" StaticName="field_7" Name="field_7" ID="{6b939c91-b5e3-4245-8a6e-da36bda576de}" Version="2" SourceID="{{listid:8ColumnBigList}}" ColName="nvarchar5" RowOrdinal="0">
+              <CHOICES />
+            </Field>
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://southcentralus0.pushnp.svc.ms/notifications?token=5d3f5d84-7046-464d-9d2a-dc978456072c" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>
