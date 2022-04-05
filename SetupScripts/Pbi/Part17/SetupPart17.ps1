@@ -33,7 +33,10 @@ $PbixFiles = @("Bespoke_8_Columns",
                "Bespoke_Multi_Sources",
                "OData_8_Columns",
                "OData_16_Columns",
-               "OData_Multi_Sources")
+               "OData_Multi_Sources",
+               "SP_Connector_V1_8_Columns",
+               "SP_Connector_V1_16_Columns",
+               "SP_Connector_V1_Multi_Sources")
 $PbixFileIds = @()
 $SPListTemplate8 = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part17/SetupScripts/Pbi/Part17/8ColumnBigList.xml?raw=true"
 $SPListTemplate16 = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part17/SetupScripts/Pbi/Part17/16ColumnBigList.xml?raw=true"
@@ -215,7 +218,24 @@ $SharePointURLParams_Two = '{
       {
         "name": "{NAME2}",
         "newValue": "{NEW_VALUE2}"
-    }
+      }
+    ]
+  }'
+
+$SharePointURLParams_Three = '{
+    "updateDetails": [
+      {
+          "name": "{NAME}",
+          "newValue": "{NEW_VALUE}"
+      },
+      {
+        "name": "{NAME2}",
+        "newValue": "{NEW_VALUE2}"
+      },
+      {
+        "name": "{NAME3}",
+        "newValue": "{NEW_VALUE3}"
+      }
     ]
   }'
 
@@ -229,16 +249,28 @@ Foreach($File in $PbixFiles)
         "OData_8_Columns" {$Body = $SharePointURLParams.Replace('{NAME}','QueryURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)/_api/web/lists/GetByTitle('8ColumnBigList')/items?$select=Author/Name,Author/Title,Id,field_2,field_4,field_6&$expand=Author/Id&$top=5000")}
         "OData_16_Columns" {$Body = $SharePointURLParams.Replace('{NAME}','QueryURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)/_api/web/lists/GetByTitle('16ColumnBigList')/items?$select=Author/Name,Author/Title,Id,field_2,field_4,field_6&$expand=Author/Id&$top=5000")}
         "OData_Multi_Sources" {
-                                $Body = $SharePointURLParams_Two.Replace('{NAME}','QueryURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)/_api/web/lists/GetByTitle('8ColumnBigList')/items?$select=Author/Name,Author/Title,Id,field_2,field_4,field_6&$expand=Author/Id&$top=5000")
-                                $Body = $Body.Replace('{NAME2}','QueryURL').Replace('{NEW_VALUE2}',"$($SPBaseUrl)/sites/$($SPSiteName)/_api/web/lists/GetByTitle('16ColumnBigList')/items?$select=Author/Name,Author/Title,Id,field_2,field_4,field_6&$expand=Author/Id&$top=5000")}
+                                $Body = $SharePointURLParams_Two.Replace('{NAME}','QueryURL_8_Columns').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)/_api/web/lists/GetByTitle('8ColumnBigList')/items?$select=Author/Name,Author/Title,Id,field_2,field_4,field_6&$expand=Author/Id&$top=5000")
+                                $Body = $Body.Replace('{NAME2}','QueryURL_16_Columns').Replace('{NEW_VALUE2}',"$($SPBaseUrl)/sites/$($SPSiteName)/_api/web/lists/GetByTitle('16ColumnBigList')/items?$select=Author/Name,Author/Title,Id,field_2,field_4,field_6&$expand=Author/Id&$top=5000")}
         "Bespoke_8_Columns" {$Body = $SharePointURLParams.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")}
         "Bespoke_16_Columns" {$Body = $SharePointURLParams.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")}
         "Bespoke_Multi_Sources" {$Body = $SharePointURLParams.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")}
-    }
+        "SP_Connector_V1_8_Columns" {
+                                 $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                 $Body = $Body.Replace('{NAME2}','ListID').Replace('{NEW_VALUE2}',$ListObj_8.Id.toString())}}
+        "SP_Connector_V1_16_Columns" {
+                                $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                $Body = $Body.Replace('{NAME2}','ListID').Replace('{NEW_VALUE2}',$ListObj_16.Id.toString())}
+        "SP_Connector_V1_Multi_Sources" {
+                                    $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                    $Body = $Body.Replace('{NAME2}','ListID_16_Columns').Replace('{NEW_VALUE2}',$ListObj_16.Id.toString())
+                                    $Body = $Body.Replace('{NAME3}','ListID_16_Columns').Replace('{NEW_VALUE3}',$ListObj_8.Id.toString())}
+    }#end switch
 
     # Update Parameters URL
     $UrlUpdateParams = "datasets/$($PbixFileIds[$Iter])/Default.UpdateParameters"
     $content = 'application/json'
+
+    Write-Host $Body
 
     #Update Paramters
     Invoke-PowerBIRestMethod -Url $UrlUpdateParams `
