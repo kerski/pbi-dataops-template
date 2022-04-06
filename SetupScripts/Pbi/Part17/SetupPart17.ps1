@@ -17,9 +17,9 @@ $TestWSDesc = "Workspace to test SharePoint refreshes"
 $SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com)"
 $SPSiteName = Read-Host "Please enter the name of the SharePoint site to setup refresh test"#>
 
-$TestWSName = "Refresh3"
+$TestWSName = "Refresh4_5"
 $SPBaseUrl = "https://kerski.sharepoint.com"
-$SPSiteName = "Refresh3"
+$SPSiteName = "Refresh4_5"
 
 #Set Variables
 $ListName8 = '8ColumnBigList'
@@ -28,7 +28,7 @@ $SampleData = 'SampleData.csv'
 
 #Download Variable URLs
 $BasePBIDownloadUrl = "https://github.com/kerski/pbi-dataops-template/blob/part17/SetupScripts/Pbi/Part17/{PBIX_NAME}.pbix?raw=true"
-$PbixFiles = @("Bespoke_8_Columns",
+$PbixFiles = @(<#"Bespoke_8_Columns",
                "Bespoke_16_Columns",
                "Bespoke_Multi_Sources",
                "OData_8_Columns",
@@ -36,7 +36,11 @@ $PbixFiles = @("Bespoke_8_Columns",
                "OData_Multi_Sources",
                "SP_Connector_V1_8_Columns",
                "SP_Connector_V1_16_Columns",
-               "SP_Connector_V1_Multi_Sources")
+               "SP_Connector_V1_Multi_Sources"#>
+               "SP_Connector_V2_8_Columns",
+               "SP_Connector_V2_16_Columns",
+               "SP_Connector_V2_Multi_Sources"               
+               )
 $PbixFileIds = @()
 $SPListTemplate8 = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part17/SetupScripts/Pbi/Part17/8ColumnBigList.xml?raw=true"
 $SPListTemplate16 = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part17/SetupScripts/Pbi/Part17/16ColumnBigList.xml?raw=true"
@@ -194,7 +198,7 @@ Foreach($File in $PbixFiles)
     $Temp = Get-PowerBIReport -Id $NewRpt.Id -WorkspaceId $TestWSObj.Id.Guid
 
     #Add ids to array
-    $PbixFileIds += $Temp.DatasetId.toString()
+    $PbixFileIds += $Temp
 
     Write-Host -ForegroundColor Cyan "Published $($File).pbix. ID: $($Temp.DatasetId.toString())"
 }
@@ -206,9 +210,7 @@ $SharePointURLParams = '{
         "name": "{NAME}",
         "newValue": "{NEW_VALUE}"
       }
-  ]
-}'
-
+  ]}'
 $SharePointURLParams_Two = '{
     "updateDetails": [
       {
@@ -240,7 +242,6 @@ $SharePointURLParams_Three = '{
   }'
 
 #Iterate and update parameters
-$Iter = 0
 Foreach($File in $PbixFiles)
 {
     $Body = ""
@@ -255,29 +256,41 @@ Foreach($File in $PbixFiles)
         "Bespoke_16_Columns" {$Body = $SharePointURLParams.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")}
         "Bespoke_Multi_Sources" {$Body = $SharePointURLParams.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")}
         "SP_Connector_V1_8_Columns" {
-                                 $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
-                                 $Body = $Body.Replace('{NAME2}','ListID').Replace('{NEW_VALUE2}',$ListObj_8.Id.toString())}}
+                                 $Body = $SharePointURLParams_Two.Replace('{NAME2}','SharePointSiteURL').Replace('{NEW_VALUE2}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                 $Body = $Body.Replace('{NAME}','ListID').Replace('{NEW_VALUE}',$ListObj_8.Id.toString())}
         "SP_Connector_V1_16_Columns" {
-                                $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointSiteURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
                                 $Body = $Body.Replace('{NAME2}','ListID').Replace('{NEW_VALUE2}',$ListObj_16.Id.toString())}
         "SP_Connector_V1_Multi_Sources" {
-                                    $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                    $Body = $SharePointURLParams_Three.Replace('{NAME}','SharePointSiteURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
                                     $Body = $Body.Replace('{NAME2}','ListID_16_Columns').Replace('{NEW_VALUE2}',$ListObj_16.Id.toString())
-                                    $Body = $Body.Replace('{NAME3}','ListID_16_Columns').Replace('{NEW_VALUE3}',$ListObj_8.Id.toString())}
-    }#end switch
+                                    $Body = $Body.Replace('{NAME3}','ListID_8_Columns').Replace('{NEW_VALUE3}',$ListObj_8.Id.toString())}
+        "SP_Connector_V2_8_Columns" {
+                                        $Body = $SharePointURLParams_Two.Replace('{NAME2}','SharePointSiteURL').Replace('{NEW_VALUE2}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                        $Body = $Body.Replace('{NAME}','ListID').Replace('{NEW_VALUE}',$ListObj_8.Id.toString())}
+        "SP_Connector_V2_16_Columns" {
+                                        $Body = $SharePointURLParams_Two.Replace('{NAME}','SharePointSiteURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                        $Body = $Body.Replace('{NAME2}','ListID').Replace('{NEW_VALUE2}',$ListObj_16.Id.toString())}
+        "SP_Connector_V2_Multi_Sources" {
+                                           $Body = $SharePointURLParams_Three.Replace('{NAME}','SharePointSiteURL').Replace('{NEW_VALUE}',"$($SPBaseUrl)/sites/$($SPSiteName)")
+                                           $Body = $Body.Replace('{NAME2}','ListID_16_Columns').Replace('{NEW_VALUE2}',$ListObj_16.Id.toString())
+                                           $Body = $Body.Replace('{NAME3}','ListID_8_Columns').Replace('{NEW_VALUE3}',$ListObj_8.Id.toString())}
+       
+        }#end switch
+
+    #Get Dataset Info
+    $DatasetInfo = $PbixFileIds | Where-Object {$_.Name -eq $File}
 
     # Update Parameters URL
-    $UrlUpdateParams = "datasets/$($PbixFileIds[$Iter])/Default.UpdateParameters"
+    Write-Host -ForegroundColor Cyan "Updating Parameters for $($File); DatasetId: $($DatasetInfo.DatasetId)"
+    $UrlUpdateParams = "groups/$($TestWSObj.Id.Guid)/datasets/$($DatasetInfo.DatasetId)/Default.UpdateParameters"
     $content = 'application/json'
-
-    Write-Host $Body
-
+    
     #Update Paramters
     Invoke-PowerBIRestMethod -Url $UrlUpdateParams `
                              -Method Post `
                              -Body $Body `
                              -Verbose
-    $Iter += 1
 }#end foreach
 
 
