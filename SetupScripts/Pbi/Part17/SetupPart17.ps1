@@ -1,9 +1,9 @@
 ﻿<#
     Author: John Kerski
     Description: This script:
-        1) Creates a workspace and uploads the Power BI reports to the new workspace.
-        2) Creates a Test SharePoint site with lists and loads data into those lists.
-
+        1) Creates a Test SharePoint site with lists and loads data into those lists.    
+        2) Creates a workspace and uploads the Power BI reports to the new workspace.
+        
     Dependencies: 
         1) You have the rights to create Power BI workspaces and SharePoint sites. 
 #>
@@ -17,9 +17,9 @@ $TestWSDesc = "Workspace to test SharePoint refreshes"
 $SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com)"
 $SPSiteName = Read-Host "Please enter the name of the SharePoint site to setup refresh test"#>
 
-$TestWSName = "Refresh4_5"
+$TestWSName = "Refresh4_6"
 $SPBaseUrl = "https://kerski.sharepoint.com"
-$SPSiteName = "Refresh4_5"
+$SPSiteName = "Refresh4_6"
 
 #Set Variables
 $ListName8 = '8ColumnBigList'
@@ -28,7 +28,7 @@ $SampleData = 'SampleData.csv'
 
 #Download Variable URLs
 $BasePBIDownloadUrl = "https://github.com/kerski/pbi-dataops-template/blob/part17/SetupScripts/Pbi/Part17/{PBIX_NAME}.pbix?raw=true"
-$PbixFiles = @(<#"Bespoke_8_Columns",
+$PbixFiles = @("Bespoke_8_Columns",
                "Bespoke_16_Columns",
                "Bespoke_Multi_Sources",
                "OData_8_Columns",
@@ -36,7 +36,7 @@ $PbixFiles = @(<#"Bespoke_8_Columns",
                "OData_Multi_Sources",
                "SP_Connector_V1_8_Columns",
                "SP_Connector_V1_16_Columns",
-               "SP_Connector_V1_Multi_Sources"#>
+               "SP_Connector_V1_Multi_Sources"
                "SP_Connector_V2_8_Columns",
                "SP_Connector_V2_16_Columns",
                "SP_Connector_V2_Multi_Sources"               
@@ -104,7 +104,7 @@ $Batch16 = New-PnPBatch
 
 Write-Host -ForegroundColor Cyan "Loading Data into SharePoint lists. THIS WILL TAKE A WHILE"
 #Iterate in 100 row counts
-For($I = 0; $I -lt $CSVData.Count-19799; $I += 200)
+For($I = 0; $I -lt $CSVData.Count; $I += 200)
 {
     #Create array to load into list
     $Subset = @()
@@ -292,7 +292,6 @@ Foreach($File in $PbixFiles)
                              -Body $Body `
                              -Verbose
 }#end foreach
-
 
 Write-Host -ForegroundColor Green "Successfully setup Power BI workspace and SharePoint site.  Please continue to follow the directions on Github."
 
