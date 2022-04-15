@@ -12,14 +12,10 @@ $TLS12Protocol = [System.Net.SecurityProtocolType] 'Tls12'
 [System.Net.ServicePointManager]::SecurityProtocol = $TLS12Protocol
 
 #Set Variables
-<#$TestWSName = Read-Host "Please enter the name of the test workspace (ex. RefreshTest)"
+$TestWSName = Read-Host "Please enter the name of the test workspace (ex. RefreshTest)"
 $TestWSDesc = "Workspace to test SharePoint refreshes"
 $SPBaseUrl = Read-Host "Please enter the base url of the SharePoint site (ex. https://x.sharepoint.com)"
-$SPSiteName = Read-Host "Please enter the name of the SharePoint site to setup refresh test"#>
-
-$TestWSName = "Refresh4_6"
-$SPBaseUrl = "https://kerski.sharepoint.com"
-$SPSiteName = "Refresh4_6"
+$SPSiteName = Read-Host "Please enter the name of the SharePoint site to setup refresh test"
 
 #Set Variables
 $ListName8 = '8ColumnBigList'
@@ -295,6 +291,6 @@ Foreach($File in $PbixFiles)
 
 Write-Host -ForegroundColor Green "Successfully setup Power BI workspace and SharePoint site.  Please continue to follow the directions on Github."
 
-    #Invoke-PowerBIRestMethod -Url "groups/$($TestWSObj.Id.Guid)" -Method Delete
-    #sharepoint online delete site collection powershell
-    #Remove-PnPTenantSite -Url "$($SPBaseUrl)/sites/$($SPSiteName)" -Force
+#Invoke-PowerBIRestMethod -Url "groups/$($TestWSObj.Id.Guid)" -Method Delete
+#sharepoint online delete site collection powershell
+#Remove-PnPTenantSite -Url "$($SPBaseUrl)/sites/$($SPSiteName)" -Force
