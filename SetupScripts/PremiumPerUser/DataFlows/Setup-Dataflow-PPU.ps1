@@ -327,7 +327,7 @@ if(!$ConfigResult) {
 #Set AzureDevOpsPAT
 $ConfigResult = az functionapp config appsettings set --name $AZFuncName `
                                       --resource-group $ResourceGroupName `
-                                      --settings "AzureDevOpsPAT=@Microsoft.KeyVault(SecretUri=$($SecResult.id))"
+                                      --settings "AzureDevOpsPAT=@Microsoft.KeyVault(SecretUri=$($SecResult.id)))"
 
 if(!$ConfigResult) {
     Write-Error "Unable to update AzureDevOpsPAT setting for Azure Function '$($AzFuncName)' "
