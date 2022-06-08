@@ -41,7 +41,7 @@ PS> .\Setup-DataFlow-Trigger.ps1
 # Set Subscription Name
 $SubName = Read-Host "Please enter the name of the subscription on Azure"
 # Set Location
-$Location = Read-Host "Please enter the location name of your Azure Service (ex. eastus2)"
+$Location = Read-Host "Please enter the location name of your Power BI Service (ex. eastus2)"
 # Set Project Name
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
 # Azure PAT Token
@@ -63,7 +63,7 @@ $AZKeyVaultName = "kv-dataflow-trigger-$($RandomSuffix)"
 
 # Example download file for Azure Functions
 $AzFuncFilePath = "./dataflow-func.zip"
-$AzFuncURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/DataFlows/dataflow-func.zip" 
+$AzFuncURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/DataFlows/func-dataflow-trigger.zip" 
 $DFFilePath = "./RawSourceExample.json"
 $DFExURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/DataFlows/RawSourceExample.json"
 
