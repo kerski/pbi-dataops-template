@@ -1,1 +1,77 @@
-{"name":"RawSourceExample","description":"Example of the raw source pulled from the Internet.","version":"1.0","culture":"en-US","modifiedTime":"2022-06-06T16:40:32.6939296+00:00","pbi:mashup":{"fastCombine":false,"allowNativeQueries":false,"queriesMetadata":{"MarvelSource":{"queryId":"26a1c461-6e57-4278-8c5c-4ade749f8b43","queryName":"MarvelSource","loadEnabled":true},"WebURL":{"queryId":"7d2b4428-ad8b-4f76-a9e0-19d5fd3133da","queryName":"WebURL","queryGroupId":"f63165ae-3c03-4a8b-8727-2df5516285e6"}},"document":"section Section1;\r\nshared MarvelSource = let\n    Source = Csv.Document(Web.Contents(WebURL),[Delimiter=\",\", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),\n    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"page_id\", Int64.Type}, {\"name\", type text}, {\"urlslug\", type text}, {\"ID\", type text}, {\"ALIGN\", type text}, {\"EYE\", type text}, {\"HAIR\", type text}, {\"SEX\", type text}, {\"GSM\", type text}, {\"ALIVE\", type text}, {\"APPEARANCES\", Int64.Type}, {\"FIRST APPEARANCE\", type text}, {\"Year\", Int64.Type}})\nin\n    #\"Changed Type\";\r\nshared WebURL = \"https://raw.githubusercontent.com/fivethirtyeight/data/master/comic-characters/marvel-wikia-data.csv\" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text];\r\n"},"annotations":[{"name":"pbi:QueryGroups","value":"[{\"id\":\"f63165ae-3c03-4a8b-8727-2df5516285e6\",\"name\":\"Parameters\",\"description\":\"\",\"parentId\":null,\"order\":0}]"}],"entities":[{"$type":"LocalEntity","name":"MarvelSource","description":"","pbi:refreshPolicy":{"$type":"FullRefreshPolicy","location":"MarvelSource.csv"},"attributes":[{"name":"page_id","dataType":"int64"},{"name":"name","dataType":"string"},{"name":"urlslug","dataType":"string"},{"name":"ID","dataType":"string"},{"name":"ALIGN","dataType":"string"},{"name":"EYE","dataType":"string"},{"name":"HAIR","dataType":"string"},{"name":"SEX","dataType":"string"},{"name":"GSM","dataType":"string"},{"name":"ALIVE","dataType":"string"},{"name":"APPEARANCES","dataType":"int64"},{"name":"FIRST APPEARANCE","dataType":"string"},{"name":"Year","dataType":"int64"}],"partitions":[{"name":"FullRefreshPolicyPartition","refreshTime":"2022-06-06T03:19:22.2025657+00:00","location":"https://stdataflowtrigger.dfs.core.windows.net:443/powerbi/DFBuild/RawSourceExample/MarvelSource/MarvelSource.csv.snapshots/MarvelSource.csv@snapshot=2022-06-06T03:19:22.0657086Z"}]}]}
+{
+	"name": "RawSourceExample",
+	"description": "Example of the raw source pulled from the Internet.",
+	"version": "1.0",
+	"culture": "en-US",
+	"modifiedTime": "2022-06-06T16:40:32.6939296+00:00",
+	"pbi:mashup": {
+		"fastCombine": false,
+		"allowNativeQueries": false,
+		"queriesMetadata": {
+			"MarvelSource": {
+				"queryId": "26a1c461-6e57-4278-8c5c-4ade749f8b43",
+				"queryName": "MarvelSource",
+				"loadEnabled": true
+			},
+			"WebURL": {
+				"queryId": "7d2b4428-ad8b-4f76-a9e0-19d5fd3133da",
+				"queryName": "WebURL",
+				"queryGroupId": "f63165ae-3c03-4a8b-8727-2df5516285e6"
+			}
+		},
+		"document": "section Section1;\r\nshared MarvelSource = let\n    Source = Csv.Document(Web.Contents(WebURL),[Delimiter=\",\", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),\n    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"page_id\", Int64.Type}, {\"name\", type text}, {\"urlslug\", type text}, {\"ID\", type text}, {\"ALIGN\", type text}, {\"EYE\", type text}, {\"HAIR\", type text}, {\"SEX\", type text}, {\"GSM\", type text}, {\"ALIVE\", type text}, {\"APPEARANCES\", Int64.Type}, {\"FIRST APPEARANCE\", type text}, {\"Year\", Int64.Type}})\nin\n    #\"Changed Type\";\r\nshared WebURL = \"https://raw.githubusercontent.com/fivethirtyeight/data/master/comic-characters/marvel-wikia-data.csv\" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text];\r\n"
+	},
+	"annotations": [{
+		"name": "pbi:QueryGroups",
+		"value": "[{\"id\":\"f63165ae-3c03-4a8b-8727-2df5516285e6\",\"name\":\"Parameters\",\"description\":\"\",\"parentId\":null,\"order\":0}]"
+	}],
+	"entities": [{
+		"$type": "LocalEntity",
+		"name": "MarvelSource",
+		"description": "",
+		"pbi:refreshPolicy": {
+			"$type": "FullRefreshPolicy",
+			"location": "MarvelSource.csv"
+		},
+		"attributes": [{
+			"name": "page_id",
+			"dataType": "int64"
+		}, {
+			"name": "name",
+			"dataType": "string"
+		}, {
+			"name": "urlslug",
+			"dataType": "string"
+		}, {
+			"name": "ID",
+			"dataType": "string"
+		}, {
+			"name": "ALIGN",
+			"dataType": "string"
+		}, {
+			"name": "EYE",
+			"dataType": "string"
+		}, {
+			"name": "HAIR",
+			"dataType": "string"
+		}, {
+			"name": "SEX",
+			"dataType": "string"
+		}, {
+			"name": "GSM",
+			"dataType": "string"
+		}, {
+			"name": "ALIVE",
+			"dataType": "string"
+		}, {
+			"name": "APPEARANCES",
+			"dataType": "int64"
+		}, {
+			"name": "FIRST APPEARANCE",
+			"dataType": "string"
+		}, {
+			"name": "Year",
+			"dataType": "int64"
+		}]
+	}]
+}
