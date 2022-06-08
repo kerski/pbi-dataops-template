@@ -24,7 +24,9 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -   Azure subscription created and you have Owner rights to the subscription.
 
-- A PAT token generated.  Please see instructions <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat" target="_blank">at this link</a>.
+- A PAT token generated with Code "Read, Write, Manage" Permissions  Please see instructions <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat" target="_blank">at this link</a>.
+
+<img src="./images/part20-PAT.PNG" alt="Example to PAT Token" width="400px"/>
 
 ### Desktop
 
@@ -52,8 +54,6 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     - The name of the project you wish to create in Azure DevOps. 
     - The PAT Token (see Prequisites)
     - The name of the Power BI workspace you wish to create.
-
-    ![Prompt for information in install script](./images/part20-enter-information.PNG)
 
 1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the PowerShell window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
 
