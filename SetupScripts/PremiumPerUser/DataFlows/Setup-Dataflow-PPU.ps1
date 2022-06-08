@@ -406,6 +406,10 @@ if($BuildWSObj.Length -eq 0)
 # Update Paramters
 Set-PowerBIWorkspace -CapacityId $Cap.Id.Guid -Scope Organization -Id $BuildWSObj.Id.Guid 
 
+Write-Host -ForegroundColor White "NEED YOUR ASSISTANCE! PLEASE now connect the workspace '$($BuildWSName)' to the storage account within '$($ResourceGroupName)'."
+Write-Host -NoNewLine 'When you complete, press any key to continue...';
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
+
 # This command sets the execution policy to bypass for only the current PowerShell session after the window is closed,
 # the next PowerShell session will open running with the default execution policy.
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -413,7 +417,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\ImportModel.ps1 -Workspace $BuildWSObj.name -File $DFFilePath
 
 # If we get here, success
-Write-Host -ForegroundColor Green "Installation Complete in Azure and Azure DevOps Project $($ProjecResult.name) at $($AzDOHostURL)$($LogInfo.name)"
+Write-Host -ForegroundColor Green "Installation Complete in Azure & Power BI, and Azure DevOps Project '$($ProjectResult.name)' created at $($AzDOHostURL)$($LoginInfo.name)"
 
 <# Cleanup
 # Delete resource group

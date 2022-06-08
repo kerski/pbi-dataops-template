@@ -59,13 +59,17 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
-1. If the script runs successfully you will be presented with a message similar in the image below. 
+1. Near the end of the installation you will see the message that starts with "NEED ASSITANCE".
 
-    ![Example of successful install](./images/part20-success-install.PNG)
-
-## Priming the Power BI Workspace
+    ![Screenshot of manual step required](./images/part20-help-please.PNG)
 
 As of June 2022, you can not easily script connect a workspace to an Azure Gen2 Data Lake, so please navigate to the newly created workspace and <a href="https://docs.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-azure-data-lake-storage-integration#prerequisites" target="_blank">follow these instructions</a> to make the connection.
+
+<img src="./images/part20-connect-workspace.PNG" alt="Screenshot of linking workspace to Azure storage" width="400px"/>
+
+6. If the script runs successfully you will be presented with a message similar in the image below. 
+
+    ![Example of successful install](./images/part20-success-install.PNG)
 
 ## Testing the dataflow to Azure DevOps pipeline
 
