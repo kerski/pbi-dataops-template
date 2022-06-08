@@ -1,6 +1,6 @@
 # Part 20 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part20/" target="_blank">Part 20 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with Azure resources to save automatically integrate dataflow code into Git.
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part20/" target="_blank">Part 20 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with Azure resources that will automatically save Power BI dataflow code in Git.
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -41,7 +41,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 ## Installation Steps
 
 1. Open PowerShell Version 7 and enter the following script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/dataflows/RawSourceExample.json/Setup-Dataflow-PPU.ps1" -OutFile "./Setup-Dataflow-PPU.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/Dataflows/Setup-Dataflow-PPU.ps1" -OutFile "./Setup-Dataflow-PPU.ps1"
     
 1. This will download the setup scripts to the current folder.  Run ".\Setup-Dataflow-PPU.ps1" in PowerShell.
 
