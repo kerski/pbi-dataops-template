@@ -246,7 +246,17 @@ if(!$AssignResult) {
     return
 }
 
-
+#Sleep about 5 minutes to let Azure sync the new identity
+Write-Host -ForegroundColor Cyan "Pausing for 5 minutes to let Azure sync the new managed identity..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "4 minutes left..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "3 minutes left..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "2 minutes left..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "1 minute left..."
+Start-Sleep -Seconds 60
 # Step 6 - Create Azure Key Vault
 Write-Host -ForegroundColor Cyan "Step 6 of 9: Create Azure Key Vault"
 $KVResult = az keyvault create --location $Location `
