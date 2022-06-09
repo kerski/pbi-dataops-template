@@ -91,7 +91,7 @@ if(!$LoginInfo) {
 az account set --subscription $SubName
 # This will throw an error is the $SubName is not accessible
 
-Write-Host -ForegroundColor Cyan "Step 1 of 9: Creating Azure DevOps project"
+Write-Host -ForegroundColor Cyan "Step 1 of 9: Create Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
@@ -234,6 +234,17 @@ if(!$MIResult) {
     Write-Error "Unable to assignment managed identity to Azure Function '$($AzFuncName)' "
     return
 }
+#Sleep about 5 minutes to let Azure sync the new identity
+Write-Host -ForegroundColor Cyan "Pausing for 5 minutes to let Azure sync the new managed identity..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "4 minutes left..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "3 minutes left..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "2 minutes left..."
+Start-Sleep -Seconds 60
+Write-Host -ForegroundColor Cyan "1 minute left..."
+Start-Sleep -Seconds 60
 
 # Make sure Managed Identity has access to the storage as Storage
 $AssignResult = az role assignment create --assignee-object-id $MIResult.principalId `
@@ -246,17 +257,6 @@ if(!$AssignResult) {
     return
 }
 
-#Sleep about 5 minutes to let Azure sync the new identity
-Write-Host -ForegroundColor Cyan "Pausing for 5 minutes to let Azure sync the new managed identity..."
-Start-Sleep -Seconds 60
-Write-Host -ForegroundColor Cyan "4 minutes left..."
-Start-Sleep -Seconds 60
-Write-Host -ForegroundColor Cyan "3 minutes left..."
-Start-Sleep -Seconds 60
-Write-Host -ForegroundColor Cyan "2 minutes left..."
-Start-Sleep -Seconds 60
-Write-Host -ForegroundColor Cyan "1 minute left..."
-Start-Sleep -Seconds 60
 # Step 6 - Create Azure Key Vault
 Write-Host -ForegroundColor Cyan "Step 6 of 9: Create Azure Key Vault"
 $KVResult = az keyvault create --location $Location `
@@ -272,6 +272,8 @@ if(!$KVResult) {
 $KVPolResult = az keyvault set-policy --name $KVResult.name `
                        --object-id $MIResult.principalId `
                        --secret-permissions get | ConvertFrom-Json
+
+$KVPolResult
 
 if(!$KVPolResult) {
     Write-Error "Unable to create azure key vault policy for the managed identity"
