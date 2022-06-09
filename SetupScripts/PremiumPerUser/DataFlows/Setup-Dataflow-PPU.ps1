@@ -267,13 +267,13 @@ if(!$KVResult) {
     Write-Error "Unable to create azure key vault"
     return
 }
+# Wait a minute before setting policy
+Start-Sleep -Seconds 60
 
 # Set get policy to secret for the Azure Function's Mangaged Identity
 $KVPolResult = az keyvault set-policy --name $KVResult.name `
                        --object-id $MIResult.principalId `
                        --secret-permissions get | ConvertFrom-Json
-
-$KVPolResult
 
 if(!$KVPolResult) {
     Write-Error "Unable to create azure key vault policy for the managed identity"
