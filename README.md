@@ -22,7 +22,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -   Azure subscription created and you have Owner rights to the subscription.
 
-- A PAT token generated with Code "Read, Write, Manage" Permissions  Please see instructions <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat" target="_blank">at this link</a>.
+- A PAT token generated with Code "Read, Write, Manage" Permissions.  Please see instructions <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat" target="_blank">at this link</a>.
 
     ![Example to PAT Token](./images/part20-PAT.PNG)
 
