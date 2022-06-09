@@ -11,14 +11,13 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 1. [Prerequisites](#Prerequisites)
 1. [Installation Steps](#Installation-Steps)
 1. [Priming the Power BI Workspace](#Priming-the-Power-BI-Workspace)
-1. [Testing the dataflow to Azure DevOps pipeline
-](#Testing-the-dataflow-to-Azure-DevOps-pipeline
-)
+1. [Checking the Dataflow pushed to Azure DevOps
+](Checking-the-Dataflow-pushed-to-Azure-DevOps)
 
 ## Prerequisites
 
-### Power BI
--   Power BI Premium Per User license assigned to a service account. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
+### Power BI and Azure
+-   Power BI Premium Per User license. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
 
 -  Identify the location of your Power BI Service. Please see instructions <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-admin-where-is-my-tenant-located" target="_blank">at this link</a>.  You'll need to convert the readable name to Azure name when prompted to enter the location.  For example, West US 2 would be 'westus2'.
 
@@ -26,7 +25,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 - A PAT token generated with Code "Read, Write, Manage" Permissions  Please see instructions <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat" target="_blank">at this link</a>.
 
-<img src="./images/part20-PAT.PNG" alt="Example to PAT Token" width="400px"/>
+    ![Example to PAT Token](./images/part20-PAT.PNG)
 
 ### Desktop
 
@@ -59,35 +58,23 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
     ![Prompt to install azure devops cli](./images/part5-devops-cli-install.PNG)
 
-1. Near the end of the installation you will see the message that starts with "NEED ASSITANCE".
+1. Near the end of the installation you will see the message that starts with "NEED ASSISTANCE".
 
     ![Screenshot of manual step required](./images/part20-help-please.PNG)
 
 As of June 2022, you can not easily script connect a workspace to an Azure Gen2 Data Lake, so please navigate to the newly created workspace and <a href="https://docs.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-azure-data-lake-storage-integration#prerequisites" target="_blank">follow these instructions</a> to make the connection.
 
-<img src="./images/part20-connect-workspace.PNG" alt="Screenshot of linking workspace to Azure storage" width="400px"/>
+   ![Screenshot of linking workspace to Azure storage](./images/part20-connect-workspace.PNG)
+
+
+***Important Note #3**: I have seen that permission settings in the storage account can take up to 10-15 minutes to take affect.  Consequently, this causes you to get an Access Denied message during this step.  Try a few times (rule of thumb 3).*
 
 6. If the script runs successfully you will be presented with a message similar in the image below. 
 
     ![Example of successful install](./images/part20-success-install.PNG)
 
-## Testing the dataflow to Azure DevOps pipeline
+## Checking the Dataflow pushed to Azure DevOps
 
-With the [Installation Steps](#InstallationSteps) and [Priming the Power BI Workspace](#PrimingthePowerBIWorkspace) steps complete, you will need to follow the steps below to test that when you update a dataflow it automatically push the code to the Git repository on the newly created Azure DevOps project. 
+With the [Installation Steps](#Installation-Steps) and [Priming the Power BI Workspace](#Priming-the-Power-BI-Workspace) steps complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. Please navigate to Repos section of the Azure DevOps project.  Switch to the 'part20' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represent the dataflow.  The image below is an example. 
 
-1. Open the dataflow and click on the edit button (outlined in orange in the image below).
-
- <img src="./images/part20-edit-dataflow.PNG" alt="Example to Edit the DataFlow" width="800px"/>
-
-2. Click the Save button and wait for the prompts to complete saving the dataflow (outlined in orange in the image below).
-
- <img src="/images/part20-save-dataflow.PNG" alt="Example to save the dataflow" width="400px"/>
-
-3. If you visit the Azure Function, within a few minutes, should see the function has been triggered.
-
- <img src="./images/part20-triggered-function.PNG" alt="Example of triggered dataflow" width="400px"/>
-
-4. Then visit the Azure DevOps project, navigate to the repository and change the branch to part20. Under the part20 branch you should see a Dataflow folder.  Within this folder you should see a 'model.json' file.
-
- <img src="./images/part20-saved-dataflow" alt="Example of saved dataflow" width="400px"/>
-
+![Example of successfully saved file to Git](./images/part20-saved-model.PNG)
