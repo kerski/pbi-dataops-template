@@ -10,9 +10,8 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 1. [Prerequisites](#Prerequisites)
 1. [Installation Steps](#Installation-Steps)
-1. [Priming the Power BI Workspace](#Priming-the-Power-BI-Workspace)
-1. [Checking the Dataflow pushed to Azure DevOps
-](Checking-the-Dataflow-pushed-to-Azure-DevOps)
+1. [Checking the dataflow pushed to Azure DevOps
+](#Checking-the-dataflow-pushed-to-Azure-DevOps)
 
 ## Prerequisites
 
@@ -75,6 +74,6 @@ As of June 2022, you can not easily script connect a workspace to an Azure Gen2 
 
 ## Checking the Dataflow pushed to Azure DevOps
 
-With the [Installation Steps](#Installation-Steps) and [Priming the Power BI Workspace](#Priming-the-Power-BI-Workspace) steps complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. Please navigate to Repos section of the Azure DevOps project.  Switch to the 'part20' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represent the dataflow.  The image below is an example. 
+With the [Installation Steps](#Installation-Steps) complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. Please navigate to Repos section of the Azure DevOps project.  Switch to the 'part20' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represent the dataflow.  The image below is an example. 
 
 ![Example of successfully saved file to Git](./images/part20-saved-model.PNG)
