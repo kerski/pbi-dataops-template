@@ -74,6 +74,6 @@ As of June 2022, you can not easily script connect a workspace to an Azure Gen2 
 
 ## Checking the Dataflow pushed to Azure DevOps
 
-With the [Installation Steps](#Installation-Steps) complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. Please navigate to Repos section of the Azure DevOps project.  Switch to the 'part20' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represent the dataflow.  The image below is an example. 
+With the [Installation Steps](#Installation-Steps) complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. Please navigate to the Repos section of the Azure DevOps project.  Switch to the 'part20' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represents the dataflow.  The image below is an example. 
 
 ![Example of successfully saved file to Git](./images/part20-saved-model.PNG)
