@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
 
-Performs installation of Azure and Power BI resources based on Part 20 of Bringing DataOps to Power BI
+Performs installation of Azure and Power BI resources based on Part 21 of Bringing DataOps to Power BI
 
 .DESCRIPTION
 
@@ -95,7 +95,7 @@ Write-Host -ForegroundColor Cyan "Step 1 of 9: Create Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
-                --description "Part 20 example of Bringing DataOps to Power BI Dataflows" `
+                --description "Part 21 example of Bringing DataOps to Power BI Dataflows" `
                 --organization "$($AzDOHostURL)$($LoginInfo.name)" `
                 --source-control git `
                 --visibility private `
