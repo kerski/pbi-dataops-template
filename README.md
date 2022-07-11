@@ -119,7 +119,7 @@ With the [Installation Steps](#InstallationSteps) complete, you will need to fol
 
 8. Open the RawSourceExample.feature file and update the {SUB_NAME} placeholder with the subscription name, {STORAGE_ACCOUNT_NAME} placeholder with the storage account name, and the {WORKSPACE_NAME} placeholder with the workspace that was created.  All this information is created during the [Installation Steps](#InstallationSteps)
 
- <img src="./images/part21-update-tests.PNG" alt="Update Tests" width="400px"/>
+ <img src="./images/part21-update-tests-placeholders.PNG" alt="Update Tests" width="400px"/>
 
 9. Save the file.
 
