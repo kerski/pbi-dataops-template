@@ -1,6 +1,6 @@
 # Part 21 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part21/" target="_blank">Part 21 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with Azure resources that will automatically save Power BI dataflow code in Git and shows you how to run tests using Pester/Gherkin.
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part22/" target="_blank">Part 22 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with Azure resources that will automatically save Power BI dataflow code in Git and shows you how to run tests using Pester/Gherkin locally and automating those tests in Azure DevOps.
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -50,7 +50,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 ## Installation Steps
 
 1. Open PowerShell Version 7 and enter the following script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/DataFlows/Setup-Dataflow-PPU.ps1" -OutFile "./Setup-Dataflow-PPU.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part22/SetupScripts/PremiumPerUser/DataFlows/Setup-Dataflow-PPU.ps1" -OutFile "./Setup-Dataflow-PPU.ps1"
     
 1. This will download the setup scripts to the current folder.  Run ".\Setup-Dataflow-PPU.ps1" in PowerShell.
 
@@ -109,7 +109,7 @@ With the [Installation Steps](#InstallationSteps) complete, you will need to fol
 
  <img src="./images/part21-clone-message.PNG" alt="Clone Popup" width="400px"/>
 
-6. Make sure to switch the branch to "part21". You can do that by clicking the branch button on the bottom left of Visual Studio Code and then select the "part21" branch when prompted by a dropdown.
+6. Make sure to switch the branch to "part22". You can do that by clicking the branch button on the bottom left of Visual Studio Code and then select the "part22" branch when prompted by a dropdown.
 
  <img src="./images/part21-switch-branch-21.PNG" alt="Swith Branch" width="400px"/>
 
@@ -126,3 +126,9 @@ With the [Installation Steps](#InstallationSteps) complete, you will need to fol
 10. Then go to the terminal window within Visual Studio Code (near the bottom on your screen) and type "Invoke-Gherkin".  The tests should run and you should see a screen similar to this:
 
  <img src="./images/part21-run-tests.PNG" alt="Run Tests" width="400px"/>
+
+11. Commit and push the changes to Azure DevOps and this will kick off the pipeline.
+
+12. This will run the tests using the Azure Service Connection described in the blog article.
+
+13. Navigate to the "Test Plans" section of Azure DevOps and locate the published test results under the "Runs" subsection in the navigation.

@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/part22
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/part22
+jobs:
+- job: Job_1
+  displayName: Dataflow CI Job
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+  - task: AzurePowerShell@5
+    displayName: 'Azure PowerShell script: Run Tests on Dataflows'
+    inputs:
+      ConnectedServiceNameARM: $(ARM_ID)
+      ScriptPath: PipelineScripts/PremiumPerUser/DataFlows/DataFlow-CI.ps1
+      errorActionPreference: continue
+      FailOnStandardError: true
+      TargetAzurePs: LatestVersion
+      pwsh: true
+    env:
+      PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
+  - task: PublishTestResults@2
+    displayName: Publish Test Results result.xml
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: result.xml
+      failTaskOnFailedTests: true
+      platform: Azure
+      configuration: Azure

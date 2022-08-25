@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
 
-Performs installation of Azure and Power BI resources based on Part 21 of Bringing DataOps to Power BI
+Performs installation of Azure and Power BI resources based on Part 22 of Bringing DataOps to Power BI
 
 .DESCRIPTION
 
@@ -14,7 +14,9 @@ Performs installation of Azure and Power BI resources based on Part 21 of Bringi
         6) Create Azure Key Vault
         7) Update Azure Function Application Settings
         8) Create Azure Event Subscription
-        9) Create Power BI Workspace and setup DataFlow Example
+        9) Create Power BI Workspace
+        10) Create Pipeline for Azure DevOps
+        11) Upload sample Power BI Dataflow to the Power BI workspace
 
         Dependencies: 
             1) Azure CLI installed with version 2.37
@@ -33,7 +35,7 @@ None.
 
 .EXAMPLE
 
-PS> .\Setup-DataFlow-Trigger.ps1
+PS> .\Setup-DataFlow-PPU.ps1
 
 #>
 
@@ -46,11 +48,18 @@ $Location = Read-Host "Please enter the location name of your Power BI Service (
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
 # Azure PAT Token
 $ADOToken = Read-Host "Please enter the PAT Token you created from Azure DevOps"
-#Set Power BI WOrkspace
+#Set Power BI Workspace
 $BuildWSName = Read-Host "Please enter the name of the build workspace (ex. Build)"
+$SvcUser = Read-Host "Please enter the email address (UPN) of the service account assigned premium per user"
+#Get Password and convert to plain string
+$SecureString = Read-Host "Please enter the password for the service account assigned premium per user" -AsSecureString
+$Bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString)
+$SvcPwd = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($Bstr)
 
+#Set variables for the Azure DevOps creation
 $AzDOHostURL = "https://dev.azure.com/"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
+$PipelineName = "DataFlow-CI-Part22"
 # Append this suffix to Azure resource names to keep from naming conflicts
 $RandomSuffix = Get-Random -Minimum 100 -Maximum 999
 # Set Resource Group Name
@@ -63,9 +72,9 @@ $AZKeyVaultName = "kv-dataflow-trigger-$($RandomSuffix)"
 
 # Example download file for Azure Functions
 $AzFuncFilePath = "./dataflow-func.zip"
-$AzFuncURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/DataFlows/func-dataflow-trigger.zip" 
+$AzFuncURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part22/SetupScripts/PremiumPerUser/DataFlows/func-dataflow-trigger.zip" 
 $DFFilePath = "./RawSourceExample.json"
-$DFExURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part20/SetupScripts/PremiumPerUser/DataFlows/RawSourceExample.json"
+$DFExURI = "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part22/SetupScripts/PremiumPerUser/DataFlows/RawSourceExample.json"
 
 # PowerShell DataFlow Scripts
 $DFUtilsURI = "https://raw.githubusercontent.com/kerski/powerbi-powershell/master/examples/dataflows/DFUtils.psm1"
@@ -91,11 +100,11 @@ if(!$LoginInfo) {
 az account set --subscription $SubName
 # This will throw an error is the $SubName is not accessible
 
-Write-Host -ForegroundColor Cyan "Step 1 of 9: Create Azure DevOps project"
+Write-Host -ForegroundColor Cyan "Step 1 of 11: Create Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
-                --description "Part 21 example of Bringing DataOps to Power BI Dataflows" `
+                --description "Part 22 example of Bringing DataOps to Power BI Dataflows" `
                 --organization "$($AzDOHostURL)$($LoginInfo.name)" `
                 --source-control git `
                 --visibility private `
@@ -130,7 +139,7 @@ if(!$RepoImportResult) {
 }
 
 # Step 2
-Write-Host -ForegroundColor Cyan "Step 2 of 9: Create Resource Group to host Data Flow Trigger"
+Write-Host -ForegroundColor Cyan "Step 2 of 11: Create Resource Group to host Data Flow Trigger"
 
 # Create a resource group
 $RGResult = az group create --name $ResourceGroupName --location $Location
@@ -141,7 +150,7 @@ if(!$RGResult) {
 }
 
 # Step 3
-Write-Host -ForegroundColor Cyan "Step 3 of 9: Create Data Storage Account (V2)"
+Write-Host -ForegroundColor Cyan "Step 3 of 11: Create Data Storage Account (V2)"
 
 # Create a storage account
 $SAResult = az storage account check-name --name $StorageName | ConvertFrom-Json
@@ -198,7 +207,7 @@ if(!$AssignResult) {
 }
 
 # Step 4 - Create an Event Topic
-Write-Host -ForegroundColor Cyan "Step 4 of 9: Create Event Grid Topic"
+Write-Host -ForegroundColor Cyan "Step 4 of 11: Create Event Grid Topic"
 
 $EGResult = az eventgrid system-topic create --resource-group $ResourceGroupName `
                                              --name $EventTopicName `
@@ -212,7 +221,7 @@ if(!$EGResult) {
 }
 
 # Step 5 - Create Azure Function
-Write-Host -ForegroundColor Cyan "Step 5 of 9: Create Azure Function App"
+Write-Host -ForegroundColor Cyan "Step 5 of 11: Create Azure Function App"
 
 $AZResult = az functionapp create --name $AzFuncName `
                                   --resource-group $ResourceGroupName `
@@ -258,7 +267,7 @@ if(!$AssignResult) {
 }
 
 # Step 6 - Create Azure Key Vault
-Write-Host -ForegroundColor Cyan "Step 6 of 9: Create Azure Key Vault"
+Write-Host -ForegroundColor Cyan "Step 6 of 11: Create Azure Key Vault"
 $KVResult = az keyvault create --location $Location `
                                --name $AZKeyVaultName `
                                --resource-group $ResourceGroupName | ConvertFrom-Json
@@ -267,13 +276,13 @@ if(!$KVResult) {
     Write-Error "Unable to create azure key vault"
     return
 }
-# Wait a minute before setting policy
-Start-Sleep -Seconds 60
 
 # Set get policy to secret for the Azure Function's Mangaged Identity
 $KVPolResult = az keyvault set-policy --name $KVResult.name `
                        --object-id $MIResult.principalId `
                        --secret-permissions get | ConvertFrom-Json
+
+$KVPolResult
 
 if(!$KVPolResult) {
     Write-Error "Unable to create azure key vault policy for the managed identity"
@@ -293,7 +302,7 @@ if(!$SecResult) {
 
 
 # Step 7 - Update Azure Function Application Settings
-Write-Host -ForegroundColor Cyan "Step 7 of 9: Update Azure Function Application Settings"
+Write-Host -ForegroundColor Cyan "Step 7 of 11: Update Azure Function Application Settings"
 
 # Deploy Code
 $FuncResult = az functionapp deployment source config-zip --name $AzFuncName `
@@ -361,7 +370,7 @@ if(!$ConfigResult) {
 #Set AzureDevOpsBranch
 $ConfigResult = az functionapp config appsettings set --name $AZFuncName `
                                       --resource-group $ResourceGroupName `
-                                      --settings "AzureDevOpsBranch=refs/heads/part20"
+                                      --settings "AzureDevOpsBranch=refs/heads/part22"
 
 if(!$ConfigResult) {
     Write-Error "Unable to update AzureDevOpsBranch setting for Azure Function '$($AzFuncName)' "
@@ -369,7 +378,7 @@ if(!$ConfigResult) {
 }
 
 # Step 8 - Create Azure Event Subscription
-Write-Host -ForegroundColor Cyan "Step 8 of 9: Create Azure Event Subscription and link to Azure Function"
+Write-Host -ForegroundColor Cyan "Step 8 of 11: Create Azure Event Subscription and link to Azure Function"
 
 # Create Event Subscription
 $SubResult = az eventgrid system-topic event-subscription create --name "EventGridTrigger2" `
@@ -385,7 +394,7 @@ if(!$SubResult) {
 }
 
 # Step 9 - Create Power BI Workspace
-Write-Host -ForegroundColor Cyan "Step 9 of 9: Create Power BI Workspace and upload example Dataflow"
+Write-Host -ForegroundColor Cyan "Step 9 of 11: Create Power BI Workspace and upload example Dataflow"
 
 #Install Powershell Module if Needed
 if (Get-Module -ListAvailable -Name "MicrosoftPowerBIMgmt") {
@@ -424,6 +433,120 @@ Write-Host -ForegroundColor White "NEED YOUR ASSISTANCE! PLEASE now connect the 
 Write-Host -NoNewLine 'When you complete, press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 
+Write-Host -ForegroundColor Cyan "Step 10 of 11: Creating Pipeline in Azure DevOps project"
+$PipelineResult = az pipelines create --name $PipelineName --repository-type "tfsgit" `
+                --description "Part 22 example pipeline of Bringing DataOps to Power BI" `
+                --org "$($AzDOHostURL)$($LoginInfo.name)" `
+                --project $ProjectName `
+                --repository $ProjectName `
+                --branch "main" `
+                --yaml-path "DataFlow-CI.yml" --skip-first-run --only-show-errors | ConvertFrom-Json
+
+#Check Result
+if(!$PipelineResult) {
+    Write-Error "Unable to setup Pipeline"
+    return
+}
+#Create Service connection required access
+#Get Subscription Information
+$SubInfo = az account show --name $SubName | ConvertFrom-JSON
+# Create as service principal
+$SPResult = az ad sp create-for-rbac --name "DataOps Dataflow $($Suffix)" --role "Storage Blob Data Reader" --scope $STResult.id | ConvertFrom-Json
+
+#Check result
+if(!$SPResult) {
+    Write-Error "Unable to create service principal"
+    return
+}
+
+#Set password for automation
+$env:AZURE_DEVOPS_EXT_AZURE_RM_SERVICE_PRINCIPAL_KEY=$SPResult.password
+$AZServConnection = az devops service-endpoint azurerm create --azure-rm-service-principal-id $($SPResult.appId) `
+                                          --azure-rm-subscription-id $($SubInfo.id) `
+                                          --azure-rm-subscription-name $SubName `
+                                          --azure-rm-tenant-id $($SubInfo.tenantId) `
+                                          --name $($SPResult.displayName) `
+                                          --org "$($AzDOHostURL)$($LoginInfo.name)" `
+                                          --project $($ProjectName) | ConvertFrom-Json
+
+#Check result
+if(!$AZServConnection) {
+    Write-Error "Unable to create Azure Service Connection"
+    return
+}
+
+# Variable 'PBI_API_URL' was defined in the Variables tab
+# Assumes commericial environment
+$VarResult = az pipelines variable create --name "PBI_API_URL" --only-show-errors `
+             --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
+             --pipeline-id $PipelineResult.id `
+             --project $ProjectName --value $PBIAPIURL
+
+#Check Result
+if(!$VarResult) {
+    Write-Error "Unable to create pipeline variable PBI_API_URL"
+    return
+}
+
+# Variable 'TENANT_ID' was defined in the Variables tab
+$VarResult = az pipelines variable create --name "TENANT_ID" --only-show-errors `
+            --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
+            --pipeline-name $PipelineName `
+            --project $ProjectName --value $LogInfo.tenantId
+
+#Check Result
+if(!$VarResult) {
+    Write-Error "Unable to create pipeline variable TENANT_ID"
+    return
+}
+# Variable 'PPU_USERNAME' was defined in the Variables tab
+$VarResult = az pipelines variable create --name "PPU_USERNAME" --only-show-errors `
+            --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
+            --pipeline-name $PipelineName `
+            --project $ProjectName --value $SvcUser
+
+#Check Result
+if(!$VarResult) {
+    Write-Error "Unable to create pipeline variable PPU_USERNAME"
+    return
+}
+
+# Variable 'PPU_PASSWORD' was defined in the Variables tab
+$VarResult = az pipelines variable create --name "PPU_PASSWORD" --only-show-errors `
+            --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
+            --pipeline-name $PipelineName `
+            --project $ProjectName --value $SvcPwd --secret $TRUE
+
+#Check Result
+if(!$VarResult) {
+    Write-Error "Unable to create pipeline variable PPU_PASSWORD"
+    return
+}
+# Variable 'PBI_BUILD_GROUP_ID' was defined in the Variables tab
+$VarResult = az pipelines variable create --name "PBI_BUILD_GROUP_ID" --only-show-errors `
+            --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
+            --pipeline-name $PipelineName `
+            --project $ProjectName --value $BuildWSObj.Id.Guid
+#Check Result
+if(!$VarResult) {
+    Write-Error "Unable to create pipeline variable PBI_BUILD_GROUP_ID"
+    return
+}
+
+# Variable 'ARM_ID' was defined in the Variables tab
+$VarResult = az pipelines variable create --name "ARM_ID" --only-show-errors `
+            --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
+            --pipeline-name $PipelineName `
+            --project $ProjectName --value $BuildWSObj.Id.Guid
+
+#Check Result
+if(!$VarResult) {
+    Write-Error "Unable to create pipeline variable ARM_ID"
+    return
+}
+
+#WRITE upload test file
+Write-Host -ForegroundColor Cyan "Step 11 of 11: Uploading sample file into workspace"
 # This command sets the execution policy to bypass for only the current PowerShell session after the window is closed,
 # the next PowerShell session will open running with the default execution policy.
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -441,3 +564,4 @@ az devops project delete --id $ProjectResult.id --organization "$($AzDOHostURL)$
 # Delete workspace
 Invoke-PowerBIRestMethod -Url "groups/$($BuildWSObj.Id.Guid)" -Method Delete
 #>
+
