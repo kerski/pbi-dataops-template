@@ -1,4 +1,4 @@
-# Part 21 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
+# Part 22 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
 
 These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part22/" target="_blank">Part 22 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with Azure resources that will automatically save Power BI dataflow code in Git and shows you how to run tests using Pester/Gherkin locally and automating those tests in Azure DevOps.
 
@@ -17,7 +17,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 ## Prerequisites
 
 ### Power BI and Azure
--   Power BI Premium Per User license. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
+-   Power BI Premium Per User license assigned to a service account. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
 
 -  Identify the location of your Power BI Service. Please see instructions <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-admin-where-is-my-tenant-located" target="_blank">at this link</a>.  You'll need to convert the readable name to Azure name when prompted to enter the location.  For example, West US 2 would be 'westus2'.
 

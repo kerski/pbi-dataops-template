@@ -429,6 +429,9 @@ if($BuildWSObj.Length -eq 0)
 # Update Paramters
 Set-PowerBIWorkspace -CapacityId $Cap.Id.Guid -Scope Organization -Id $BuildWSObj.Id.Guid 
 
+#Assign service account admin rights to this workspace
+Add-PowerBIWorkspaceUser -Id $BuildWSObj[$BuildWSObj.Length-1].Id.ToString() -AccessRight Admin -UserPrincipalName $SvcUser
+
 Write-Host -ForegroundColor White "NEED YOUR ASSISTANCE! PLEASE now connect the workspace '$($BuildWSName)' to the storage account within '$($ResourceGroupName)'."
 Write-Host -NoNewLine 'When you complete, press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
