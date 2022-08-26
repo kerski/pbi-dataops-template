@@ -60,6 +60,7 @@ $SvcPwd = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($Bstr)
 $AzDOHostURL = "https://dev.azure.com/"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
 $PipelineName = "DataFlow-CI-Part22"
+$PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 # Append this suffix to Azure resource names to keep from naming conflicts
 $RandomSuffix = Get-Random -Minimum 100 -Maximum 999
 # Set Resource Group Name
@@ -442,8 +443,8 @@ $PipelineResult = az pipelines create --name $PipelineName --repository-type "tf
                 --org "$($AzDOHostURL)$($LoginInfo.name)" `
                 --project $ProjectName `
                 --repository $ProjectName `
-                --branch "main" `
-                --yaml-path "DataFlow-CI.yml" --skip-first-run --only-show-errors | ConvertFrom-Json
+                --branch "part22" `
+                --yaml-path "PipelineScripts\PremiumPerUser\DataFlows\DataFlow-CI.yml" --skip-first-run --only-show-errors | ConvertFrom-Json
 
 #Check Result
 if(!$PipelineResult) {
@@ -454,7 +455,7 @@ if(!$PipelineResult) {
 #Get Subscription Information
 $SubInfo = az account show --name $SubName | ConvertFrom-JSON
 # Create as service principal
-$SPResult = az ad sp create-for-rbac --name "DataOps Dataflow $($Suffix)" --role "Storage Blob Data Reader" --scope $STResult.id | ConvertFrom-Json
+$SPResult = az ad sp create-for-rbac --name "DataOps Dataflow $($RandomSuffix)" --role "Storage Blob Data Reader" --scope $STResult.id | ConvertFrom-Json
 
 #Check result
 if(!$SPResult) {
@@ -495,7 +496,7 @@ if(!$VarResult) {
 $VarResult = az pipelines variable create --name "TENANT_ID" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
             --pipeline-name $PipelineName `
-            --project $ProjectName --value $LogInfo.tenantId
+            --project $ProjectName --value $LoginInfo.tenantId
 
 #Check Result
 if(!$VarResult) {
@@ -540,7 +541,7 @@ if(!$VarResult) {
 $VarResult = az pipelines variable create --name "ARM_ID" --only-show-errors `
             --allow-override true --org "$($AzDOHostURL)$($LoginInfo.name)" `
             --pipeline-name $PipelineName `
-            --project $ProjectName --value $BuildWSObj.Id.Guid
+            --project $ProjectName --value $AZServConnection.id
 
 #Check Result
 if(!$VarResult) {

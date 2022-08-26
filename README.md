@@ -61,6 +61,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     - The name of the project you wish to create in Azure DevOps. 
     - The PAT Token (see Prequisites)
     - The name of the Power BI workspace you wish to create.
+    - The name (UPN/email) of the Service account you created in the Prerequisites section.
 
 1. During the course of the install you will be prompted to enter your Microsoft 365 credentials. Depending on your environment you may have a browser tab appear to sign-in. After signing in you can return to the PowerShell window. In addition, if you don't have the Power BI Management Shell or Azure DevOps CLI package installed, you will be asked to install.  Please affirm you wish to install those packages if prompted.
 
@@ -83,9 +84,21 @@ As of June 2022, you cannot easily script the connection between a workspace and
 
 ## Checking the Dataflow pushed to Azure DevOps
 
-With the [Installation Steps](#Installation-Steps) complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. Please navigate to the Repos section of the Azure DevOps project.  Switch to the 'part21' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represents the dataflow.  The image below is an example. 
+With the [Installation Steps](#Installation-Steps) complete, the Azure resource should have automatically picked up on the new dataflow and pushed it to Git. 
+
+1. Please navigate to the Repos section of the Azure DevOps project.  Switch to the 'part22' branch in the Repo and you should see a 'DataFlows' folder that contains the newly pushed 'model.json' file that represents the dataflow.  The image below is an example. 
 
 ![Example of successfully saved file to Git](./images/part20-saved-model.PNG)
+
+2. Next navigate to the pipelines and you will see that the first pipeline is paused.  This is because we need to authorize the use of the service connection.  Click on the paused pipeline and you will see a prompt to "This pipeline needs permission to access a resource before this run can continue".  Click the "View" button.
+
+![This pipeline needs permission to access a resource before this run can continue](./images/part22-authorize.PNG)
+
+3. Click the "Permit" button and select "Permit" again when the pop-up is presented.
+
+![Permit](./images/part22-permit.PNG)
+
+Don't worry about the pipeline running we need to make a few more updates.  Please see the next section.
 
 ## Cloning the Repository and Run Tests
 
@@ -111,7 +124,7 @@ With the [Installation Steps](#InstallationSteps) complete, you will need to fol
 
 6. Make sure to switch the branch to "part22". You can do that by clicking the branch button on the bottom left of Visual Studio Code and then select the "part22" branch when prompted by a dropdown.
 
- <img src="./images/part21-switch-branch-21.PNG" alt="Swith Branch" width="400px"/>
+ <img src="./images/part22-switch-branch-22.PNG" alt="Swith Branch" width="250px"/>
 
 7. Now it's time to setup the test files.  Cut the folder "CI" found in SetupsScripts\PremiumPerUser\DataFlows and paste to DataFlows\{Workspace}\RawSourceExample.  Remember cut not copy, otherwise the tests will run twice.
 
@@ -129,6 +142,16 @@ With the [Installation Steps](#InstallationSteps) complete, you will need to fol
 
 11. Commit and push the changes to Azure DevOps and this will kick off the pipeline.
 
-12. This will run the tests using the Azure Service Connection described in the blog article.
+ <img src="./images/part22-commit.PNG" alt="Run Tests" width="300px"/>
+
+12. Navigate to Azure DevOps and see the results of the pipeline.
+
+ <img src="./images/part22-view-pipeline-results.PNG" alt="Run Tests" width="300px"/>
 
 13. Navigate to the "Test Plans" section of Azure DevOps and locate the published test results under the "Runs" subsection in the navigation.
+
+ <img src="./images/part22-navigate-test-plans.PNG" alt="Run Tests" width="300px"/>
+
+14. Here you can view all the test results and prior test results ran by the pipeline.
+
+ <img src="./images/part22-view-test-results.PNG" alt="Run Tests" width="400px"/>
