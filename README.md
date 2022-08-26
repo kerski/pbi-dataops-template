@@ -142,7 +142,7 @@ With the [Installation Steps](#InstallationSteps) complete, you will need to fol
 
 11. Commit and push the changes to Azure DevOps and this will kick off the pipeline.
 
- <img src="./images/part22-commit.PNG" alt="Run Tests" width="300px"/>
+ <img src="./images/part22-commit-changes.PNG" alt="Run Tests" width="300px"/>
 
 12. Navigate to Azure DevOps and see the results of the pipeline.
 
