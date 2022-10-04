@@ -47,17 +47,13 @@ Azure DevOps is a product that can host a repository (a.k.a. repo).  This repo i
 
 ![Terminal](./images/part22-terminal.png)
 
-7. From the terminal run: "git lfs install" 
-
-![Git LFS](./images/part22-git-lfs.png)
-
-8. From the terminal run: "Get-ChildItem -Path '.' -Recurse | Unblock-File"
+7. From the terminal run: "Get-ChildItem -Path '.' -Recurse | Unblock-File"
 
 This will allow us to run the Powershell scripts locally
 
-9. From the terminal run: "git checkout part23". This will move you to the part23 branch where you should be performing your updates.  You can verify that you are in the right branch by looking at the bottom right of Visual Studio.  If you see "part23", you've successfully completed this step.
+8. From the terminal run: "git checkout part23". This will move you to the part23 branch where you should be performing your updates.  You can verify that you are in the right branch by looking at the bottom right of Visual Studio.  If you see "part23", you've successfully completed this step.
 
-10. Your project is now setup for developing.  Sometimes Visual Studio code will ask you if you want to call Git Fetch on your behalf.  Choose yes and this will provide updates from the repository in Azure DevOps.
+9. Your project is now setup for developing.  Sometimes Visual Studio code will ask you if you want to call Git Fetch on your behalf.  Choose yes and this will provide updates from the repository in Azure DevOps.
 
 # Updating Power BI Files
 
