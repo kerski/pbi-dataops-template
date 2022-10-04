@@ -17,7 +17,7 @@ Scenario: Validate AlignmentDim Schema
 	| Name          | Type  | Format |
 	| Alignment     | string|        |
 	| AlignmentID   | int64 |    0   |
-    | AlignmentKey  | string|    0    |
+    | AlignmentKey  | string|        |
 
 Scenario: Validate AlignmentDim Data
 	Given we have a table called "AlignmentDim"
