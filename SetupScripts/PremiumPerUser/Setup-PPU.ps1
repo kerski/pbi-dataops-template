@@ -30,8 +30,8 @@ $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
-$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part5/Pbi/SampleModel/SampleModel.pbix?raw=true"
-$PipelineName = "DataOpsCI-Part5"
+$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part23/Pbi/SampleModel/SampleModel.pbix?raw=true"
+$PipelineName = "DataOpsCI-Part23"
 
 #Check Inputs
 if(!$BuildWSName -or !$DevWSName -or !$SvcUser -or !$SvcPwd -or !$ProjectName)
@@ -108,7 +108,7 @@ Write-Host -ForegroundColor Cyan "Step 2 of 5: Creating Azure DevOps project"
 #Assumes organization name matches $LogInfo.name and url for Azure DevOps Service is https://dev.azure.com
 $ProjectResult = az devops project create `
                 --name $ProjectName `
-                --description "Part 5 example of Bringing DataOps to Power BI" `
+                --description "Part 23 example of Bringing DataOps to Power BI" `
                 --organization "$($AzDOHostURL)$($LogInfo.name)" `
                 --source-control git `
                 --visibility private `
@@ -138,7 +138,7 @@ if(!$RepoResult) {
 
 #Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
 $PipelineResult = az pipelines create --name $PipelineName --repository-type "tfsgit" `
-                --description "Part 5 example pipeline of Bringing DataOps to Power BI" `
+                --description "Part 23 example pipeline of Bringing DataOps to Power BI" `
                 --org "$($AzDOHostURL)$($LogInfo.name)" `
                 --project $ProjectName `
                 --repository $ProjectName `

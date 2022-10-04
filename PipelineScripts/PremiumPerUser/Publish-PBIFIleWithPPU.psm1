@@ -1,10 +1,41 @@
 ﻿<#
-    Author: John Kerski
-    Description: This script publishes PBI to workspace indentified by WorkspaceId parameter
+    .SYNOPSIS
+    Publish PBI file to workspace using Premium Per User
 
-    Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
+    .DESCRIPTION
+     Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
+
+    .PARAMETER WorkspaceId
+    GUID representing workspace in the service
+
+    .PARAMETER LocalDatasetPath
+    File path to the .pbix file
+
+    .PARAMETER UserName
+    Service Account's UserName
+
+    .PARAMETER Password
+    Service Account's Password
+
+    .PARAMETER Tenant ID
+    App Service Principal's Tenant ID
+
+    .PARAMETER APIUrl
+    Url EndPoint for Power BI API (ex. https://api.powerbi.com/v1.0/myorg)
+
+    .OUTPUTS
+    Microsoft.PowerBI.Common.Api.Reports.Report
+
+    .EXAMPLE
+    $Temp = Publish-PBIFIleWithPPU -WorkspaceId $BuildGroupId `
+                     -LocalDatasetPath $PBIPath `
+                     -UserName $UserName `
+                     -Password $Password `
+                     -TenantId $TenantId `
+                     -APIUrl $PbiApiUrl
+
 #>
-Function Publish-PBIFIleWithPPU { 
+Function Publish-PBIFileWithPPU { 
 		[CmdletBinding()]
 		Param( 
 				[Parameter(Position = 0, Mandatory = $true)][String]$WorkspaceId, 
@@ -22,7 +53,7 @@ Function Publish-PBIFIleWithPPU {
                 } else {
                     Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
                 }
-                #Set Client Secret as Secure String
+                #Set Password as Secure String
                 $Secret = $Password | ConvertTo-SecureString -AsPlainText -Force
                 $Credentials = [System.Management.Automation.PSCredential]::new($UserName,$Secret)
                 #Connect to Power BI
@@ -49,4 +80,4 @@ Function Publish-PBIFIleWithPPU {
 
 
 
-Export-ModuleMember -Function Publish-PBIFIleWithPPU
+Export-ModuleMember -Function Publish-PBIFileWithPPU

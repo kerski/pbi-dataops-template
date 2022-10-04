@@ -7,7 +7,7 @@
 trigger:
   branches:
     include:
-    - refs/heads/part5
+    - refs/heads/part23
 jobs:
 - job: Job_1
   displayName: Agent job 1
@@ -21,3 +21,11 @@ jobs:
       filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
     env:
       PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable
+  - task: PublishTestResults@2
+    displayName: Publish Test Results result.xml
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: results.xml
+      failTaskOnFailedTests: true
+      platform: Azure
+      configuration: Azure

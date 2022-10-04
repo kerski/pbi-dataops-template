@@ -19,6 +19,11 @@ ROW(
 	"ActualValue", _Marvel_Fact_Count
 ),
 ROW(
+	"TestName", "Table: MarvelFact Count should be greater than zero", 
+	"ExpectedValue", 1,
+	"ActualValue", _Marvel_Fact_Count > 1
+),
+ROW(
 	"TestName", "Table: DateDim should be at least 982 rows", 
 	"ExpectedValue", 1,
 	"ActualValue", _Date_Dim_Count >= 982

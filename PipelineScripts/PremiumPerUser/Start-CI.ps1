@@ -8,9 +8,9 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 #Get Working Directory
 $WorkingDir = (& pwd) -replace "\\", '/'
-Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Publish-PBIFIleWithPPU.psm1 -Force
-Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Refresh-DatasetSyncWithPPU.psm1 -Force
-Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Send-XMLAWithPPU.psm1 -Force
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Publish-PBIFileWithPPU.psm1 -Force
+Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Invoke-RefreshDatasetSyncWithPPU.psm1 -Force
+Import-Module $WorkingDir/Pbi/TestingScripts/Pester/4.10.1/Pester.psm1 -Force
 #Set Default Environment Variables 
 $Opts = @{
     TenantId = "${env:TENANT_ID}";
@@ -50,8 +50,8 @@ if(-not $Opts.Password){
 
 #Iterate of Power BI Changes and get the test files
 if($Opts.PbixChanges)
-{	
-	foreach ($File in $Opts.PbixChanges) {
+{
+foreach ($File in $Opts.PbixChanges) {
         #If file exists and not deleted
         if($File)
         {
@@ -61,11 +61,11 @@ if($Opts.PbixChanges)
             $Temp = @([pscustomobject]@{PBIPath=$File;TestFolderPath=$ParentFolder;BuildInfo=$null;RefreshResult=$null})
             $Opts.PbixTracking += $Temp
         }#end if
-	}#end for-each
+}#end for-each
 }
 else
 {
-	Write-Warning "Found no PBI files that have changed."
+Write-Warning "Found no PBI files that have changed."
 }#end if
 
 #Install Powershell Module if Needed
@@ -88,7 +88,7 @@ foreach ($PBIPromote in $Opts.PbixTracking){
                      -Password $Opts.Password `
                      -TenantId $Opts.TenantId `
                      -APIUrl $Opts.PbiApiUrl
-    
+   
     $Opts.PbixTracking[$Iter].BuildInfo = $Temp
 
     $Opts.PbixTracking[$Iter].BuildInfo
@@ -100,126 +100,56 @@ $Iter = 0
 foreach($PBIPromote in $Opts.PbixTracking){
     Write-Host "Checking if file needs refreshing: $($PBIPromote.PBIPath)"
 
-    #If DatasetId property is null then this is a PowerBI report with a dataset needing a refresh
-    if(!$PBIPromote.BuildInfo.DatasetId -ne $null){ 
-        $RefreshResult = Refresh-DatasetSyncWithPPU -WorkspaceId $Opts.BuildGroupId `
+    #If DatasetId property is not null then this is a PowerBI report with a dataset needing a refresh
+    if($PBIPromote.BuildInfo.DatasetId -ne $null){
+        $RefreshResult = Invoke-RefreshDatasetSyncWithPPU -WorkspaceId $Opts.BuildGroupId `
                         -DatasetId $PBIPromote.BuildInfo.DatasetId `
                         -UserName $Opts.UserName `
                         -Password $Opts.Password `
                         -TenantId $Opts.TenantId `
                         -APIUrl $Opts.PbiApiUrl
-        
+    
+        Write-Host $RefreshResult " refresh result"
+
         #If Failed to Refresh stop script
         if($RefreshResult -ne "Completed")
         {
-            Write-Host "##vso[task.logissue type=error]Failed to refresh: $($PBIPromote.PBIPath)"
+            Write-Host "##vso[task.logissue type=error]Failed to Refresh: $($PBIPromote.PBIPath)"
             exit 1
         }
-        else
-        {
+        else{       
             Write-Host "Successfully refreshed: $($PBIPromote.PBIPath)"
         }
     }#end if Power BI Report can be refreshed
-
+    
     $Iter = $Iter + 1
 }#end foreach
 
-
-#Run Tests regardless of changes
-
-#Find all files in working directory
-$PBIsToTest = Get-ChildItem -Path "./pbi" -Recurse | Where-Object {$_ -like "*.pbix"}
-
-#Set Client Secret as Secure String
-$Secret = $Opts.Password | ConvertTo-SecureString -AsPlainText -Force
-$Credentials = [System.Management.Automation.PSCredential]::new($Opts.UserName,$Secret)
-#Connect to Power BI
-Connect-PowerBIServiceAccount -Credential $Credentials
-
-#Get Workspace Information to make sure we get the right Workspacename for XMLA
-$BuildWS = Get-PowerBIWorkspace -Id $Opts.BuildGroupId 
-
-#Setup Failed Test Counts and Results Array
+# Reset Failure Count
 $FailureCount = 0
-$TestResults = @()
 
-$Iter = 0
-foreach($PBITest in $PBIsToTest){
-    #Get the Report Information
-    $TempRpt = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBITest.BaseName
-    $TempOptFile = "$($WorkingDir)/$($TempRpt.Name).xml"
-    
-    #Run Tests
-    #Get parent folder of this file
-    $ParentFolder = Split-Path -Path $PBITest.FullName
-    #Get dax files in this folder
-    $DaxFilesInFolder = Get-ChildItem -Path $ParentFolder | Where-Object {$_ -like "*.*dax"}    
-    Write-Host "Attempting to run tests for: $($PBITest)"
+# Run Tests
+Invoke-Gherkin -Strict -OutputFile results.xml -OutputFormat NUnitXml -ErrorVariable $ErrorCount
 
-    foreach($Test in $DaxFilesInFolder)
-    {
-        Write-Host "Running Tests found in $($Test.FullName)"
+# Retrieve Errors
+#Load into XML
+[System.Xml.XmlDocument]$TempResult = Get-Content "$($WorkingDir)/results.xml"
+$TempFailureCount = [int]$TempResult.'test-results'.failures
+$FailureCount = $TempFailureCount + 0
 
-        $QueryResults = Send-XMLAWithPPU -WorkspaceName $BuildWS.Name `
-                        -DatasetName $TempRpt.Name `
-                        -UserName $Opts.UserName `
-                        -Password $Opts.Password `
-                        -TenantId $Opts.TenantId `
-                        -APIUrl $Opts.PbiApiUrl `
-                        -InputFile $Test.FullName     
-                        
-        #Get Node List
-        [System.Xml.XmlNodeList]$Rows = $QueryResults.GetElementsByTagName("row")
-
-        #Check if Row Count is 0, no test results.
-        if($Rows.Count -eq 0){
-            $FailureCount += 1
-            Write-Host "##vso[task.logissue type=warning]Query in test file $($Test.FullName) returned no results."
-        }#end check of results
-
-        #Iterate through each row of the query results and check test results
-        foreach($Row in $Rows)
-        {
-            #Expects Columns TestName, Expected, Actual Columns, Passed
-            if($Row.ChildNodes.Count -ne 4)
-            {
-                $FailureCount +=1
-                Write-Host "##vso[task.logissue type=error]Query in test file $($Test.FullName) returned no results that did not have 4 columns (TestName, Expected, and Actual)."
-            }
-            else
-            {
-                #Extract Values
-                $TestName = $row.ChildNodes[0].InnerText
-                $ExpectedVal = $row.ChildNodes[1].InnerText
-                $ActualVal = $row.ChildNodes[2].InnerText
-                #Compute whether the test passed
-                $Passed = ($ExpectedVal -eq $ActualVal) -and ($ExpectedVal -and $ActualVal)
-
-                if(-not $Passed)
-                {
-                    $FailureCount +=1
-                    Write-Host "##vso[task.logissue type=error]FAILED!: Test $($TestName). Expected: $($ExpectedVal) != $($ActualVal)"
-                }
-                else
-                {
-                    Write-Host "Test $($TestName) passed. Expected: $($ExpectedVal) == $($ActualVal)"
-                }
-            }
-        }#end foreach row
-    }#end iterating over test files
-    $Iter = $Iter + 1
-}#end foreach PBI files
-
+Write-Host "Failed Test Cases: $($FailureCount)"
 
 #If FailureCount is greater than 1
 if($FailureCount -gt 0)
 {
-    Write-Host "##vso[task.logissue type=error]$($FailureCount) failed test(s). Please resolve"
-    exit 1
+    Write-Host "##vso[task.logissue type=error]($FailureCount) failed test(s). Please resolve."
 }
 else #Promote to Development
 {
     $Iter = 0
+    #Find all files in working directory to promote
+    $PBIsToTest = Get-ChildItem -Path "./pbi" -Recurse | Where-Object {$_ -like "*.pbix"}
+    # Now promote
     foreach($PBIToDev in $PBIsToTest){
         #Get parent folder of this file
         $ParentFolder = Split-Path -Path $PBIToDev.FullName

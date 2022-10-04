@@ -1,8 +1,52 @@
 ﻿<#
-    Author: John Kerski
-    Description: This script issues a DAX query (identified by the InputFile path) via XMLA to the Workspace and Dataset.
+    .SYNOPSIS
+    This script issues a DAX query (identified by the InputFile path) via XMLA to the Workspace and Dataset.
 
+    .DESCRIPTION
+    This script issues a DAX query (identified by the InputFile path) via XMLA to the Workspace and Dataset.
     Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
+
+    $Result = Send-XMLAWithPPU -Workspace $WSName `
+                  -DatasetName $DatasetName `
+                  -UserName $UserName `
+                  -Password $Password `
+                  -TenantId $TenantId `
+                  -APIUrl $PbiApiUrl `
+                  -InputFile $FilePath
+
+    .PARAMETER WorkspaceName
+    Name of workspace in the service
+
+    .PARAMETER DatasetName
+    Name of the dataset in the service
+
+    .PARAMETER UserName
+    Service Account's UserName
+
+    .PARAMETER Password
+    Service Account's Password
+
+    .PARAMETER Tenant ID
+    App Service Principal's Tenant ID
+
+    .PARAMETER APIUrl
+    Url EndPoint for Power BI API (ex. https://api.powerbi.com/v1.0/myorg)
+
+    .PARAMETER InputFile
+    File path to DAX query    
+
+    .OUTPUTS
+    System.Xml.XmlDocument with results of DAX query
+
+    .EXAMPLE
+    $Result = Send-XMLAWithPPU -WorkspaceName $WSName `
+                  -DatasetName $DatasetName `
+                  -UserName $UserName `
+                  -Password $Password `
+                  -TenantId $TenantId `
+                  -APIUrl $PbiApiUrl `
+                  -InputFile $FilePath
+
 #>
 Function Send-XMLAWithPPU { 
 		[CmdletBinding()]
@@ -23,7 +67,7 @@ Function Send-XMLAWithPPU {
                 } else {
                     Install-Module -Name SqlServer
                 }
-                #Set Client Secret as Secure String
+                #Set Password as Secure String
                 $Secret = $Password | ConvertTo-SecureString -AsPlainText -Force
                 $Credentials = [System.Management.Automation.PSCredential]::new($UserName,$Secret)
                 #Replace https with powerbi

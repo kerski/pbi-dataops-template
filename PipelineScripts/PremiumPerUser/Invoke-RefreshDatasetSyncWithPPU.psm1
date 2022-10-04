@@ -1,18 +1,50 @@
 ﻿<#
-    Author: John Kerski
-    Description: This script runs a synchronous refresh of a dataset against the WorkspaceId identified.
+    .SYNOPSIS
+    This script runs a synchronous refresh of a dataset against the WorkspaceId identified.
 
+    .DESCRIPTION
+    This script runs a synchronous refresh of a dataset against the WorkspaceId identified.
     Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
+
+    .PARAMETER WorkspaceId
+    GUID representing workspace in the service
+
+    .PARAMETER DatasetId
+    GUID represnting the dataset in the service
+
+    .PARAMETER UserName
+    Service Account's UserName
+
+    .PARAMETER Password
+    Service Account's Password
+
+    .PARAMETER Tenant ID
+    App Service Principal's Tenant ID
+
+    .PARAMETER APIUrl
+    Url EndPoint for Power BI API (ex. https://api.powerbi.com/v1.0/myorg)
+
+    .OUTPUTS
+    Refresh json as defined is MS Docs: https://learn.microsoft.com/en-us/rest/api/power-bi/datasets/get-refresh-history-in-group#refresh
+
+    .EXAMPLE
+   $RefreshResult = Invoke-RefreshDatasetSyncWithPPU -WorkspaceId $BuildGroupId `
+                  -DatasetId $DatasetId `
+                  -UserName $UserName `
+                  -Password $Password `
+                  -TenantId $TenantId `
+                  -APIUrl $PbiApiUrl
+
 #>
-Function Refresh-DatasetSyncWithPPU { 
+Function Invoke-RefreshDatasetSyncWithPPU { 
 		[CmdletBinding()]
 		Param( 
 				[Parameter(Position = 0, Mandatory = $true)][String]$WorkspaceId, 
 				[Parameter(Position = 1, Mandatory = $true)][String]$DatasetId,
-                [Parameter(Position = 2, Mandatory = $true)][String]$UserName,
-                [Parameter(Position = 3, Mandatory = $true)][String]$Password,
-                [Parameter(Position = 4, Mandatory = $true)][String]$TenantId,
-                [Parameter(Position = 5, Mandatory = $true)][String]$APIUrl
+            [Parameter(Position = 2, Mandatory = $true)][String]$UserName,
+            [Parameter(Position = 3, Mandatory = $true)][String]$Password,
+            [Parameter(Position = 4, Mandatory = $true)][String]$TenantId,
+            [Parameter(Position = 5, Mandatory = $true)][String]$APIUrl
 		) 
 		Process { 
             Try {
@@ -22,7 +54,7 @@ Function Refresh-DatasetSyncWithPPU {
                 } else {
                     Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
                 }
-                #Set Client Secret as Secure String
+                #Set Password as Secure String
                 $Secret = $Password | ConvertTo-SecureString -AsPlainText -Force
                 $Credentials = [System.Management.Automation.PSCredential]::new($UserName,$Secret)
                 #Connect to Power BI
@@ -80,4 +112,4 @@ Function Refresh-DatasetSyncWithPPU {
 	}#End Process
 }#End Function
                   
-Export-ModuleMember -Function Refresh-DatasetSyncWithPPU
+Export-ModuleMember -Function Invoke-RefreshDatasetSyncWithPPU
