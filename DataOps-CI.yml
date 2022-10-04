@@ -26,6 +26,7 @@ jobs:
     inputs:
       testRunner: NUnit
       testResultsFiles: results.xml
+      testRunTitle: Sample Test Results
       failTaskOnFailedTests: true
       platform: Azure
       configuration: Azure
