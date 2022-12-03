@@ -1,6 +1,6 @@
 # "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles with Power BI datasets
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part23/" target="_blank">Part 23 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests and deploys a Power BI report.
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part24/" target="_blank">Part 24 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests and deploys a Power BI report.
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
