@@ -1,0 +1,111 @@
+{
+  "name": "72058f8f-3867-4df8-af3f-2499050103e2",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "relationships": [
+      {
+        "name": "c536afe1-3f60-4922-8aaa-c9e5754c7744",
+        "fromTable": "MarvelFact",
+        "fromColumn": "DateID",
+        "toTable": "DateDim",
+        "toColumn": "DateID"
+      },
+      {
+        "name": "99b81a18-76e8-4806-a3e6-d8ab605cc07a",
+        "fromTable": "MarvelFact",
+        "fromColumn": "EyeID",
+        "toTable": "EyeColorDim",
+        "toColumn": "EyeID"
+      },
+      {
+        "name": "56999b72-f4f6-442c-9f2d-65422acff5af",
+        "fromTable": "MarvelFact",
+        "fromColumn": "AlignmentID",
+        "toTable": "AlignmentDim",
+        "toColumn": "AlignmentID"
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DateDimBlank",
+        "kind": "m",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "WebURL",
+        "description": "Use: https://raw.githubusercontent.com/fivethirtyeight/data/master/comic-characters/marvel-wikia-data.csv",
+        "kind": "m",
+        "queryGroup": "Parameters",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ]
+      }
+    ],
+    "queryGroups": [
+      {
+        "folder": "Dimensions",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "folder": "Fact",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "folder": "Parameters",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "2"
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.111.590.0 (22.11)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"MarvelFact\",\"DateDim\",\"EyeColorDim\",\"AlignmentDim\",\"DateDimBlank\",\"MarvelSource\",\"WebURL\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      }
+    ]
+  }
+}

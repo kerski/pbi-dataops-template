@@ -1,0 +1,14 @@
+{
+  "type": "calculated",
+  "name": "Month Year",
+  "dataType": "string",
+  "isDataTypeInferred": true,
+  "sortByColumn": "MonthYearSort",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

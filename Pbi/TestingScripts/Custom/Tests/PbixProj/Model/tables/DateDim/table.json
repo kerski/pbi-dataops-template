@@ -1,0 +1,19 @@
+{
+  "name": "DateDim",
+  "partitions": [
+    {
+      "name": "DateDim-e3a1d953-1356-4aad-8dfb-22648d5b0c23",
+      "mode": "import",
+      "queryGroup": "Dimensions",
+      "source": {
+        "type": "m"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

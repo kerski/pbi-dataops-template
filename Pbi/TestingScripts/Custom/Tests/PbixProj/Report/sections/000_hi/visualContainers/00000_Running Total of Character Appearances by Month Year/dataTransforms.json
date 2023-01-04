@@ -1,0 +1,205 @@
+{
+  "projectionOrdering": {
+    "Category": [
+      0
+    ],
+    "Y": [
+      1
+    ],
+    "Y2": [
+      2
+    ]
+  },
+  "projectionActiveItems": {
+    "Category": [
+      {
+        "queryRef": "DateDim.Month Year",
+        "suppressConcat": false
+      }
+    ]
+  },
+  "queryMetadata": {
+    "Select": [
+      {
+        "Restatement": "Month Year",
+        "Name": "DateDim.Month Year",
+        "Type": 2048
+      },
+      {
+        "Restatement": "Running Total of Character Appearances",
+        "Name": "MarvelFact.Running Total of Character Appearances",
+        "Type": 3,
+        "Format": "#,0"
+      },
+      {
+        "Restatement": "Number of Characters2",
+        "Name": "MarvelFact.Number of Characters",
+        "Type": 3,
+        "Format": "#,0"
+      }
+    ],
+    "Filters": [
+      {
+        "type": 0,
+        "expression": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DateDim"
+              }
+            },
+            "Property": "Month Year"
+          }
+        }
+      },
+      {
+        "type": 2,
+        "expression": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MarvelFact"
+              }
+            },
+            "Property": "Running Total of Character Appearances"
+          }
+        }
+      },
+      {
+        "type": 2,
+        "expression": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "MarvelFact"
+              }
+            },
+            "Property": "Number of Characters"
+          }
+        }
+      },
+      {
+        "type": 0,
+        "expression": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DateDim"
+              }
+            },
+            "Property": "Date"
+          }
+        }
+      }
+    ]
+  },
+  "visualElements": [
+    {
+      "DataRoles": [
+        {
+          "Name": "Category",
+          "Projection": 0,
+          "isActive": true
+        },
+        {
+          "Name": "Y",
+          "Projection": 1,
+          "isActive": false
+        },
+        {
+          "Name": "Y2",
+          "Projection": 2,
+          "isActive": false
+        }
+      ]
+    }
+  ],
+  "selects": [
+    {
+      "displayName": "Month Year",
+      "queryName": "DateDim.Month Year",
+      "roles": {
+        "Category": true
+      },
+      "sort": 1,
+      "sortOrder": 0,
+      "type": {
+        "category": null,
+        "underlyingType": 1
+      },
+      "expr": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "DateDim"
+            }
+          },
+          "Property": "Month Year"
+        }
+      }
+    },
+    {
+      "displayName": "Running Total of Character Appearances",
+      "format": "#,0",
+      "queryName": "MarvelFact.Running Total of Character Appearances",
+      "roles": {
+        "Y": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "MarvelFact"
+            }
+          },
+          "Property": "Running Total of Character Appearances"
+        }
+      }
+    },
+    {
+      "displayName": "Number of Characters2",
+      "format": "#,0",
+      "queryName": "MarvelFact.Number of Characters",
+      "roles": {
+        "Y2": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "MarvelFact"
+            }
+          },
+          "Property": "Number of Characters"
+        }
+      }
+    },
+    {
+      "displayName": "Date Filter",
+      "queryName": "DateDim.Date Filter",
+      "roles": {},
+      "type": {
+        "category": null,
+        "underlyingType": 1
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "DateDim"
+            }
+          },
+          "Property": "Date Filter"
+        }
+      }
+    }
+  ]
+}

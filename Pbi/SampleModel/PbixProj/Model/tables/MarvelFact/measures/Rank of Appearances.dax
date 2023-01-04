@@ -1,0 +1,5 @@
+
+RANKX (
+    ALLEXCEPT ( 'MarvelFact', AlignmentDim[Alignment] ),
+    CALCULATE ( SUM ( 'MarvelFact'[Appearances] ) )
+)

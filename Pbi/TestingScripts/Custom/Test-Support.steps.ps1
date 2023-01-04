@@ -1,8 +1,12 @@
+<# Note: Started to add '__' prefix for variables that are referenced in downstream tests
+   Not all have been updated as of December 2022
+#>
+
 # Setup before each feature
 BeforeEachFeature {
   #Install Powershell Module if Needed
   if (Get-Module -ListAvailable -Name "MicrosoftPowerBIMgmt") {
-    Write-Host -ForegroundColor Cyan "MicrosoftPowerBIMgmt already installed"
+    #Write-Host -ForegroundColor Cyan "MicrosoftPowerBIMgmt already installed"
   } else {
     Install-Module -Name MicrosoftPowerBIMgmt -Scope CurrentUser -AllowClobber -Force
   }
@@ -15,7 +19,7 @@ Given 'that we have access to the Power BI Report named "(?<PBIFile>[a-zA-Z\s].*
   #Check if we are running locally or in a pipeline
   $IsLocal = $False
   $IsFileOpen = $False
-  $PBIFileToTest = $Null
+  $__PBIFileToTest = $Null
 
   if(${env:BUILD_SOURCEVERSION}) # assumes this only exists in Azure Pipelines
   {
@@ -40,13 +44,16 @@ Given 'that we have access to the Power BI Report named "(?<PBIFile>[a-zA-Z\s].*
     $ConnectionStatus = Connect-PowerBIServiceAccount -Credential $Credentials 
     
     #Setup variables to be used for connections
-    $PBIFileToTest = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBIFile
+    $__PBIFileToTest = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBIFile
     $BuildWS = Get-PowerBIWorkspace -Id $Opts.BuildGroupId
 
     #Replace https with powerbi
     $PBIEndpoint = $Opts.PBIAPIUrl.Replace("https","powerbi")
 
-    $PBIFileToTest | Should -Not -BeNullOrEmpty
+    # Add Title to property for use later
+    $__PBIFileToTest | Add-Member -NotePropertyName Title -NotePropertyValue $PBIFile
+    
+    $__PBIFileToTest | Should -Not -BeNullOrEmpty
   }
   else #Running locally
   {    
@@ -59,18 +66,18 @@ Given 'that we have access to the Power BI Report named "(?<PBIFile>[a-zA-Z\s].*
     $IsLocal = $True
     # Make sure we got files back
     $PBIFilesOpened | Should -Not -BeNullOrEmpty
-    $PBIFileToTest = $null
+    $__PBIFileToTest = $null
     #Check to see if its the right file
     foreach ($X in $PBIFilesOpened) {
       if ($X.Title -eq $PBIFile) {
-        $PBIFileToTest = $X
+        $__PBIFileToTest = $X
       }
     }
   
     # Checking to see if the file is open to conduct a test
-    if ($PBIFileToTest) {
+    if ($__PBIFileToTest) {
       $IsFileOpen = $true
-      $PBIFileToTest | Should -Not -BeNullOrEmpty
+      $__PBIFileToTest | Should -Not -BeNullOrEmpty
     }
     {
       $IsFileOpen = $false
@@ -95,10 +102,10 @@ Given 'we have the (?<TestFile>[a-zA-Z\s].*) file' {
   param($TestFile)
   if ($IsFileOpen -or $IsLocal -eq $False) {
     #Get dax files in this folder
-    $FilePathToTest = "pbi\$($PBIFileToTest.Title)"
+    $FilePathToTest = "pbi\$($__PBIFileToTest.Title)"
     if($IsLocal -eq $False)
     {
-      $FilePathToTest = "pbi/$($PBIFileToTest.Name)"
+      $FilePathToTest = "pbi/$($__PBIFileToTest.Name)"
     }#end devops check
 
     $DaxFilesInFolder = Get-ChildItem -Path $FilePathToTest | Where-Object { $_ -like "*.*dax" }
@@ -137,14 +144,14 @@ Then 'the (?<TestFile>[a-zA-Z\s].*) file should pass its tests' {
       #Connect to Power BI and run DAX Query
       if($IsLocal)
       {
-        $Result = Invoke-ASCmd -Server "localhost:$($PBIFileToTest.Port)" `
-        -Database $PBIFileToTest.DatabaseName `
+        $Result = Invoke-ASCmd -Server "localhost:$($__PBIFileToTest.Port)" `
+        -Database $__PBIFileToTest.DatabaseName `
         -InputFile $FileToTest.FullName
       }
       else
       {
         $Result = Invoke-ASCmd -Server "$($PBIEndpoint)/$($BuildWS.Name)" `
-        -Database $PBIFileToTest.Name `
+        -Database $__PBIFileToTest.Name `
         -InputFile $FileToTest.FullName `
         -Credential $Credentials `
         -TenantId $Opts.TenantId
@@ -214,8 +221,8 @@ And 'we have the schema for "(?<TableName>[a-zA-Z\s].*)"' {
     $WorkingDir = (& pwd) 
     Import-Module $WorkingDir\Pbi\TestingScripts\Custom\Get-DatasetSchemaFromLocal.psm1 -Force  
 
-    $DatasetSchema = Get-DatasetSchemaFromLocal -PBIPort $PBIFileToTest.Port `
-    -PBIDatasetID $PBIFileToTest.DatabaseName `
+    $DatasetSchema = Get-DatasetSchemaFromLocal -PBIPort $__PBIFileToTest.Port `
+    -PBIDatasetID $__PBIFileToTest.DatabaseName `
     -ScriptFileLocation $Config.SchemaScriptPath `
     -TabularEditorPath $Config.TabularEditorPath    
   }
@@ -225,7 +232,7 @@ And 'we have the schema for "(?<TableName>[a-zA-Z\s].*)"' {
     Import-Module $WorkingDir/Pbi/TestingScripts/Custom/Get-DatasetSchemaFromService.psm1 -Force
 
     $DatasetSchema = Get-DatasetSchemaFromService -WorkspaceName $BuildWS.Name `
-        -DatasetName $PBIFileToTest.Name `
+        -DatasetName $__PBIFileToTest.Name `
         -UserName $Opts.UserName `
         -Password $Opts.Password `
         -TenantId $Opts.TenantId `
@@ -292,14 +299,14 @@ Given 'we have a table called "(?<TableName>[a-zA-Z\s].*)"' {
   #Connect to Power BI and run DAX Query
   if($IsLocal)
   {
-    $Result = Invoke-ASCmd -Server "localhost:$($PBIFileToTest.Port)" `
-    -Database $PBIFileToTest.DatabaseName `
+    $Result = Invoke-ASCmd -Server "localhost:$($__PBIFileToTest.Port)" `
+    -Database $__PBIFileToTest.DatabaseName `
     -Query $TableQuery
   }
   else
   {
     $Result = Invoke-ASCmd -Server "$($PBIEndpoint)/$($BuildWS.Name)" `
-    -Database $PBIFileToTest.Name `
+    -Database $__PBIFileToTest.Name `
     -Query $TableQuery `
     -Credential $Credentials `
     -TenantId $Opts.TenantId
@@ -339,14 +346,14 @@ And 'the values of "(?<ColumnName>[a-zA-Z\s].*)" matches this regex: "(?<Regex>[
   #Connect to Power BI and run DAX Query
   if($IsLocal)
   {
-    $Result = Invoke-ASCmd -Server "localhost:$($PBIFileToTest.Port)" `
-    -Database $PBIFileToTest.DatabaseName `
+    $Result = Invoke-ASCmd -Server "localhost:$($__PBIFileToTest.Port)" `
+    -Database $__PBIFileToTest.DatabaseName `
     -Query $ValQuery
   }
   else
   {
     $Result = Invoke-ASCmd -Server "$($PBIEndpoint)/$($BuildWS.Name)" `
-    -Database $PBIFileToTest.Name `
+    -Database $__PBIFileToTest.Name `
     -Query $ValQuery `
     -Credential $Credentials `
     -TenantId $Opts.TenantId

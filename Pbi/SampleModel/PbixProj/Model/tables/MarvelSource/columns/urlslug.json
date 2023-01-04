@@ -1,0 +1,17 @@
+{
+  "name": "urlslug",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "urlslug",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

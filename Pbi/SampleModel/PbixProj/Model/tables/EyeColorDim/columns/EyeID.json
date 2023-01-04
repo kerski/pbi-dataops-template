@@ -1,0 +1,13 @@
+{
+  "name": "EyeID",
+  "dataType": "int64",
+  "sourceColumn": "EyeID",
+  "formatString": "0",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

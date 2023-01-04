@@ -1,0 +1,17 @@
+{
+  "name": "ALIGN",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "ALIGN",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

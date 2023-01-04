@@ -1,0 +1,17 @@
+{
+  "name": "GSM",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "GSM",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

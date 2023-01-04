@@ -1,0 +1,13 @@
+{
+  "name": "Appearances",
+  "dataType": "int64",
+  "sourceColumn": "Appearances",
+  "formatString": "0",
+  "summarizeBy": "sum",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

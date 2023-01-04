@@ -1,6 +1,6 @@
 # "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles with Power BI datasets
 
-These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part24/" target="_blank">Part 24 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests and deploys a Power BI report.
+These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part25/" target="_blank">Part 25 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with a pipeline that tests and deploys a Power BI report.
 
 > ***Important Note #1**: This guide is customized to Power BI for U.S. Commercial environment. If you are trying to set this up for another Microsoft cloud environment (like U.S. Gov Cloud), please check Microsoft's documentation for the appropriate URLs. They will be different from the U.S. Commercial environment.*
 
@@ -11,8 +11,12 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 1. [Prerequisites](#Prerequisites)
 1. [Installation Steps](#Installation-Steps)
 1. [Priming the Pipeline](#Priming-the-Pipeline)
-1. [Running the Pipeline](#Running-the-Pipeline)
-1. [Failed Pipeline](#Failed-Pipeline-Example)
+1. Version Control
+    1. [Cloning the Project](./documentation/clone-project.md)
+    1. [Tracking Changes](./documentation/tracking-changes.md)
+1. Testing
+    1. [Generating Tests](./generate-tests.md)
+    1. [Running Tests](./run-tests.md)
 
 ## Prerequisites
 
@@ -35,11 +39,17 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 - For Azure DevOps you must be a member of the Project Collection Administrators group, the Organization Owner, or have the Create new projects permission set to Allow. 
 
+### pbi-tools
+
+- Please install pbi-tools.  Installation instructions are <a href="https://pbi.tools/tutorials/getting-started-cli.html" target="_blank">at this link.</a>
+
+- Please note that Power BI desktop must not be installed from the Microsoft Store, and you will need to make sure pbi-tools is added to your environment PATH variable.
+
 ## Installation Steps
 
 ### Create Power BI Workspaces and Create Azure DevOps project
 1. Open PowerShell Version 7 and enter the following script:
-    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part23/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
+    > Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kerski/pbi-dataops-template/part25/SetupScripts/PremiumPerUser/Setup-PPU.ps1" -OutFile "./Setup-PPU.ps1"
 
     ***Important Note #3**: You may need to run Unblock-File ./Setup-PPU.ps1 depending on your PowerShell execution policies.*
     

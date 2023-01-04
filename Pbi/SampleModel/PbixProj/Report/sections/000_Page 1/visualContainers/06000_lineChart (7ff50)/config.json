@@ -1,0 +1,87 @@
+{
+  "name": "7ff5063be9393370363c",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 762.36123348017622,
+        "y": 7.894273127753304,
+        "z": 6000,
+        "width": 517.63876651982378,
+        "height": 351.85903083700441,
+        "tabOrder": 6000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "lineChart",
+    "projections": {
+      "Category": [
+        {
+          "queryRef": "DateDim.Month Year",
+          "active": true
+        }
+      ],
+      "Y": [
+        {
+          "queryRef": "MarvelFact.Running Total of Character Appearances"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "d",
+          "Entity": "DateDim",
+          "Type": 0
+        },
+        {
+          "Name": "m",
+          "Entity": "MarvelFact",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "d"
+              }
+            },
+            "Property": "Month Year"
+          },
+          "Name": "DateDim.Month Year"
+        },
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "m"
+              }
+            },
+            "Property": "Running Total of Character Appearances"
+          },
+          "Name": "MarvelFact.Running Total of Character Appearances"
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "vcObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Running Total of Character Appearances by Month Year'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

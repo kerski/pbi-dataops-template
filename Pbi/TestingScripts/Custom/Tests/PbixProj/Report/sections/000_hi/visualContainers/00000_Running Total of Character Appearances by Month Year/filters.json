@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Filterc5f35fcab3f1e05ceccc",
+    "expression": {
+      "Column": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "DateDim"
+          }
+        },
+        "Property": "Month Year"
+      }
+    },
+    "type": "Categorical",
+    "howCreated": 0,
+    "objects": {},
+    "isHiddenInViewMode": true,
+    "isLockedInViewMode": false
+  },
+  {
+    "name": "Filter90c4c3f550580d997efd",
+    "expression": {
+      "Measure": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "MarvelFact"
+          }
+        },
+        "Property": "Running Total of Character Appearances"
+      }
+    },
+    "type": "Advanced",
+    "howCreated": 0,
+    "isHiddenInViewMode": false,
+    "isLockedInViewMode": true
+  },
+  {
+    "name": "Filterf094be9ceb66e36810ac",
+    "expression": {
+      "Measure": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "MarvelFact"
+          }
+        },
+        "Property": "Number of Characters"
+      }
+    },
+    "type": "Advanced",
+    "howCreated": 0,
+    "isHiddenInViewMode": false,
+    "isLockedInViewMode": true
+  },
+  {
+    "name": "Filterbf8a9db39ca54daeef03",
+    "expression": {
+      "Column": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "DateDim"
+          }
+        },
+        "Property": "Date"
+      }
+    },
+    "type": "Categorical",
+    "howCreated": 1,
+    "objects": {},
+    "isHiddenInViewMode": false
+  }
+]

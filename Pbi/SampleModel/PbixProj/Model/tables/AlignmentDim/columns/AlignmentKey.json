@@ -1,0 +1,12 @@
+{
+  "name": "AlignmentKey",
+  "dataType": "string",
+  "sourceColumn": "AlignmentKey",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

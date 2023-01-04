@@ -1,0 +1,13 @@
+
+VAR MinDate =
+    FORMAT ( MIN ( 'DateDim'[Date] ), "MMMM, YYYY" )
+VAR MaxDate =
+    FORMAT ( MAX ( 'DateDim'[Date] ), "MMMM, YYYY" )
+VAR SelDate =
+    SELECTEDVALUE ( 'DateDim'[Date], "X" )
+RETURN
+    IF (
+        SelDate = "X",
+        "between " & MinDate & " and " & MaxDate,
+        "for the month of " & FORMAT ( SelDate, "MMMM, YYYY" )
+    )

@@ -1,0 +1,17 @@
+{
+  "name": "ID",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "ID",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "objects": {
+    "dataPoint": [
+      {
+        "properties": {
+          "fill": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Aggregation": {
+                    "Expression": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "EyeColorDim"
+                          }
+                        },
+                        "Property": "Eye Color"
+                      }
+                    },
+                    "Function": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selector": {
+          "data": [
+            {
+              "dataViewWildcard": {
+                "matchingOption": 1
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "projectionOrdering": {
+    "Category": [
+      1
+    ],
+    "Y": [
+      0
+    ]
+  },
+  "projectionActiveItems": {
+    "Category": [
+      {
+        "queryRef": "EyeColorDim.Eye Color",
+        "suppressConcat": false
+      }
+    ]
+  },
+  "queryMetadata": {
+    "Select": [
+      {
+        "Restatement": "ID",
+        "Name": "CountNonNull(MarvelFact.ID)",
+        "Type": 3
+      },
+      {
+        "Restatement": "Eye Color",
+        "Name": "EyeColorDim.Eye Color",
+        "Type": 2048
+      }
+    ],
+    "Filters": [
+      {
+        "type": 2,
+        "expression": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "MarvelFact"
+                  }
+                },
+                "Property": "ID"
+              }
+            },
+            "Function": 5
+          }
+        }
+      },
+      {
+        "type": 0,
+        "expression": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "EyeColorDim"
+              }
+            },
+            "Property": "Eye Color"
+          }
+        }
+      }
+    ]
+  },
+  "visualElements": [
+    {
+      "DataRoles": [
+        {
+          "Name": "Category",
+          "Projection": 1,
+          "isActive": true
+        },
+        {
+          "Name": "Y",
+          "Projection": 0,
+          "isActive": false
+        }
+      ]
+    }
+  ],
+  "selects": [
+    {
+      "displayName": "ID",
+      "queryName": "CountNonNull(MarvelFact.ID)",
+      "roles": {
+        "Y": true
+      },
+      "sort": 2,
+      "sortOrder": 0,
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "Aggregation": {
+          "Expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "MarvelFact"
+                }
+              },
+              "Property": "ID"
+            }
+          },
+          "Function": 5
+        }
+      }
+    },
+    {
+      "displayName": "Eye Color",
+      "queryName": "EyeColorDim.Eye Color",
+      "roles": {
+        "Category": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 1
+      },
+      "expr": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "EyeColorDim"
+            }
+          },
+          "Property": "Eye Color"
+        }
+      }
+    },
+    {
+      "displayName": "First Eye Color",
+      "queryName": "Min(EyeColorDim.Eye Color)",
+      "roles": {},
+      "type": {
+        "category": null,
+        "underlyingType": 1
+      },
+      "expr": {
+        "Aggregation": {
+          "Expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "EyeColorDim"
+                }
+              },
+              "Property": "Eye Color"
+            }
+          },
+          "Function": 3
+        }
+      }
+    }
+  ]
+}

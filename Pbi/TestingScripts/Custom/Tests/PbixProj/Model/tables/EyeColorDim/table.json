@@ -1,0 +1,23 @@
+{
+  "name": "EyeColorDim",
+  "partitions": [
+    {
+      "name": "EyeColorDim-9e3c8afc-012c-44ec-9c61-96893c06fa7b",
+      "mode": "import",
+      "queryGroup": "Dimensions",
+      "source": {
+        "type": "m"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    },
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    }
+  ]
+}

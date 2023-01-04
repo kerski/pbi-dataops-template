@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Filter0899c423789a87d8198e",
+    "expression": {
+      "Measure": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "MarvelFact"
+          }
+        },
+        "Property": "Number of Characters"
+      }
+    },
+    "type": "Advanced",
+    "howCreated": 0,
+    "isHiddenInViewMode": false,
+    "isLockedInViewMode": true
+  }
+]

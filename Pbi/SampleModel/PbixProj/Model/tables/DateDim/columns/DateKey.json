@@ -1,0 +1,12 @@
+{
+  "name": "DateKey",
+  "dataType": "string",
+  "sourceColumn": "DateKey",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

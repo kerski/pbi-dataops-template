@@ -1,0 +1,23 @@
+{
+  "name": "MarvelFact",
+  "partitions": [
+    {
+      "name": "MarvelFact-6bd788f7-6397-4a40-bbcd-b7a7355b7188",
+      "mode": "import",
+      "queryGroup": "Fact",
+      "source": {
+        "type": "m"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "MarvelSource",
+  "isHidden": true,
+  "partitions": [
+    {
+      "name": "MarvelSource-9b980f40-8504-413c-98b2-7be27f4146c9",
+      "mode": "import",
+      "source": {
+        "type": "m"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

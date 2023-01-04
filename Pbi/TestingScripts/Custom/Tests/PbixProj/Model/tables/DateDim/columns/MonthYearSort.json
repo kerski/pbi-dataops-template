@@ -1,0 +1,17 @@
+{
+  "name": "MonthYearSort",
+  "dataType": "int64",
+  "sourceColumn": "MonthYearSort",
+  "formatString": "0",
+  "summarizeBy": "sum",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"DataType\"]"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Filter59a03a7dd9197aee7639",
+    "expression": {
+      "Column": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "DateDim"
+          }
+        },
+        "Property": "Date"
+      }
+    },
+    "type": "Categorical",
+    "howCreated": 0,
+    "isHiddenInViewMode": false,
+    "isLockedInViewMode": true
+  }
+]

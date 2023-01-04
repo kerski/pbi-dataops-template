@@ -1,0 +1,17 @@
+{
+  "name": "SEX",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "SEX",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

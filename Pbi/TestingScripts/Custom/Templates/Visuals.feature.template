@@ -1,0 +1,42 @@
+@Visual
+Feature: {PBI_FILE} Visuals
+
+Background: {PBI_FILE} Configuration Setup
+    Given that we have access to the Power BI Report named "{PBI_FILE}"
+    And that we have the Report configuration files
+
+Scenario: Validate Report Settings
+    Given that we have the report settings
+    Then the default section is the 1st section
+    Then all report-level measures have a prefix: "{MEASURE_PREFIX}"
+    And the report uses a custom theme named "{THEME_FILE}"
+    And the Persistent Filters setting is disabled
+    And the Visual Option "Hide the visual header in reading view" is disabled 
+    And the Visual Option "Use the modern visual header with updated styling options" is enabled
+    And the Visual Option "Change default visual interaction from cross highlighting to cross filtering" is disabled
+    And the Export data setting is "export summarized data only"
+    And the Filtering experience "Allow users to change filter types" is enabled 
+    And the Filtering experience "Enable search for the filter pane" is enabled
+    And the Cross-report drillthrough setting "Allow visuals in this report to use drillthrough targets from other reports" is disabled
+    And the Personalize visuals setting "Allow report readers to personalize visuals to suit their needs" is disabled
+    And the Developer Mode setting "Turn on developer mode for custom visuals for this session" is disabled
+    And the Default summarizations setting "For aggregated fields, always show the default summarization type" is enabled
+
+Scenario Outline: Validate Section Settings
+    Given that we have the section: <Section>
+    Then the section has their canvas set with the background image named "{IMAGE_FILE}"
+    And the section has a width of 1280px and a height of 720px
+
+    Scenarios: Sections
+    | Section |
+{SECTIONS}
+
+Scenario Outline: Validate Non Decorative Visuals
+    Given that we have the <VisualType> with the ID <VisualID> located in section: <Section>. Config Path: <ConfigPath>
+    Then the visual should have a title. Config Path: <ConfigPath>
+    And ensure alt text is added to the visual if it is a non-decorative visual. Config Path: <ConfigPath>
+    And all visual level filters for the visual are hidden or locked in the filter pane. Config Path: <ConfigPath>
+    
+    Scenarios: Visuals
+    | Section | VisualType  | VisualID | ConfigPath |
+{VISUALS}

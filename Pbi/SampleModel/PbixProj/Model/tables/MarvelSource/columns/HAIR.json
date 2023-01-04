@@ -1,0 +1,17 @@
+{
+  "name": "HAIR",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "HAIR",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

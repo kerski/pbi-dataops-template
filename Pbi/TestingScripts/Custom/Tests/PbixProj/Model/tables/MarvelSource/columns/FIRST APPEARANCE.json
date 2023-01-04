@@ -1,0 +1,17 @@
+{
+  "name": "FIRST APPEARANCE",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "FIRST APPEARANCE",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+let
+    Source = MarvelSource,
+    #"Removed Other Columns" = Table.SelectColumns(Source,{"FIRST APPEARANCE", "Year"}),
+    #"Split Column by Delimiter" = Table.SplitColumn(#"Removed Other Columns", "FIRST APPEARANCE", Splitter.SplitTextByDelimiter("-", QuoteStyle.Csv), {"FIRST APPEARANCE.1", "FIRST APPEARANCE.2"}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"FIRST APPEARANCE.1", type text}, {"FIRST APPEARANCE.2", Int64.Type}}),
+    #"Added Custom" = Table.AddColumn(#"Changed Type1", "Date", each Date.FromText([FIRST APPEARANCE.1]&" 1, "&Text.From([Year]))),
+    #"Filtered Rows" = Table.SelectRows(#"Added Custom", each ([Date] <> null)),
+    #"Sorted Rows" = Table.Sort(#"Filtered Rows",{{"Date", Order.Ascending}}),
+    #"Removed Columns" = Table.RemoveColumns(#"Sorted Rows",{"FIRST APPEARANCE.1", "FIRST APPEARANCE.2", "Year"}),
+    #"Added Custom1" = Table.AddColumn(#"Removed Columns", "EndDate", each Date.From(DateTime.LocalNow())),
+    #"Filtered Rows1" = Table.SelectRows(#"Added Custom1", let earliest = List.Min(#"Added Custom1"[Date]) in each [Date] = earliest),
+    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows1", {"Date"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Duplicates",{{"Date", "StartDate"}}),
+    #"Added Custom2" = Table.AddColumn(#"Renamed Columns", "Dates", each {Number.From([StartDate])..Number.From([EndDate])}),
+    #"Expanded Dates" = Table.ExpandListColumn(#"Added Custom2", "Dates"),
+    #"Changed Type2" = Table.TransformColumnTypes(#"Expanded Dates",{{"Dates", type date}}),
+    #"Filter1stMonth" = Table.SelectRows(#"Changed Type2", each Date.Day([Dates]) = 1),
+    #"Removed Columns1" = Table.RemoveColumns(#"Filter1stMonth",{"StartDate", "EndDate"}),
+    #"Added Index" = Table.AddIndexColumn(#"Removed Columns1", "Index", 1, 1, Int64.Type),
+    #"Reordered Columns" = Table.ReorderColumns(#"Added Index",{"Index", "Dates"}),
+    #"Added Custom3" = Table.AddColumn(#"Reordered Columns", "DateKey", each Date.ToText([Dates],"MMM-yyyy")),
+    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom3",{{"Dates", "Date"}, {"Index", "DateID"}}),
+    #"Appended Query" = Table.Combine({#"Renamed Columns1", DateDimBlank}),
+    #"Sorted Rows1" = Table.Sort(#"Appended Query",{{"DateID", Order.Ascending}}),
+    #"Replaced Value" = Table.ReplaceValue(#"Sorted Rows1","","Jan-0001",Replacer.ReplaceValue,{"DateKey"}),
+    #"Added Custom4" = Table.AddColumn(#"Replaced Value", "MonthYearSort", each Date.Year([Date])*100 + Date.Month([Date]))
+in
+    #"Added Custom4"

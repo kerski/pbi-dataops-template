@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Filter192cf877ce584585d833",
+    "expression": {
+      "Column": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "AlignmentDim"
+          }
+        },
+        "Property": "Alignment"
+      }
+    },
+    "type": "Categorical",
+    "howCreated": 0,
+    "isHiddenInViewMode": false,
+    "isLockedInViewMode": true
+  }
+]

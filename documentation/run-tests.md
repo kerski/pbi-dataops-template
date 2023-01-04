@@ -12,8 +12,12 @@ These instructions define how to run tests locally and the taxonomy of the tests
         - [Schema Tests](#schema-tests)
         - [Regular Expression Tests](#regex-tests)
         - [DAX Tests](#dax-tests)
+        - [Visual Tests for Report](#visual-tests-for-reports)
+        - [Visual Tests for Sections](#visual-tests-for-sections)
+        - [Visual Tests for Visuals](#visual-tests-for-visuals)
 
 2. [Running Tests](#running-tests)
+    - [Running Specific Test](#running-a-specific-test)
 
 ## The Testing Structure
 
@@ -171,6 +175,155 @@ returns an [acceptable schema](#samplemodeldaxfeature) and all the
 expected values equal the actual values in the query results, the test
 will pass.
 
+#### Visual Tests for Reports
+
+##### Given that we have the report settings
+This verifies that a PbixProj folder exists for the report and has extracted data using pbi-tools.
+
+##### Then the default section is the {1st or 2nd or 3rd...} section
+This verifies that the nth tab (typically 1st) is the default tab that opens in the Power BI service for the report.  Often when working on a report it's easy to save and publish on a tab that is not considered the default.  This helps verify that's not an issue.
+
+##### Then all report-level measures have a prefix: "{MEASURE_PREFIX}"
+
+For measures created on "thin" reports or reports that are connected to a Power BI dataset, you can implement a prefix naming convention using the parameter {MEASURE_PREFIX}.
+
+##### And the report uses a custom theme named "{THEME_FILE}"
+
+Accepts {THEME_FILE} name and will verify the report uses that theme file.
+
+##### And the Persistent Filters setting is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below.
+
+![Persistent Filters](./images/part25-persistent-filters.png)
+
+##### And the Visual Option "Hide the visual header in reading view" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below (outlined in orange).
+
+![Visual Option 1](./images/part25-visual-options-1.png)
+
+##### And the Visual Option "Use the modern visual header with updated styling options" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below (outlined in orange).
+
+![Visual Option 2](./images/part25-visual-options-2.png)
+
+##### And the Visual Option "Change default visual interaction from cross highlighting to cross filtering" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below (outlined in orange).
+
+![Visual Option 3](./images/part25-visual-options-3.png)
+
+##### And the Export data setting is {export summarized data only, export summarized and underlying data or no export allowed}
+
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below.
+
+Accepts:
+- "export summarized data only" - option 1 in image below.
+- "export summarized and underlying data" - option 2 in image below.
+- "no export allowed" - option 3 in image below.
+
+![Export Data](./images/part25-export-data.png)
+
+##### And the Filtering experience "Allow users to change filter types" is {enabled or disabled}  
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below (outlined in orange).
+
+![Filtering Experience 1](./images/part25-filtering-experience-1.png)
+
+##### And the Filtering experience "Enable search for the filter pane" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below (outlined in orange).
+
+![Filtering Experience 2](./images/part25-filtering-experience-2.png)
+
+##### And the Cross-report drillthrough setting "Allow visuals in this report to use drillthrough targets from other reports" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below.
+
+![Cross Report](./images/part25-cross-report.png)
+
+##### And the Personalize visuals setting "Allow report readers to personalize visuals to suit their needs" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below.
+
+![Personalize Visualizes](./images/part25-personal-visualize.png)
+
+##### And the Developer Mode setting "Turn on developer mode for custom visuals for this session" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below.
+
+![Developer Mode](./images/part25-developer-mode.png)
+
+##### And the Default summarizations setting "For aggregated fields, always show the default summarization type" is {enabled or disabled} 
+
+Accepts "enabled" or "disabled" parameter.
+Under the Options->Current File->Report Settings file in Power BI Desktop, this verifies the setting's status in the image below.
+
+![Default Summarizations](./images/part25-default-summarizations.png)
+
+
+#### Visual Tests for Sections
+These tests rely on a scenario outline so it can run tests on each section (example below). Sections are considered tabs in the Power BI report.
+
+![Section Tests](./images/part25-visual-section-tests.png)
+
+##### Given that we have the section: <Section>
+
+This verifies the section exists in the report configuration files.
+
+##### Then the section has their {canvas or wallpaper} set with the background image named "{IMAGE_FILE}"
+
+This accepts the canvas or wallpaper parameter; the settings are found in the visualizations pane for a specific section (outlined in orange in the image below)
+
+![Canvas or Wallpaper](./images/part25-canvas-wallpaper.png)
+
+
+This also accepts the {IMAGE_FILE} parameter which should be the name of the image used in with the wallpaper or canvas.
+
+
+##### And the section has a width of {WIDTH}px and a height of {HEIGHT}px
+
+This accepts the {WIDTH} and {HEIGHT} parameters in pixels and verifies the Canvas Settings height and width (image below).
+
+![Canvas Settings](./images/part25-canvas-settings.png)
+
+#### Visual Tests for Visuals
+These tests rely on a scenario outline so it can run tests on each visual (example below).
+
+![Section Tests](./images/part25-visual-tests.png)
+
+##### Given that we have the <VisualType> with the ID <VisualID> located in section: <Section>. Config Path: <ConfigPath>
+
+This verifies the visual exists in the section.
+
+##### Then the visual should have a title. Config Path: <ConfigPath>
+
+This verifies the visual has a title as recommended for accessibility.  The title does not need to be toggled on in order for this test to pass. This visual can have a title, either a literal value or conditional formatting, be toggled off and the test will pass for that visual.
+
+![Title Property](./images/part25-title.png)
+
+##### And ensure alt text is added to the visual if it is a non-decorative visual. Config Path: <ConfigPath>
+
+This verifies the visual has an alt text as recommended for accessibility.  If the visual is hidden on the tab order (when hidden, it's considered decorative), this test passes by default.
+
+![Alt Text](./images/part25-alt-text.png)
+
+##### And all visual level filters for the visual are hidden or locked in the filter pane. Config Path: <ConfigPath>   
+
+If you'd like to make sure a visual hides or locks its filters, this test will enforce that.  Often, design policies will want report-level or page-level filters only.  By locking or hiding visual level filters, you can improve the user experience with the filter pane.  If the filter pane is hidden, this test passes by default.
+
+
 ## Running Tests
 
 There are a few challenges when running the same tests both on your
@@ -219,3 +372,17 @@ This commands makes sure we are running classic PowerShell and not PowerShell Co
 
 ![Failed PBITests](./images/part23-failed-run-pbi-tests.png)
 
+### Running a Specific Test
+
+If you do not want to run a specific test, you can do so by following these steps:
+
+1. From the terminal enter the command "Powershell -NoExit"
+
+2. Then from the terminal enter the command ./Run-PBITests.ps1 -FileName "SampleModel" -Feature "Visuals"
+
+![Run PBITests For Specific Test](./images/part25-run-specific-test.png)
+
+The command takes two parameters:
+
+- FileName - The name of the Power BI file to test
+- Feature - The name of the feature file to run for the test.  You don't need to add the suffix .feature.

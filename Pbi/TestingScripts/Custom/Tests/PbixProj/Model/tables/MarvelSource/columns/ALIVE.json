@@ -1,0 +1,17 @@
+{
+  "name": "ALIVE",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "ALIVE",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

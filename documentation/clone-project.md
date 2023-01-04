@@ -51,13 +51,13 @@ Azure DevOps is a product that can host a repository (a.k.a. repo).  This repo i
 
 This will allow us to run the Powershell scripts locally
 
-8. From the terminal run: "git checkout part23". 
+8. From the terminal run: "git checkout part25". 
 
-![Git Checkout](./images/part23-switch-branch.png)
+![Git Checkout](./images/git-checkout.png)
 
-This will move you to the part23 branch where you should be performing your updates.  You can verify that you are in the right branch by looking at the bottom right of Visual Studio.  If you see "part23", you've successfully completed this step.
+This will move you to the part25 branch where you should be performing your updates.  You can verify that you are in the right branch by looking at the bottom right of Visual Studio.  If you see "part25", you've successfully completed this step.
 
-![Git Checkout](./images/part23-branch.png)
+![Git Checkout](./images/part-x-branch.png)
 
 9. Your project is now setup for developing.  Sometimes Visual Studio code will ask you if you want to call Git Fetch on your behalf.  Choose yes and this will provide updates from the repository in Azure DevOps.
 
@@ -147,6 +147,10 @@ For example, in the image below you can see an example of the failed test.
 
 ![Example of Pipeline Failure Details](./images/part5-pipeline-failed-details.PNG)
 
+## Tracking Changes
+
+Please see [instructions for tracking changes.](./tracking-changes.md)
+
 ## Running tests
 
-Please see [instructions for running tests](./run-tests.md)
+Please see [instructions for running tests.](./run-tests.md)

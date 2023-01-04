@@ -30,8 +30,8 @@ $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'
 $AzDOHostURL = "https://dev.azure.com/"
 $PBIAPIURL = "https://api.powerbi.com/v1.0/myorg"
 $RepoToCopy = "https://github.com/kerski/pbi-dataops-template.git"
-$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part23/Pbi/SampleModel/SampleModel.pbix?raw=true"
-$PipelineName = "DataOpsCI-Part23"
+$SampleModelURL = "https://github.com/kerski/pbi-dataops-template/blob/part25/Pbi/SampleModel/SampleModel.pbix?raw=true"
+$PipelineName = "DataOpsCI-Part25"
 
 #Check Inputs
 if(!$BuildWSName -or !$DevWSName -or !$SvcUser -or !$SvcPwd -or !$ProjectName)

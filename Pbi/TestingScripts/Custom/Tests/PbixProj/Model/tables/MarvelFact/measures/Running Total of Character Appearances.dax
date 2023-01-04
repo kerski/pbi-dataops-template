@@ -1,0 +1,8 @@
+
+CALCULATE (
+    COUNTROWS ( 'MarvelFact' ),
+    FILTER (
+        ALL ( 'MarvelFact' ),
+        'MarvelFact'[DateID] <= MAX ( 'DateDim'[DateID] )
+    )
+)

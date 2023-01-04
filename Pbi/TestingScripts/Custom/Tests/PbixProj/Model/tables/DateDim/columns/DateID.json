@@ -1,0 +1,13 @@
+{
+  "name": "DateID",
+  "dataType": "int64",
+  "sourceColumn": "DateID",
+  "formatString": "0",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

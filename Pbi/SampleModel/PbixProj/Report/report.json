@@ -1,0 +1,41 @@
+{
+  "id": 1520303,
+  "layoutOptimization": 0,
+  "reportId": 395703,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "id": 1351693,
+        "items": [
+          {
+            "id": 4062596,
+            "path": "lineStackedColumnMatrixADACEA3309644A92B1A6D50A68C81088.pbiviz.json",
+            "resourcePackageId": 1351693,
+            "resourcePackageItemBlobInfoId": 8431062,
+            "type": 5
+          }
+        ],
+        "name": "lineStackedColumnMatrixADACEA3309644A92B1A6D50A68C81088",
+        "type": 0
+      }
+    },
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "id": 1351694,
+        "items": [
+          {
+            "id": 4062597,
+            "name": "CY21SU04",
+            "path": "BaseThemes/CY21SU04.json",
+            "resourcePackageId": 1351694,
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ]
+}

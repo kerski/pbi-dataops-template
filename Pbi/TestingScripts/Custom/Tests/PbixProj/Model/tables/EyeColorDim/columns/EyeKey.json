@@ -1,0 +1,12 @@
+{
+  "name": "EyeKey",
+  "dataType": "string",
+  "sourceColumn": "EyeKey",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

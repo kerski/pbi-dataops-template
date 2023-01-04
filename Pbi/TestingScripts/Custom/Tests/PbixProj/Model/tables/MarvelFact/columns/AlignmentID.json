@@ -1,0 +1,13 @@
+{
+  "name": "AlignmentID",
+  "dataType": "int64",
+  "sourceColumn": "AlignmentID",
+  "formatString": "0",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

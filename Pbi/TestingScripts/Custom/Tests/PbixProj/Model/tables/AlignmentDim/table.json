@@ -1,0 +1,19 @@
+{
+  "name": "AlignmentDim",
+  "partitions": [
+    {
+      "name": "AlignmentDim-efd4d92e-b9f5-41bd-a54f-2260dec05954",
+      "mode": "import",
+      "queryGroup": "Dimensions",
+      "source": {
+        "type": "m"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

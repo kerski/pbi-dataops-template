@@ -1,0 +1,82 @@
+{
+  "name": "cadf3690c972d007b403",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 10.14977973568282,
+        "y": 359.75330396475772,
+        "z": 7000,
+        "width": 219.91189427312776,
+        "height": 276.29955947136563,
+        "tabOrder": -1001
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Hello World"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AlignmentDim"
+                        }
+                      },
+                      "Property": "Alignment"
+                    }
+                  },
+                  "Function": 3
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'hello title'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Eye Color",
+  "dataType": "string",
+  "sourceColumn": "Eye Color",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}
