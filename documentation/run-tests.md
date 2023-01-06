@@ -309,7 +309,9 @@ This verifies the visual exists in the section.
 
 ##### Then the visual should have a title. Config Path: <ConfigPath>
 
-This verifies the visual has a title as recommended for accessibility.  The title does not need to be toggled on in order for this test to pass. This visual can have a title, either a literal value or conditional formatting, be toggled off and the test will pass for that visual.
+This verifies the visual has a title as recommended for accessibility.
+The title does not need to be toggled on in order for this test to pass;
+it just needs either a literal value or conditional formatting set.
 
 ![Title Property](./images/part25-title.png)
 

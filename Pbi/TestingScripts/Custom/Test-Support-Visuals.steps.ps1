@@ -244,24 +244,25 @@ Then 'the section has their (?<BackgroundSetting>(canvas|wallpaper)) set with th
   param($BackgroundSetting, $BackgroundImg)
 
   # Assume tests to fail
-  $PassesBackgroundSetting = $False
   if($BackgroundSetting -eq "wallpaper"){
-      # Check if the wallpaper image has the background image supplied
-      if($__Section.Config.objects.outspace.properties.image.image.name.expr.Literal -and `
-         $__Section.Config.objects.outspace.properties.image.image.name.expr.Literal.Value -eq "'$($BackgroundImg)'")
-      {
-          $PassesBackgroundSetting = $True
-      }
-    }
-    else # canvas
+    # Check if the wallpaper image has the background image supplied
+    if($__Section.Config.objects.outspace.properties.image.image.name.expr.Literal -and `
+       ($__Section.Config.objects.outspace.properties.image.image.name.expr.Literal.Value -eq "$($BackgroundImg)" -or `
+        $__Section.Config.objects.outspace.properties.image.image.name.expr.Literal.Value -eq "'$($BackgroundImg)'"))
     {
-      # Check if the canvas has the background image supplied
-      if($__Section.Config.objects.background.properties.image.image.name.expr.Literal -and `
-         $__Section.Config.objects.background.properties.image.image.name.expr.Literal.Value -eq "'$($BackgroundImg)'")
-      {
-          $PassesBackgroundSetting = $True
-      }
-    }#end check canvas or wallpaper
+        $PassesBackgroundSetting = $True
+    }
+  }
+  else # canvas
+  {
+    # Check if the canvas has the background image supplied
+    if($__Section.Config.objects.background.properties.image.image.name.expr.Literal -and `
+       ($__Section.Config.objects.background.properties.image.image.name.expr.Literal.Value -eq "$($BackgroundImg)" -or `
+        $__Section.Config.objects.background.properties.image.image.name.expr.Literal.Value -eq "'$($BackgroundImg)'"))
+    {
+        $PassesBackgroundSetting = $True
+    }
+  }#end check canvas or wallpaper
 
   $PassesBackgroundSetting | Should -Be $True
 }
