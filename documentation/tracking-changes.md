@@ -12,8 +12,9 @@ This section covers how to track changes to .pbix files using pbi-tools. As stat
 
 1.	[Clone the project](./clone-project.md)
 2.	Install pbi-tools - Please make sure to complete step 4 (Add the tool folder to your path environment setting). This will make running pbi-tools much easier moving forward.
-- pbi-tools requires Windows 64-bit and Power BI Desktop installed on the machine running pbi-tools. 
-- Make sure to select "Edit environment variables for your account" (outlined in the image below).
+    - pbi-tools requires Windows 64-bit and Power BI Desktop installed on the machine running pbi-tools. 
+    - *Please do NOT install Power BI Desktop with the Microsoft Store. pbi-tools will not be able to interact with Power BI Desktop (as of Jan. 2023).*
+    - Make sure to select "Edit environment variables for your account" (outlined in the image below).
  
 ## Steps to Track Changes
 
@@ -35,11 +36,11 @@ When updating Power BI files within this project, please tracks changes by follo
 
 # Contents of the PbixProj folder
 
-Each sub-folder in the "Pbi" folder represents a single .pbix file that is stored in source control.  Within each sub-folder is a 'PbixProj'.  This folder contains the extracted contents of the .pbix file (example provided in the image below). 
+Each sub-folder in the "Pbi" folder represents a single .pbix file that is stored in source control.  Within each sub-folder is a 'PbixProj' folder.  This folder contains the extracted contents of the .pbix file (example provided in the image below). 
 
 ![Main PbixProj contents](./images/part25-pbi-tools-pbixproj.png)
 
-The following provides our latest understanding of the folders and files within the 'PbixProj' folder.
+The following provides my latest understanding of the folders and files within the 'PbixProj' folder.
 
 - CustomVisuals - Identifies the custom visuals imported into the .pbix file.
 - Model - This describes the tables, measures, and relationships in the .pbix file.
