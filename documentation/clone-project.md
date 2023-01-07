@@ -106,21 +106,21 @@ This project has an Azure DevOps Pipeline enabled to trigger any time the develo
 
 ![CI Pipeline](./images/part22-ci-pipeline.png)
 
-1. You've complete the [steps to sync to Azure DevOps](#syncing-your-changes-with-azure-devops-server).
+Step 1: You've complete this step in [sync to Azure DevOps](#syncing-your-changes-with-azure-devops-server).
 
-2. The automated scripts in the PipelineScripts folder identifies any new or changed .pbix files and publishes to the Build workspace using the premium per user account. 
+Step 2: The automated scripts in the PipelineScripts folder identifies any new or changed .pbix files and publishes to the Build workspace using the premium per user account. 
 
-3. Any new or changed .pbix files are refreshed (if they are a dataset). **NOTE: The first time a new file is placed in the Build workspace, the refresh will fail. You have to “prime” the pipeline and set the data source credentials manually.  Please talk with the lead developer about setting those credentials**. As of August 2022, setting data source credentials (like OAuth) is not fully automated by Microsoft.
+Step 3: Any new or changed .pbix files are refreshed (if they are a dataset). **NOTE: The first time a new file is placed in the Build workspace, the refresh will fail. You have to “prime” the pipeline and set the data source credentials manually.  Please talk with the lead developer about setting those credentials**. As of August 2022, setting data source credentials (like OAuth) is not fully automated by Microsoft.
 
-4. Any tests sitting in the same folder as each .pbix file are ran against the .pbix file in the Build Workspace using XMLA (which is why an app service principal is needed). Please note that regardless of if the .pbix file is new, changed, or unchanged, tests are executed. Failed tests are logged to Azure DevOps and the build will fail.
+Step 4: Any tests sitting in the same folder as each .pbix file are ran against the .pbix file in the Build Workspace using XMLA (which is why an app service principal is needed). Please note that regardless of if the .pbix file is new, changed, or unchanged, tests are executed. Failed tests are logged to Azure DevOps and the build will fail.
 
-5. If a .pbix file has all the tests pass, then the .pbix file is moved to the Development workspace.
+Step 5: If a .pbix file has all the tests pass, then the .pbix file is moved to the Development workspace.
 
-6. If step 4 for a .pbix file has resulted with a failed test, then the build will fail and the Development workspace will not be updated
+Step 6: If step 4 for a .pbix file has resulted with a failed test, then the build will fail and the Development workspace will not be updated
 
 # Verify your updates are in the Development workspace
 
-1. Once you complete your updates, navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically donated by the a blue clock icon. Note the description you entered in [steps to sync to Azure DevOps](#syncing-your-changes-with-azure-devops-server) will appear.  Press the pipeline link (outlined in orange in the image below).
+1. Once you complete your updates, navigate back to Azure DevOps and you should see the pipeline in progress.  This is typically denoted by the a blue clock icon. Note the description you entered in [steps to sync to Azure DevOps](#syncing-your-changes-with-azure-devops-server) will appear.  Press the pipeline link (outlined in orange in the image below).
 
 ![Example of Pipeline in Azure Devops](./images/part5-see-pipeline.PNG)
 

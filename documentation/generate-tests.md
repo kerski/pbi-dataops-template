@@ -20,7 +20,7 @@ The following sections below provide instructions on generating tests.
 
 ### Visual Test Template
 
-As of December 2022, this project has the ability to generate a set of tests for evaluating the reports, tabs, and visuals in a Power BI report.
+As of January 2023, this project has the ability to generate a set of tests for evaluating the reports, tabs, and visuals in a Power BI report.
 
 To generate a template, here are the steps:
 

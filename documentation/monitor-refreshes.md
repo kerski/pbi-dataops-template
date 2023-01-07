@@ -11,7 +11,7 @@ This serves as a guide for setting up the [Power BI Monitoring report template](
 ##	Prerequisites
 
 - Complete the installation instructions for the custom connector depending on the location of your Power BI service:
-    -  [Power BI Commericial](https://github.com/kerski/powerquery-connector-pbi-rest-api-commercial#desktop)
+    -  [Power BI Commercial](https://github.com/kerski/powerquery-connector-pbi-rest-api-commercial#desktop)
     -  [Power BI Community Cloud](https://github.com/kerski/powerquery-connector-pbi-rest-api-gcc#desktop)
 
 ### Installation

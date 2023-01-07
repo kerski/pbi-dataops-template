@@ -15,8 +15,8 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
     1. [Cloning the Project](./documentation/clone-project.md)
     1. [Tracking Changes](./documentation/tracking-changes.md)
 1. Testing
-    1. [Generating Tests](./generate-tests.md)
-    1. [Running Tests](./run-tests.md)
+    1. [Generating Tests](./documentation/generate-tests.md)
+    1. [Running Tests](./documentation/run-tests.md)
 
 ## Prerequisites
 
@@ -27,11 +27,11 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -  <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli" target="_blank">Azure CLI</a> installed.
 
--  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2" target="_blank">PowerShell 7</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
+-  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2" target="_blank">PowerShell Core</a> and <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_windows_powershell_5.1?view=powershell-5.1" target="_blank">PowerShell for .NET Framework (5.1)</a>.  PowerShell for .NET Framework is used for testing given that the SqlServer Module for PowerShell does not work for .NET Core (as of Jan. 2023).
 
 -   <a href="https://desktop.github.com/" target="_blank">GitHub desktop</a> installed.
 
--   Power BI Desktop installed on device executing these steps.
+-   Power BI Desktop installed on device executing these steps. *Please do not include from the Microsoft store as this does not make it compatible with pbi-tools (as of Jan. 2023)*
 
 ### Azure DevOps
 
@@ -43,7 +43,7 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 - Please install pbi-tools.  Installation instructions are <a href="https://pbi.tools/tutorials/getting-started-cli.html" target="_blank">at this link.</a>
 
-- Please note that Power BI desktop must not be installed from the Microsoft Store, and you will need to make sure pbi-tools is added to your environment PATH variable.
+- Please note that Power BI desktop must NOT be installed from the Microsoft Store, and you will need to make sure pbi-tools is added to your environment PATH variable.
 
 ## Installation Steps
 
