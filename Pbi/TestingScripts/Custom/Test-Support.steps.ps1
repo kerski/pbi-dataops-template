@@ -12,6 +12,12 @@ BeforeEachFeature {
   }
 }
 
+# Clean up global variables
+AfterEachFeature {
+  #Delete Global Variables used for testing and performance 
+  Remove-Variable -Name "PBIFileOpened_Settings" -Scope Global -ErrorAction:Ignore
+}
+
 #region BACKGROUND steps
 Given 'that we have access to the Power BI Report named "(?<PBIFile>[a-zA-Z\s].*)"' {
   param($PBIFile)
@@ -62,7 +68,19 @@ Given 'that we have access to the Power BI Report named "(?<PBIFile>[a-zA-Z\s].*
     $WorkingDir = (& pwd) 
     Import-Module $WorkingDir\Pbi\TestingScripts\Custom\Get-PowerBIReportsOpenedLocally.psm1 -Force
     #Now retrieve files that are opened currently
-    $PBIFilesOpened = Get-PowerBIReportsOpenedLocally
+    # Check if we have this cached in global
+    $CachedFilesOpened = Get-Variable -Name "PBIFileOpened_Settings" -Scope Global -ValueOnly -ErrorAction:Ignore
+    if($CachedFilesOpened)
+    {
+      $PBIFilesOpened = $CachedFilesOpened
+    }
+    else
+    { 
+      #get data since cache doesn't exist
+      $PBIFilesOpened = Get-PowerBIReportsOpenedLocally
+      # Save to global variable
+      New-Variable -Name "PBIFileOpened_Settings" -Value $PBIFilesOpened -Scope Global -Force
+    }
     $IsLocal = $True
     # Make sure we got files back
     $PBIFilesOpened | Should -Not -BeNullOrEmpty
