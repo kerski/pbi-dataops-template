@@ -117,7 +117,7 @@ foreach ($Temp in $PBIFilesOpened) {
         $TempFile = "$($WorkingDir)\Pbi\TestingScripts\$((New-Guid).Guid).xml"
 
         #Now run tests
-        Invoke-Gherkin -Path $FolderPathToTest -OutputFile $TempFile -Show  Failed,Summary
+        Invoke-Gherkin -Path $FolderPathToTest -OutputFile $TempFile -Show  Failed,Summary,Context
 
       #Load into XML
       [System.Xml.XmlDocument]$TempResult = Get-Content $TempFile
