@@ -13,9 +13,17 @@ BeforeEachFeature {
 }
 
 # Clean up global variables
-AfterEachFeature {
-  #Delete Global Variables used for testing and performance 
+AfterEachFeature{
+  #Delete Global Variables used for testing and performance
   Remove-Variable -Name "PBIFileOpened_Settings" -Scope Global -ErrorAction:Ignore
+  #Delete Global Variables used for testing and performance
+  $PBIFiles = Get-ChildItem -Path "./pbi" -Recurse | Where-Object {$_ -like "*.pbix"}
+  foreach($TempFile in $PBIFiles){
+      $FileNameNoExt = [System.IO.Path]::GetFileNameWithoutExtension($TempFile.FullName)
+      Remove-Variable -Name "$($FileNameNoExt)_Credentials" -Scope Global -ErrorAction:Ignore
+      Remove-Variable -Name "$($FileNameNoExt)_ReportObjFromService" -Scope Global -ErrorAction:Ignore
+      Remove-Variable -Name "$($FileNameNoExt)_BuildWSObjFromService" -Scope Global -ErrorAction:Ignore            
+  }#end foreach  
 }
 
 #region BACKGROUND steps
@@ -41,23 +49,35 @@ Given 'that we have access to the Power BI Report named "(?<PBIFile>[a-zA-Z\s].*
       BuildVersion = "${env:BUILD_SOURCEVERSION}";
     }
 
-    Write-Host ($Opts | Format-Table | Out-String)    
-    #Set Password as Secure String
-
-    $Secret = $Opts.Password | ConvertTo-SecureString -AsPlainText -Force
-    $Credentials = [System.Management.Automation.PSCredential]::new($Opts.UserName,$Secret)
-    #Connect to Power BI
-    $ConnectionStatus = Connect-PowerBIServiceAccount -Credential $Credentials 
+    #Check global variables
+    $__Credentials = Get-Variable -Name "$($PBIFile)_Credentials" -Scope Global -ValueOnly -ErrorAction:Ignore
+    $__PBIFileToTest = Get-Variable -Name "$($PBIFile)_ReportObjFromService" -Scope Global -ValueOnly -ErrorAction:Ignore
+    $__BuildWS = Get-Variable -Name "$($PBIFile)_BuildWSObjFromService" -Scope Global -ValueOnly -ErrorAction:Ignore
     
-    #Setup variables to be used for connections
-    $__PBIFileToTest = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBIFile
-    $BuildWS = Get-PowerBIWorkspace -Id $Opts.BuildGroupId
+    if(-not $__Credentials -or -not $__PBIFileToTest -or -not $__BuildWS)
+    {
+      # no cache exists so get data
+       #Write-Host ($Opts | Format-Table | Out-String)    
+      $Secret = $Opts.Password | ConvertTo-SecureString -AsPlainText -Force	
+      $__Credentials = [System.Management.Automation.PSCredential]::new($Opts.UserName,$Secret)	
+      #Connect to Power BI	
+      $ConnectionStatus = Connect-PowerBIServiceAccount -Credential $__Credentials   
+      #Setup variables to be used for connections
+      $__PBIFileToTest = Get-PowerBIReport -WorkspaceId $Opts.BuildGroupId -Name $PBIFile
+      #Write-Host $__PBIFileToTest
+      $__BuildWS = Get-PowerBIWorkspace -Id $Opts.BuildGroupId
+      # Save to global variable
+      New-Variable -Name "$($PBIFile)_Credentials" -Value $__Credentials -Scope Global -Force
+      New-Variable -Name "$($PBIFile)_ReportObjFromService" -Value $__PBIFileToTest -Scope Global -Force
+      New-Variable -Name "$($PBIFile)_BuildWSObjFromService" -Value $__BuildWS -Scope Global -Force  
+    }
+    #end if
 
     #Replace https with powerbi
-    $PBIEndpoint = $Opts.PBIAPIUrl.Replace("https","powerbi")
+    $__PBIEndpoint = $Opts.PBIAPIUrl.Replace("https","powerbi")
 
     # Add Title to property for use later
-    $__PBIFileToTest | Add-Member -NotePropertyName Title -NotePropertyValue $PBIFile
+    $__PBIFileToTest | Add-Member -NotePropertyName Title -NotePropertyValue $PBIFile -Force
     
     $__PBIFileToTest | Should -Not -BeNullOrEmpty
   }
@@ -168,10 +188,10 @@ Then 'the (?<TestFile>[a-zA-Z\s].*) file should pass its tests' {
       }
       else
       {
-        $Result = Invoke-ASCmd -Server "$($PBIEndpoint)/$($BuildWS.Name)" `
+        $Result = Invoke-ASCmd -Server "$($__PBIEndpoint)/$($__BuildWS.Name)" `
         -Database $__PBIFileToTest.Name `
         -InputFile $FileToTest.FullName `
-        -Credential $Credentials `
+        -Credential $__Credentials `
         -TenantId $Opts.TenantId
       }
 
@@ -249,7 +269,7 @@ And 'we have the schema for "(?<TableName>[a-zA-Z\s].*)"' {
     $WorkingDir = (& pwd) -replace "\\", '/'
     Import-Module $WorkingDir/Pbi/TestingScripts/Custom/Get-DatasetSchemaFromService.psm1 -Force
 
-    $DatasetSchema = Get-DatasetSchemaFromService -WorkspaceName $BuildWS.Name `
+    $DatasetSchema = Get-DatasetSchemaFromService -WorkspaceName $__BuildWS.Name `
         -DatasetName $__PBIFileToTest.Name `
         -UserName $Opts.UserName `
         -Password $Opts.Password `
@@ -323,10 +343,10 @@ Given 'we have a table called "(?<TableName>[a-zA-Z\s].*)"' {
   }
   else
   {
-    $Result = Invoke-ASCmd -Server "$($PBIEndpoint)/$($BuildWS.Name)" `
+    $Result = Invoke-ASCmd -Server "$($__PBIEndpoint)/$($__BuildWS.Name)" `
     -Database $__PBIFileToTest.Name `
     -Query $TableQuery `
-    -Credential $Credentials `
+    -Credential $__Credentials `
     -TenantId $Opts.TenantId
   }#end IsLocal check 
 
@@ -370,10 +390,10 @@ And 'the values of "(?<ColumnName>[a-zA-Z\s].*)" matches this regex: "(?<Regex>[
   }
   else
   {
-    $Result = Invoke-ASCmd -Server "$($PBIEndpoint)/$($BuildWS.Name)" `
+    $Result = Invoke-ASCmd -Server "$($__PBIEndpoint)/$($__BuildWS.Name)" `
     -Database $__PBIFileToTest.Name `
     -Query $ValQuery `
-    -Credential $Credentials `
+    -Credential $__Credentials `
     -TenantId $Opts.TenantId
   }#end IsLocal check 
 
