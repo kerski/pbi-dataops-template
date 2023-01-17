@@ -47,7 +47,9 @@ $Location = Read-Host "Please enter the location name of your Power BI Service (
 # Set Project Name
 $ProjectName = Read-Host "Please enter the name of the Azure DevOps project you'd like to create"
 # Azure PAT Token
-$ADOToken = Read-Host "Please enter the PAT Token you created from Azure DevOps"
+$SecureADOToken = Read-Host "Please enter the PAT Token you created from Azure DevOps" -AsSecureString
+$TokenBstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureADOToken)
+$ADOToken = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($TokenBstr)
 #Set Power BI Workspace
 $BuildWSName = Read-Host "Please enter the name of the build workspace (ex. Build)"
 $SvcUser = Read-Host "Please enter the email address (UPN) of the service account assigned premium per user"
