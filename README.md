@@ -1,4 +1,4 @@
-# Part 22 of "Bringing DataOps to Power BI" this branch serves to provides templates for applying DataOps principles.
+# Part 22 of "Bringing DataOps to Power BI". This branch serves to provide a template for applying DataOps principles to Power BI Dataflows
 
 These instructions are a continuation from <a href="https://www.kerski.tech/bringing-dataops-to-power-bi-part22/" target="_blank">Part 22 of Bringing DataOps to Power BI</a>.  The steps below describe how to setup a DevOps project with Azure resources that will automatically save Power BI dataflow code in Git and shows you how to run tests using Pester/Gherkin locally and automating those tests in Azure DevOps.
 
