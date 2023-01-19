@@ -20,15 +20,13 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
 -  <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli" target="_blank">Azure CLI</a> version 2.37 installed.
 
-- <a href="https://code.visualstudio.com/download" target="_blank">Visual Studio Code</a> installed.  It's free and a great tool for development.
+-  <a href="https://code.visualstudio.com/download" target="_blank">Visual Studio Code</a> installed.  It's free and a great tool for development.
 
-- <a href="https://code.visualstudio.com/docs/editor/github" target="_blank">Install GitHub Pull Requests and Issues extension</a>.
-
--  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2" target="_blank">PowerShell 7</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell ISE to run a PowerShell script. 
+-  <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2" target="_blank">PowerShell 7</a> installed.  If you are using Windows 10 or 11, this should be installed already. For the purposes of the instructions I'm going to use PowerShell 7 to run a PowerShell script. 
 
 - Via the PowerShell terminal install Pester 4
 
-    Install-Module -Name Pester -RequiredVersion 4.6.0
+    Install-Module -Name Pester -RequiredVersion 4.6.0 -Force
 
 ### Power BI and Azure
 -   Power BI Premium Per User license assigned to a service account. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
