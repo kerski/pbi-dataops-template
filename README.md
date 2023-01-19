@@ -28,6 +28,12 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
     Install-Module -Name Pester -RequiredVersion 4.6.0 -Force
 
+### Azure DevOps
+
+-  Signed up for <a href="https://docs.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?view=azure-devops" target="_blank">Azure DevOps</a>.
+
+- For Azure DevOps you must be a member of the Project Collection Administrators group, the Organization Owner, or have the Create new projects permission set to Allow. 
+
 ### Power BI and Azure
 -   Power BI Premium Per User license assigned to a service account. If you do not have a Premium Per User license, use the "Buy Now" feature on <a href="https://docs.microsoft.com/en-us/power-bi/admin/service-premium-per-user-faq" target="_blank">Microsoft's site</a> or if you don't have access to do that, please contact your administrator (be nice!).
 
@@ -38,12 +44,6 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 - A PAT token generated with Code "Read, Write, Manage" Permissions.  Please see instructions <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat" target="_blank">at this link</a>.
 
     ![Example to PAT Token](./images/part20-PAT.PNG)
-
-### Azure DevOps
-
--  Signed up for <a href="https://docs.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?view=azure-devops" target="_blank">Azure DevOps</a>.
-
-- For Azure DevOps you must be a member of the Project Collection Administrators group, the Organization Owner, or have the Create new projects permission set to Allow. 
 
 ## Installation Steps
 
