@@ -28,6 +28,8 @@ These instructions are a continuation from <a href="https://www.kerski.tech/brin
 
     Install-Module -Name Pester -RequiredVersion 4.6.0 -Force
 
+    *For certain versions of Windows, you may need to remove an older version of Pester.  Please see these directions: <a href="https://pester.dev/docs/introduction/installation#removing-the-built-in-version-of-pester" target="_blank">Removing Built-In Version of Pester</a>*
+
 ### Azure DevOps
 
 -  Signed up for <a href="https://docs.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?view=azure-devops" target="_blank">Azure DevOps</a>.
