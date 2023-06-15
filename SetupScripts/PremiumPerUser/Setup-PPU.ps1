@@ -53,7 +53,7 @@ Login-PowerBI
 Write-Host -ForegroundColor Cyan "Step 1 or 5: Creating Power BI Workspaces" 
 
 #Get Premium Per User Capacity as it will be used to assign to new workspace
-$Cap = Get-PowerBICapacity -Scope Individual
+$Cap = Get-PowerBICapacity -Scope Individual | Where-Object {$_.Sku -eq "PP3"}
 
 if(!$Cap.DisplayName -like "Premium Per User*")
 {
