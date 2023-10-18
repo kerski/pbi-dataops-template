@@ -358,9 +358,10 @@ Given 'we have a table called "(?<TableName>[a-zA-Z\s].*)"' {
   $XmlResult.LoadXml($Result)
 
   #Get Node List
-  [System.Xml.XmlNodeList]$Rows = $XmlResult.GetElementsByTagName("row")
+  [System.Xml.XmlNode]$RowXml = $XmlResult.SelectSingleNode("//*[local-name()='row']")
 
-  $Rows.Name | Should -Be $TableName
+  $RowXml.HasChildNodes | Should -Be $True
+  $RowXml.ChildNodes[2].InnerText | Should -Be $TableName
 }
 
 # Column Regex
@@ -397,7 +398,6 @@ And 'the values of "(?<ColumnName>[a-zA-Z\s].*)" matches this regex: "(?<Regex>[
     -TenantId $Opts.TenantId
   }#end IsLocal check 
 
-
   #Remove unicode chars for brackets and spaces from XML node names
   $Result = $Result -replace '_x[0-9A-z]{4}_', '';
 
@@ -406,11 +406,11 @@ And 'the values of "(?<ColumnName>[a-zA-Z\s].*)" matches this regex: "(?<Regex>[
   $XmlResult.LoadXml($Result)
 
   #Get Node List
-  [System.Xml.XmlNodeList]$Rows = $XmlResult.GetElementsByTagName("row")
+  [System.Xml.XmlNodeList]$Rows = $XmlResult.GetElementsByTagName("//*[local-name()='row']")
 
   if($Rows) #Query got results
   {
-      $TempVals = $Rows.Values
+      $TempVals = @($Rows.LastChild.InnerXML)
   
       #Get what doesn't match
       $TempNoMatches = $TempVals -notmatch $Regex
