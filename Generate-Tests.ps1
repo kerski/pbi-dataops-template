@@ -16,10 +16,10 @@
         Acceptable values are Visuals
 
         Example:
-            -Type Visual
+            -Type Visuals
 
     .EXAMPLE
-        ./Generate-Tests.ps1 -FileName "SampleModel" -Type Visual
+        ./Generate-Tests.ps1 -FileName "SampleModel" -Type Visuals
     #>
 param([String]$FileName, [String]$Type)
 
