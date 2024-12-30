@@ -19,6 +19,7 @@ jobs:
   - task: PowerShell@2
     displayName: Continuous Integration
     inputs:
+      pwsh: true
       filePath: PipelineScripts/PremiumPerUser/Start-CI.ps1
     env:
       PPU_PASSWORD: $(PPU_PASSWORD) # Maps the secret variable

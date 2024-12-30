@@ -4,10 +4,13 @@
 
     Dependencies: Premium Per User license purchased and assigned to UserName and UserName has admin right to workspace.
 #>
+#Force the load of the SqlServer module first to avoid Microsoft.Identity.Client DLL conflicts when running on a LOCAL agent
+$SqlServerVersion = (Get-InstalledModule | Where-Object name -eq SqlServer).Version
+Import-Module SqlServer -RequiredVersion $SqlServerVersion
 #Setup TLS 12
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 #Get Working Directory
-$WorkingDir = (& pwd) -replace "\\", '/'
+$WorkingDir = (& Get-Location) -replace "\\", '/'
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Publish-PBIFileWithPPU.psm1 -Force
 Import-Module $WorkingDir/PipelineScripts/PremiumPerUser/Invoke-RefreshDatasetSyncWithPPU.psm1 -Force
 Import-Module $WorkingDir/Pbi/TestingScripts/Pester/4.10.1/Pester.psm1 -Force
@@ -101,7 +104,7 @@ foreach($PBIPromote in $Opts.PbixTracking){
     Write-Host "Checking if file needs refreshing: $($PBIPromote.PBIPath)"
 
     #If DatasetId property is not null then this is a PowerBI report with a dataset needing a refresh
-    if($PBIPromote.BuildInfo.DatasetId -ne $null){
+    if($null -ne $PBIPromote.BuildInfo.DatasetId){
         $RefreshResult = Invoke-RefreshDatasetSyncWithPPU -WorkspaceId $Opts.BuildGroupId `
                         -DatasetId $PBIPromote.BuildInfo.DatasetId `
                         -UserName $Opts.UserName `
